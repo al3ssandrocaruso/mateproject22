@@ -10,11 +10,10 @@ import java.io.File;
 
 public class JFX2UserBean extends GenericUserBean {
 
-    public JFX2UserBean(String username, String email, String password, File img, String name, String secondName, String gender) throws InputNullException, EmailValidatorException {
+    public JFX2UserBean(String username, String email, String password, String name, String secondName, String gender) throws InputNullException, EmailValidatorException {
         setUsername(username);
         setEmail(email);
         setPassword(password);
-        setImage(img);
         setName(name);
         setSecondName(secondName);
         setGender(gender);
