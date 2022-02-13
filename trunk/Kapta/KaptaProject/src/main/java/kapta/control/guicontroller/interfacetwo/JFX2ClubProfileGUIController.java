@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -19,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import kapta.application.ClubProfileApplicationLayer;
@@ -87,6 +85,7 @@ public class JFX2ClubProfileGUIController implements Observer {
     private ClubProfileApplicationLayer clubProfileApplicationLayer;
     private int numSbagliate=0;
     private boolean state=false;
+    private String system="System";
 
     private Map<Pane,RequestModel> map=new HashMap<>();
     private Font font = Font.font("Arial",FontWeight.BOLD, 15);
@@ -122,8 +121,8 @@ public class JFX2ClubProfileGUIController implements Observer {
  */
         Stage dialog=GetDialogStage.startDialog(ae);
 
-        Label label1= GetFontedLabel.getFonted("An email has been sent to you","System");
-        Label label2=GetFontedLabel.getFonted("Please, insert your token to confirm","System");
+        Label label1= GetFontedLabel.getFonted("An email has been sent to you",system);
+        Label label2=GetFontedLabel.getFonted("Please, insert your token to confirm",system);
         VBox dialogVbox = new VBox(21);
 
         TextField textField = new TextField();
@@ -139,7 +138,7 @@ public class JFX2ClubProfileGUIController implements Observer {
         dialogVbox.setPadding(new Insets(0,50,0,50));
 
         Button button=new Button("Verify");
-        Font font1 = Font.font("System", FontWeight.BOLD, 25);
+        Font font1 = Font.font(system, FontWeight.BOLD, 25);
         button.setFont(font1);
         button.setStyle("-fx-background-color: #200f54;" + radius + white);
 

@@ -56,10 +56,6 @@ public class JFX2ReplaceSceneAndInitializePage {
             e.printStackTrace();
         }
 
-        if (fxml.equals("/JFX2/JFX2PartyEventPage.fxml" )) {
-            JFX2PartyEventPageSetter.setter(ob, loader.getController());
-        }
-
         //Questi due sotto mi servono per popolare la pagina del creator di un party o di un evento
         if(fxml.equals(jfx2Profile)) {
             UserModel um = (UserModel) ob;
@@ -69,6 +65,11 @@ public class JFX2ReplaceSceneAndInitializePage {
             ClubModel cm = (ClubModel) ob;
             JFX2ClubProfileSetter.setter(cm, loader.getController());
         }
+
+        if (fxml.equals("/JFX2/JFX2PartyEventPage.fxml" )) {
+            JFX2PartyEventPageSetter.setter(ob, loader.getController());
+        }
+
 
         Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

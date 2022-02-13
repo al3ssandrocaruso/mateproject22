@@ -7,14 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import kapta.application.ClubProfileApplicationLayer;
@@ -64,6 +62,7 @@ public class JFX1CreateEventGUIController implements Initializable {
     private Button btnSubmitRequest;
 
     private int numSbagliate=0;
+    private String arial="Arial";
     private ClubProfileApplicationLayer clubProfileApplicationLayer;
 
     public ClubProfileApplicationLayer getClubProfileApplication() {
@@ -89,8 +88,8 @@ public class JFX1CreateEventGUIController implements Initializable {
     public void submitRequest(ActionEvent ae) {
         getClubProfileApplication().goToGenerateToken();
         final Stage dialog = GetDialogStage.startDialog(ae);
-        Label label1= GetFontedLabel.getFonted("An email has been sent to you","Arial");
-        Label label2= GetFontedLabel.getFonted("Please, insert your token to confirm","Arial");
+        Label label1= GetFontedLabel.getFonted("An email has been sent to you",arial);
+        Label label2= GetFontedLabel.getFonted("Please, insert your token to confirm",arial);
         VBox dialogVbox = new VBox(20);
 
         TextField textField = new TextField();
@@ -104,7 +103,7 @@ public class JFX1CreateEventGUIController implements Initializable {
         dialogVbox.setPadding(new Insets(0,50,0,50));
 
         Button button=new Button("Verify");
-        Font font1 = Font.font("Arial", FontWeight.BOLD, 25);
+        Font font1 = Font.font(arial, FontWeight.BOLD, 25);
         button.setFont(font1);
         button.setStyle("-fx-background-color: #200f54;" + "-fx-background-radius: 28;" + "-fx-text-fill: white");
 
