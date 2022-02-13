@@ -20,10 +20,10 @@ public class JFX2UserBean extends GenericUserBean {
         setType();
     }
 
-    public void setUsername(String username) { this.username=username;}
+    public void setUsername(String username) { this.username=username+"";}
     public void setEmail(String email) throws InputNullException, EmailValidatorException {
         if(email.isEmpty()) {
-        Trigger.emptyField("email");
+        Trigger.emptyField("email.");
         }
         boolean correctFormat = EmailValidator.validate(email);
         if(correctFormat){this.email = email;}
@@ -31,10 +31,10 @@ public class JFX2UserBean extends GenericUserBean {
             throw new EmailValidatorException(email);
         }
     }
+    public void setType(){this.type=0;}
     public void setPassword(String password) {this.password=password;}
     public void setImage(File img){this.img=img;}
     public void setName(String name) {this.name = name;}
     public void setSecondName(String secondName) {this.secondName=secondName;}
     public void setGender(String gender){this.gender=gender;}
-    public void setType(){this.type=0;}
 }
