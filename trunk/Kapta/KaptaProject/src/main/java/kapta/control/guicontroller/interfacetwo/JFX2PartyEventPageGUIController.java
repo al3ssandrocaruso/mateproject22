@@ -41,6 +41,7 @@ import kapta.utils.bean.beanout.jfx2.JFX2UserBeanOut;
 import kapta.utils.pagesetter.setterjfx2.JFX2ClubProfileSetter;
 import kapta.utils.pagesetter.setterjfx2.JFX2UserProfileSetter;
 import kapta.utils.Observer;
+import kapta.utils.utils.GetDialogStage;
 
 import java.io.File;
 import java.io.IOException;
@@ -247,18 +248,8 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                     Button btnSend=new Button("Send");
                     btnSend.setFont(font1);
                     btnSend.setStyle("-fx-background-color: #54E589;" + radius + "-fx-text-fill: white");
-                    HBox hBox=new HBox(btnLoad);
-                    hBox.setAlignment(Pos.CENTER);
-                    hBox.setSpacing(10);
+                    HBox hBox= GetDialogStage.fill(btnLoad,dialogVbox,dialog,label1);
 
-                    dialogVbox.setAlignment(Pos.CENTER);
-                    dialogVbox.getChildren().addAll(label1,hBox);
-                    dialogVbox.setStyle("--fxbackground-color: white");
-
-                    Scene dialogScene = new Scene(dialogVbox, 500, 400);
-                    dialog.setResizable(false);
-                    dialog.setScene(dialogScene);
-                    dialog.show();
 
                     btnLoad.setOnAction(ae ->{
                         File file;

@@ -25,6 +25,8 @@ import kapta.utils.greenpass.AdapterGreenPass;
 import kapta.utils.greenpass.TargetGreenPass;
 import kapta.utils.bean.beanin.jfx1.JFX1RequestBean;
 import kapta.utils.VisualComponent;
+import kapta.utils.utils.GetDialogStage;
+
 import java.io.File;
 
 
@@ -130,18 +132,7 @@ public class JFX1DecorationEventTwo extends Decorator{
                     Button btnSend = new Button("Send");
                     btnSend.setFont(font1);
                     btnSend.setStyle("-fx-background-color: #54E589;" + radius + white);
-                    HBox hBox = new HBox(btnLoad);
-                    hBox.setAlignment(Pos.CENTER);
-                    hBox.setSpacing(10);
-
-                    dialogVbox.setAlignment(Pos.CENTER);
-                    dialogVbox.getChildren().addAll(label1, hBox);
-                    dialogVbox.setStyle("--fxbackground-color: white");
-
-                    Scene dialogScene = new Scene(dialogVbox, 500, 400);
-                    dialog.setResizable(false);
-                    dialog.setScene(dialogScene);
-                    dialog.show();
+                    HBox hBox=GetDialogStage.fill(btnLoad,dialogVbox,dialog,label1);
 
                     btnLoad.setOnAction(actionEvent -> {
                         try {File file;

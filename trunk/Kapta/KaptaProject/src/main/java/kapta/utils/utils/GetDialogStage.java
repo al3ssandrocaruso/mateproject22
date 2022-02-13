@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -46,5 +47,20 @@ public class GetDialogStage {
         Scene dialogScene = new Scene(dialogVbox, 500, 300);
         dialog.setScene(dialogScene);
         dialog.show();
+    }
+    public static HBox fill(Button btnLoad,VBox dialogVbox,Stage dialog,Label label1){
+        HBox hBox = new HBox(btnLoad);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(10);
+
+        dialogVbox.setAlignment(Pos.CENTER);
+        dialogVbox.getChildren().addAll(label1, hBox);
+        dialogVbox.setStyle("--fxbackground-color: white");
+
+        Scene dialogScene = new Scene(dialogVbox, 500, 400);
+        dialog.setResizable(false);
+        dialog.setScene(dialogScene);
+        dialog.show();
+        return  hBox;
     }
 }
