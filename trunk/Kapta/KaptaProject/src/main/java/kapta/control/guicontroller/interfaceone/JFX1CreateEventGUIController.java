@@ -1,8 +1,5 @@
 package kapta.control.guicontroller.interfaceone;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -14,7 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import kapta.application.ClubProfileApplicationLayer;
 import kapta.control.appcontroller.CreateEventController;
 import kapta.control.guicontroller.interfacetwo.FillDialogBox;

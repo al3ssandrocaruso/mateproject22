@@ -9,6 +9,9 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 public class FillDialogBox {
+    private FillDialogBox(){
+        //ignored
+    }
     public static int fill(Label label1, Button button, Label label2, int numSbagliate) {
         label1.setVisible(false);
         button.setVisible(false);

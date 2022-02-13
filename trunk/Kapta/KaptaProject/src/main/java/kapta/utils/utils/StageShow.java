@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class StageShow {
+    private StageShow(){
+        //ignored
+    }
     public static void showStage(ActionEvent ae, Parent root){
         Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
