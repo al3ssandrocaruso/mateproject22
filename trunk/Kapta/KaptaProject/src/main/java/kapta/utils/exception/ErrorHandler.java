@@ -28,10 +28,10 @@ public class ErrorHandler {
         String message = e.getMessage();
         ErrorDialog errorDialog = createErrorDialog();
 
-        if(e instanceof ConfirmPasswordException || e instanceof MysqlConnectionFailed ||e instanceof WrongPasswordException || e instanceof InputNullException || e instanceof EmailValidatorException || e instanceof GenericException || e instanceof TokenException ){
+        if(e instanceof ConfirmPasswordException  ||e instanceof WrongPasswordException || e instanceof InputNullException || e instanceof EmailValidatorException || e instanceof GenericException || e instanceof TokenException ){
             errorDialog.createNotice(message);
         }
-        if(e instanceof WrongDBOperationException || e instanceof WrongQueryException || e instanceof WrongCrudException || e instanceof  UsernameConflictException || e instanceof InavalidGreenPassException || e instanceof ExpiredGreenPassException){
+        if(e instanceof WrongDBOperationException || e instanceof WrongQueryException || e instanceof MysqlConnectionFailed || e instanceof WrongCrudException || e instanceof  UsernameConflictException || e instanceof InavalidGreenPassException || e instanceof ExpiredGreenPassException){
             errorDialog.createWarning(message);
         }
     }
