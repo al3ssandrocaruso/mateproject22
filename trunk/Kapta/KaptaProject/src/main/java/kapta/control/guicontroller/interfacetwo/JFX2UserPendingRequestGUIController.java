@@ -18,32 +18,19 @@ public class JFX2UserPendingRequestGUIController {
     @FXML
     private Label labelEventDate;
 
-    @FXML
-    private Label labelEventPrice;
+
 
     private RequestApplicationLayer requestApplicationLayer;
-    public void setRequestApplicationLayer(RequestApplicationLayer requestApplicationLayer) {
-        this.requestApplicationLayer = requestApplicationLayer;
-    }
-    public void setEventPic(Image eventPic) {this.eventPic.setImage(eventPic);}
-    public void setLabelEventName(String labelEventName) {
-        this.labelEventName.setText(labelEventName);
-    }
-    public void setLabelEventDate(String labelEventDate) {
-        this.labelEventDate.setText(labelEventDate);
-    }
-    public void setLabelEventPrice(String labelEventPrice) {
-        this.labelEventPrice.setText(labelEventPrice);
-    }
+
 
     public void infoPendingEvent(ActionEvent actionEvent) {
         requestApplicationLayer.navigateToEventPage(actionEvent,"/JFX2/JFX2PartyEventPage.fxml");
     }
     public void setAll(JFX2RequestBeanOut jfx2RequestBeanOut,RequestApplicationLayer requestApplicationLayer){
-        setEventPic(jfx2RequestBeanOut.getRelatedEventImg());
-        setLabelEventName(jfx2RequestBeanOut.getRelatedEvent());
-        setLabelEventDate(jfx2RequestBeanOut.getDate());
-        setRequestApplicationLayer(requestApplicationLayer);
+        eventPic.setImage(jfx2RequestBeanOut.getRelatedEventImg());
+        this.labelEventName.setText( jfx2RequestBeanOut.getRelatedEvent());
+        this.labelEventDate.setText(jfx2RequestBeanOut.getDate());
+        this.requestApplicationLayer =requestApplicationLayer;
     }
 
     public void cancelRequest(ActionEvent actionEvent) {

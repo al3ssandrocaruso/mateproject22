@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import kapta.application.RequestApplicationLayer;
 import kapta.utils.bean.beanout.jfx2.JFX2RequestBeanOut;
 
-public class JFX2UserRejectedRequestItemGUIController {
+public class JFX2UserRejectedRequestItemGUIController  {
 
     @FXML
     private Label labelEventName;
@@ -25,19 +25,11 @@ public class JFX2UserRejectedRequestItemGUIController {
     public void setEventPic(Image eventPic) {this.eventPic.setImage(eventPic);}
 
     private RequestApplicationLayer requestApplicationLayer;
+
+
+
     public void setRequestApplicationLayer(RequestApplicationLayer requestApplicationLayer) {
         this.requestApplicationLayer = requestApplicationLayer;
-    }
-
-
-    public void setLabelEventName(String labelEventName) {
-        this.labelEventName.setText(labelEventName);
-    }
-    public void setLabelEventDate(String labelEventDate) {
-        this.labelEventDate.setText(labelEventDate);
-    }
-    public void setLabelEventPrice(String labelEventPrice) {
-        this.labelEventPrice.setText(labelEventPrice);
     }
 
 
@@ -46,8 +38,8 @@ public class JFX2UserRejectedRequestItemGUIController {
     }
     public void setAll(JFX2RequestBeanOut jfx2RequestBeanOut, RequestApplicationLayer requestApplicationLayer){
         setEventPic(jfx2RequestBeanOut.getRelatedEventImg());
-        setLabelEventName(jfx2RequestBeanOut.getRelatedEvent());
-        setLabelEventDate(jfx2RequestBeanOut.getDate());
-        setRequestApplicationLayer(requestApplicationLayer);
+        labelEventName.setText(jfx2RequestBeanOut.getRelatedEvent());
+        labelEventDate.setText(jfx2RequestBeanOut.getDate());
+        labelEventPrice.setText(requestApplicationLayer.toString());
     }
 }
