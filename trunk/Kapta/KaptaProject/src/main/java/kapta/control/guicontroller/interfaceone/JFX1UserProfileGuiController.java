@@ -26,6 +26,7 @@ import kapta.utils.decorations.JFX1DecorationUserOne;
 import kapta.utils.decorations.JFX1DecorationUserTwo;
 import kapta.utils.Observer;
 import kapta.utils.VisualComponent;
+import kapta.utils.utils.UpdateHandlerUno;
 
 import java.io.IOException;
 
@@ -124,10 +125,7 @@ public class JFX1UserProfileGuiController implements Observer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            JFX1PartyItemGUIController pigc = fxmlLoader.getController();
-            JFX1PartyBeanOut jfx1PartyBeanOut = new JFX1PartyBeanOut(partyModel);
-            PartyApplicationLayer pa = new PartyApplicationLayer(partyModel, pigc);
-            pigc.setAll(jfx1PartyBeanOut, pa);
+            UpdateHandlerUno.handler(fxmlLoader,partyModel);
             this.listView.getItems().add(pane);
         }
         else if(ob instanceof EventModel eventModel) {

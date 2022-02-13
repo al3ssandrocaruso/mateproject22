@@ -22,6 +22,8 @@ import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
 import kapta.utils.GenericObservableList;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import kapta.utils.Observer;
+import kapta.utils.utils.UpdateHandlerUno;
+
 import java.io.IOException;
 
 
@@ -66,13 +68,8 @@ public class JFX1UserHomePageGUIController implements Observer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            JFX1PartyItemGUIController pigc = fxmlLoader.getController();
-
-            JFX1PartyBeanOut jfx1PartyBeanOut = new JFX1PartyBeanOut(partyModel);
-            PartyApplicationLayer pa = new PartyApplicationLayer(partyModel, pigc);
-            pigc.setAll(jfx1PartyBeanOut, pa);
+            UpdateHandlerUno.handler(fxmlLoader,partyModel);
             this.listView.getItems().add(pane);
-
         }
         if(ob instanceof EventModel eventModel){
             try {

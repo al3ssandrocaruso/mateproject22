@@ -2,10 +2,7 @@ package kapta.utils.init;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import kapta.control.guicontroller.interfaceone.JFX1CreateEventGUIController;
 import kapta.control.guicontroller.interfaceone.register.JFX1ClubRegisterGUIController;
 import kapta.control.guicontroller.interfaceone.register.JFX1UserRegisterGUIController;
