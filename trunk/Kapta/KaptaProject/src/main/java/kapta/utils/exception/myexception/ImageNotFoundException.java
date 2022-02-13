@@ -8,6 +8,6 @@ public class ImageNotFoundException extends FinalException {
     private static final long serialVersionUID =16L;
 
     public ImageNotFoundException() {
-        super("Non è stato possibile caricare l'immagine inserita , puoi farlo nelle settings quando vuoi ");
+        super("FAIL: Impossible to set Image");
     }
 }

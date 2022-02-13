@@ -59,7 +59,7 @@ public class JFX1SuperRegisterGUIController {
     }
 
     public void loadImage() {
-        Stage stage = (Stage) passwordField.getScene().getWindow();
+        Stage stage = (Stage) textFieldEmail.getScene().getWindow();
         FileChooser fileChooser=new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imagine Files","*.png","*.jpg"));
         img=fileChooser.showOpenDialog(stage).getAbsoluteFile();
