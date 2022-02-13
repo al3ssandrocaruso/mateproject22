@@ -45,10 +45,11 @@ public class CreateEventController {
         }
     }
     public static boolean timeGenerationValidation(LocalDateTime first, LocalDateTime second) {
+        boolean ret = false;
         long diff = ChronoUnit.SECONDS.between(first, second);
         if(diff<=SECOND_TOLERANCE){
-            return true;
+            ret = true;
         }
-        return false;
+        return ret;
     }
 }

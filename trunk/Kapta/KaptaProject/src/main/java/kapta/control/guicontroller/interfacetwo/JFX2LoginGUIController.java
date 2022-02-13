@@ -11,11 +11,11 @@ import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 import kapta.utils.init.ReplaceScene;
+import kapta.utils.session.ThreadLocalSession;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static kapta.utils.session.ThreadLocalSession.intrfc;
 
 public class JFX2LoginGUIController implements Initializable {
 
@@ -52,7 +52,7 @@ public class JFX2LoginGUIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        intrfc = 2;
+        ThreadLocalSession.setIntrfc(2);
     }
 }
 

@@ -9,9 +9,9 @@ import java.io.IOException;
 
 public class ThreadLocalSession implements Runnable
 {
-    public static ThreadLocal<Session> userSession= new ThreadLocal<>();
-    public static String usernameSession;
-    public static int intrfc;
+    private static ThreadLocal<Session> userSession= new ThreadLocal<>();
+    private static String usernameSession;
+    private static int intrfc;
 
     public ThreadLocalSession() {}
 
@@ -40,7 +40,7 @@ public class ThreadLocalSession implements Runnable
     @Override
     public void run() {
 
-        Platform.runLater(() -> display());
+        Platform.runLater(this::display);
     }
 
     private Runnable display() {

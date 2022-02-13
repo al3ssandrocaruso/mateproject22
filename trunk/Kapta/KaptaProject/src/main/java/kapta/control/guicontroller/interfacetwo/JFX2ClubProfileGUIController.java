@@ -113,7 +113,6 @@ public class JFX2ClubProfileGUIController implements Observer {
 
         clubProfileApplicationLayer.goToGenerateToken();
 
-        //CODICE DUPLICATO DI DIALOGBOX, DA SISTAMERE. UNICO TRA DUE INTERFACCE COME FOSSE DI SISTEMA?
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(((Node) ae.getSource()).getScene().getWindow());

@@ -2,10 +2,9 @@ package kapta.utils.exception;
 
 
 import kapta.utils.exception.myexception.*;
+import kapta.utils.session.ThreadLocalSession;
 
 import java.sql.SQLException;
-
-import static kapta.utils.session.ThreadLocalSession.intrfc;
 
 
 public class ErrorHandler {
@@ -73,7 +72,7 @@ public class ErrorHandler {
 
     private ErrorDialog createErrorDialog() {
         ErrorDialog errorDialog;
-        if(intrfc==1){
+        if(ThreadLocalSession.getIntrfc()==1){
             errorDialog = new ErrorDialogInt1();
         }
         else{

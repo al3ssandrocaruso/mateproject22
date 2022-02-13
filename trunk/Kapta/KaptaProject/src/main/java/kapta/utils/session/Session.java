@@ -7,7 +7,6 @@ public class Session {
 
     // 0 per user
     // 1 per Club
-
     private int type;
     private int id;
     private UserModel eventModel;
