@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import kapta.application.ClubProfileApplicationLayer;
 import kapta.control.appcontroller.CreateEventController;
+import kapta.control.guicontroller.interfacetwo.FillDialogBox;
 import kapta.utils.bean.beanin.jfx1.JFX1EventBean;
 import kapta.utils.bean.beanin.jfx1.JFX1TokenBeanIn;
 import kapta.utils.exception.ErrorHandler;
@@ -124,28 +125,7 @@ public class JFX1CreateEventGUIController implements Initializable {
                 dialog.close();
             }catch (TokenException t){
                 ErrorHandler.getInstance().reportFinalException(t);
-                label1.setVisible(false);
-                button.setVisible(false);
-                label2.setText("Retry in ");
-                numSbagliate++;
-                Timeline tm = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-                    int i = 5*numSbagliate;
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        label2.setText("Retry in "+i);
-                        if(i==0){
-                            label1.setText("An email has been sent to you");
-                            label2.setText("Please, insert your token to confirm");
-                            button.setVisible(true);
-                            label1.setVisible(true);
-                        }
-                        i--;
-                    }
-                }));
-
-                tm.setCycleCount((5*numSbagliate)+1);
-                tm.play();
-
+                numSbagliate = FillDialogBox.fill(label1, button, label2, numSbagliate);
             }
         });
     }

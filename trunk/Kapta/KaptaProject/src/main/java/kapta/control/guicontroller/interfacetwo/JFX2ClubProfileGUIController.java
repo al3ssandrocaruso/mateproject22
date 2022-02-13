@@ -114,11 +114,7 @@ public class JFX2ClubProfileGUIController implements Observer {
     public void confirmCreateEvent(ActionEvent ae) {
 
         clubProfileApplicationLayer.goToGenerateToken();
-/*
-        final Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(((Node) ae.getSource()).getScene().getWindow());
- */
+
         Stage dialog=GetDialogStage.startDialog(ae);
 
         Label label1= GetFontedLabel.getFonted("An email has been sent to you",system);
@@ -151,8 +147,8 @@ public class JFX2ClubProfileGUIController implements Observer {
         dialog.setScene(dialogScene);
         dialog.show();
 
-        button.setOnAction(e->{
-            String insertedToken=textField.getText();
+        button.setOnAction(e-> {
+            String insertedToken = textField.getText();
             JFX2TokenBeanIn jfx2TokenBeanIn = new JFX2TokenBeanIn(insertedToken);
             try {
                 getClubProfileApplication().goToCompareToken(jfx2TokenBeanIn);
@@ -168,29 +164,9 @@ public class JFX2ClubProfileGUIController implements Observer {
                 labelDuration.setText("0");
                 dialog.close();
                 successEventVBox.toFront();
-            }catch (TokenException ex){
+            } catch (TokenException ex) {
                 ErrorHandler.getInstance().reportFinalException(ex);
-                label1.setVisible(false);
-                button.setVisible(false);
-                label2.setText("Retry in ");
-                numSbagliate++;
-                Timeline tm = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<>() {
-                    int i = 5*numSbagliate;
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        label2.setText("Retry in "+i);
-                        if(i==0){
-                            label1.setText("An email has been sent to you");
-                            label2.setText("Please, insert your token to confirm");
-                            button.setVisible(true);
-                            label1.setVisible(true);
-                        }
-                        i--;
-                    }
-                }));
-
-                tm.setCycleCount((5*numSbagliate)+1);
-                tm.play();
+                numSbagliate = FillDialogBox.fill(label1, button, label2, numSbagliate);
             }
         });
     }
