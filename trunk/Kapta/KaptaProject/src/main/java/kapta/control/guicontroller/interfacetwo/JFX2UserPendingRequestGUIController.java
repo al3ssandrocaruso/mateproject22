@@ -3,7 +3,6 @@ package kapta.control.guicontroller.interfacetwo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.application.RequestApplicationLayer;
 import kapta.utils.bean.beanout.jfx2.JFX2RequestBeanOut;
