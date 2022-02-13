@@ -250,31 +250,8 @@ public class JFX2UserProfileGUIController implements Observer {
             hBox.setAlignment(Pos.CENTER_LEFT);
             hBox.setSpacing(190);
             HBox.setMargin(label, new Insets(0, 0, 0, 10));
-
-            vBox.getChildren().addAll(hBox, followingListView);
-
-            vBox.setAlignment(Pos.CENTER);
-            vBox.setMinHeight(400);
-            vBox.setMinWidth(400);
-            vBox.setStyle("-fx-background-color: #200f54");
-            popupFollowerFollowing.setX(687);
-            popupFollowerFollowing.setY(140);
-
-            popupFollowerFollowing.getContent().addAll(vBox);
-
-            DropShadow dropShadow = new DropShadow();
-            dropShadow.setWidth(30);
-            dropShadow.setHeight(30);
-            dropShadow.setRadius(14.5);
-            dropShadow.setSpread(0.3);
-            vBox.setEffect(dropShadow);
-
-            popupFollowerFollowing.show(ap.getScene().getWindow());
-
-            btnClose.setOnAction((ActionEvent event) -> {
-                popupFollowerFollowing.hide();
-                popupFollowingOn = false;
-            });
+            vBox.getChildren().addAll(hBox,followingListView);
+            handleFolList(vBox,btnClose,true);
         }
     }
 
@@ -296,26 +273,7 @@ public class JFX2UserProfileGUIController implements Observer {
             hBox.setSpacing(190);
             HBox.setMargin(label, new Insets(0, 0, 0, 10));
             vBox.getChildren().addAll(hBox, followerListView);
-            vBox.setAlignment(Pos.CENTER);
-            vBox.setMinHeight(400);
-            vBox.setMinWidth(400);
-            vBox.setStyle("-fx-background-color: #200f54");
-            popupFollowerFollowing.setX(687);
-            popupFollowerFollowing.setY(110);
-            popupFollowerFollowing.getContent().addAll(vBox);
-
-            DropShadow dropShadow = new DropShadow();
-            dropShadow.setWidth(30);
-            dropShadow.setHeight(30);
-            dropShadow.setRadius(14.5);
-            dropShadow.setSpread(0.3);
-            vBox.setEffect(dropShadow);
-            popupFollowerFollowing.show(ap.getScene().getWindow());
-
-            btnClose.setOnAction((ActionEvent event) -> {
-                popupFollowerFollowing.hide();
-                popupFollowerOn = false;
-            });
+            handleFolList(vBox,btnClose,false);
         }
     }
 
@@ -446,6 +404,31 @@ public class JFX2UserProfileGUIController implements Observer {
         }
 
         setPane(type);
+    }
+    private void handleFolList(VBox vBox,Button btnClose, boolean support){
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setMinHeight(400);
+        vBox.setMinWidth(400);
+        vBox.setStyle("-fx-background-color: #200f54");
+        popupFollowerFollowing.setX(687);
+        popupFollowerFollowing.setY(140);
+
+        popupFollowerFollowing.getContent().addAll(vBox);
+
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setWidth(30);
+        dropShadow.setHeight(30);
+        dropShadow.setRadius(14.5);
+        dropShadow.setSpread(0.3);
+        vBox.setEffect(dropShadow);
+
+        popupFollowerFollowing.show(ap.getScene().getWindow());
+
+        btnClose.setOnAction((ActionEvent event) -> {
+            popupFollowerFollowing.hide();
+            if(support){popupFollowingOn = false;}
+            else {popupFollowerOn=false;}
+        });
     }
 }
 
