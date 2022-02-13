@@ -1,6 +1,7 @@
 package kapta.utils.bean.beanin.jfx2;
 
 import kapta.utils.bean.beanin.PartyBean;
+import kapta.utils.utils.HelperSetDuration;
 
 import java.io.File;
 import java.sql.Time;
@@ -34,20 +35,7 @@ public class JFX2PartyBean extends PartyBean {
         this.date = java.sql.Date.valueOf(localDate);
     }
     public void setPartyDuration(Double partyDuration){
-        String durationStr="0"+partyDuration.toString().charAt(0)+":";
-        String support=""+partyDuration.toString().charAt(2);
-        if(support.equals("0")){durationStr=durationStr.concat("00");}
-        else{durationStr=durationStr.concat("30");}
-
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm"); //e.g 12:15
-
-        long ms= 0;
-        try {
-            ms = sdf.parse(durationStr).getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        this.duration = new Time(ms);
+        this.duration = new Time(HelperSetDuration.conv(partyDuration));
     }
 
 
