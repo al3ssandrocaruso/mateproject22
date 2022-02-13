@@ -41,6 +41,7 @@ public class JFX1DecorationEventTwo extends Decorator{
 
     private String radius = "-fx-background-radius: 28;";
     private String white = "-fx-text-fill: white;";
+    private String black = "-fx-text-fill: black;";
     private String arial = "Arial";
 
 
@@ -54,23 +55,19 @@ public class JFX1DecorationEventTwo extends Decorator{
         switch(support){
             case -1:{ //No Request yet
                 button.setFont(Font.font(arial, FontWeight.BOLD, 10));
-                button.setStyle("-fx-background-color: #e8e7fc; "+radius + "-fx-text-fill: black;");
-                this.setToWrite("Request");
+                fill("#e8e7fc","Request",black);
                 break;
             }
             case 0:{ //Pending
-                button.setStyle("-fx-background-color: #ff9105; "+radius + white);
-                this.setToWrite("Pending");
+                fill("#ff9105","Pending",white);
                 break;
             }
             case 1: { //Accepted Request
-                button.setStyle("-fx-background-color: #54e589; "+radius + white);
-                this.setToWrite("Accepted");
+                fill("#54e589","Accepted",white);
                 break;
             }
             case 2: {
-                button.setStyle("-fx-background-color: #d00000; "+ radius + white);
-                this.setToWrite("Rejected");
+                fill("d00000","Rejected",white);
                 break;
             }
             default:
@@ -200,5 +197,10 @@ public class JFX1DecorationEventTwo extends Decorator{
         VBox preliminaryResult=super.addUserPanel();
         preliminaryResult=this.applyDecorationPartyTwo(preliminaryResult);
         return preliminaryResult;
+    }
+    private void fill(String color, String toWrite, String textFill){
+        String c="-fx-background-color: "+color+"; ";
+        button.setStyle(c+radius + textFill);
+        this.setToWrite(toWrite);
     }
 }
