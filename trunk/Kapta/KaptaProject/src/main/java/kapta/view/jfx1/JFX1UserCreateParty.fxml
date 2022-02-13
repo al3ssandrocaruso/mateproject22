@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfaceone.JFX1CreatePartyGUIController">
+   <children>
+      <AnchorPane layoutX="-10.0" layoutY="-5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: #e8e7fc;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox layoutX="30.0" layoutY="32.0" prefHeight="514.0" prefWidth="999.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0" />
+            <VBox alignment="CENTER" layoutX="47.0" layoutY="86.0" prefHeight="724.0" prefWidth="815.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 28;" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="86.0">
+               <children>
+                  <TextField fx:id="textFieldPartyName" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" promptText="name party" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textFieldPartyAddress" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" promptText="address" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textFieldPartyDuration" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" promptText="party duration" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+                     <font>
+                        <Font name="Arial" size="20.0" />
+                     </font>
+                  </TextField>
+                  <HBox alignment="CENTER" prefHeight="52.0" prefWidth="655.0" spacing="6.0">
+                     <children>
+                        <TextField fx:id="textFieldPartyTimeH" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="147.0" promptText="party time h" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+                           <font>
+                              <Font name="Arial" size="20.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="textFieldPartyTimeM" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="147.0" promptText="party time min" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+                           <font>
+                              <Font name="Arial" size="20.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="815.0" spacing="10.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date:">
+                           <font>
+                              <Font name="Arial Bold" size="19.0" />
+                           </font>
+                        </Text>
+                        <DatePicker fx:id="datePickerPartyDate" prefHeight="24.0" prefWidth="109.0" />
+                        <Button mnemonicParsing="false" onAction="#loadPartyImage" prefHeight="64.0" prefWidth="120.0" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+                           <graphic>
+                              <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/add-image.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets top="8.0" />
+                           </padding>
+                           <effect>
+                              <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button fx:id="btnConfirmCreateParty" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#confirmCreatePartyAction" prefHeight="75.0" prefWidth="200.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" text="Confirm" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Bold" size="25.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="641.0" layoutY="174.0" prefHeight="600.0" prefWidth="396.0" spacing="20.0" style="-fx-background-color: #200f54; -fx-background-radius: 0;" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="60.0">
+               <children>
+                  <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/LogoBianco.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ImageView>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Party" textAlignment="CENTER" wrappingWidth="315.05859375">
+                     <font>
+                        <Font name="Arial Bold" size="50.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Text>
+                  <Button fx:id="btnBackToProfile" mnemonicParsing="false" onAction="#backToProfileAction" prefHeight="75.0" prefWidth="200.0" style="-fx-background-radius: 28; -fx-background-color: e8e7fc;" text="Profile" textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="28.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

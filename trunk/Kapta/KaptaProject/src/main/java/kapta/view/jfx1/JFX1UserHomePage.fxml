@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfaceone.JFX1UserHomePageGUIController">
+   <children>
+      <ImageView fitHeight="896.0" fitWidth="1267.0" layoutX="226.0" layoutY="21.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/JFX1Wallpaper.jpeg" />
+         </image>
+      </ImageView>
+      <fx:include fx:id="someId" source="JFX1UserSideBar.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox alignment="TOP_CENTER" layoutX="213.0" layoutY="34.0" prefHeight="550.0" prefWidth="740.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <HBox prefHeight="56.0" prefWidth="847.0">
+               <children>
+                  <TextField fx:id="searchBar" prefHeight="55.0" prefWidth="625.0" promptText="search for a follower, event or party" style="-fx-border-color: lightGrey; -fx-border-width: 4; -fx-background-radius: 28; -fx-border-radius: 28;">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search" prefHeight="50.0" prefWidth="180.0" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;" text="Search" textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="21.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+            <ListView fx:id="listView" prefHeight="350.0" prefWidth="650.0" style="-fx-border-color: lightGrey; -fx-border-width: 5;">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </ListView>
+            <Label text="Alternatively, let's create a party!">
+               <font>
+                  <Font name="Arial" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="3.0" />
+               </VBox.margin>
+            </Label>
+            <Line endX="150.0" startX="-150.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Line>
+            <Button fx:id="btnCreateParty" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#gotoCreatePartyAction" prefHeight="75.0" prefWidth="350.0" style="-fx-background-color: #200f54; -fx-background-radius: 100;" text="Create Party" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="40.0" />
+               </font>
+               <effect>
+                  <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

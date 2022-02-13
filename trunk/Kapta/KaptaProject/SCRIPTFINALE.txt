@@ -1,0 +1,2 @@
+SONAR_TOKEN 5553851be395ee8def302711776e43dedd977923
+mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=al3ssandrocaruso_MateISPW22

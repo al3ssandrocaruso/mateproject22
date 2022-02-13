@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: e5e5e5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfacetwo.JFX2UserProfileGUIController">
+   <children>
+      <VBox fx:id="vboxJoinedList" alignment="CENTER" layoutX="603.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="400.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 0;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="610.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+         <children>
+            <VBox alignment="CENTER" prefHeight="615.0" prefWidth="400.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 0;">
+               <children>
+                  <Label fx:id="labelJoinedPartyEvent" alignment="CENTER" prefHeight="42.0" prefWidth="339.0" text="Joined Party/Event" textFill="#003249">
+                     <font>
+                        <Font name="Arial Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="listViewJoined" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="360.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ListView>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+      <AnchorPane layoutX="314.0" layoutY="19.0" />
+      <VBox alignment="TOP_CENTER" layoutX="21.0" layoutY="21.0" prefHeight="605.0" prefWidth="564.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="580.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 0;">
+               <children>
+                  <ImageView fx:id="profileImg" fitHeight="200.0" fitWidth="311.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" top="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <AnchorPane prefHeight="250.0" prefWidth="257.0">
+                     <children>
+                        <VBox fx:id="vboxPresentation" alignment="CENTER" prefHeight="240.0" prefWidth="250.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="6.0">
+                           <children>
+                              <Label fx:id="labelUsername" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="246.0" text="\@Username" textFill="#200f54">
+                                 <font>
+                                    <Font name="Arial Bold" size="22.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="112.0" text="Follower:" textFill="#003249">
+                                       <font>
+                                          <Font name="Arial Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="numberFollower" mnemonicParsing="false" onAction="#showFollower" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: white;" text="0" textFill="#200f54">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="30.0" prefWidth="101.0" text="Following:" textFill="#003249">
+                                       <font>
+                                          <Font name="Arial Bold" size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Button fx:id="numberFollowing" mnemonicParsing="false" onAction="#showFollowing" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: white;" text="0" textFill="#200f54">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox fx:id="hboxViewJoinedList" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="250.0">
+                                 <children>
+                                    <Button fx:id="btnJoinedOrFollow" mnemonicParsing="false" onAction="#performAction" prefHeight="42.0" prefWidth="163.0" style="-fx-background-radius: 28; -fx-background-color: #200f54;" text="Joined List" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <effect>
+                                          <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                                       </effect>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <AnchorPane fx:id="anchorPaneSetting" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="580.0">
+               <children>
+                  <HBox fx:id="hboxVisited" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="580.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="388.0" spacing="10.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="23.0" prefWidth="98.0" text="Info" textFill="#200f54" underline="true">
+                                 <font>
+                                    <Font name="Arial Bold" size="45.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="127.0" spacing="10.0">
+                                 <children>
+                                    <Label prefHeight="23.0" prefWidth="70.0" text="Name:" textFill="#200f54">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="labelInfoName" alignment="TOP_LEFT" prefHeight="29.0" prefWidth="290.0" text="Label">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label prefHeight="23.0" prefWidth="100.0" text="Surname:" textFill="#200f54">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="labelInfoSurname" alignment="TOP_LEFT" prefHeight="29.0" prefWidth="271.0" text="Label">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="30.0" prefWidth="413.0" spacing="10.0">
+                                 <children>
+                                    <Label prefHeight="23.0" prefWidth="67.0" text="Email:" textFill="#200f54">
+                                       <font>
+                                          <Font name="Arial Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="labelInfoEmail" alignment="TOP_LEFT" prefHeight="30.0" prefWidth="312.0" text="Label">
+                                       <font>
+                                          <Font name="Arial Bold" size="19.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER" prefHeight="208.0" prefWidth="152.0">
+                           <children>
+                              <ImageView fitHeight="142.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/InfoIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding></HBox>
+                  <HBox fx:id="hboxSettings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="580.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 0;" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="235.0" prefWidth="573.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="33.0" prefWidth="185.0" text="Profile Settings" textFill="#200f54">
+                                 <font>
+                                    <Font name="Arial Bold" size="25.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="5.0" />
+                                 </padding>
+                              </Label>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="all fields below must be filled in to avoid problems">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="533.0">
+                                 <children>
+                                    <VBox alignment="CENTER" prefHeight="160.0" prefWidth="470.0">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <TextField fx:id="textFieldSettingUsername" prefHeight="25.0" prefWidth="200.0" promptText="change username" style="-fx-background-radius: 0; -fx-background-color: #e8e7fc;" />
+                                                <TextField fx:id="textFieldSettingName" prefHeight="25.0" prefWidth="200.0" promptText="change name" style="-fx-background-radius: 0; -fx-background-color: #e8e7fc;" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <TextField fx:id="textFieldSettingSecondName" prefHeight="25.0" prefWidth="200.0" promptText="change secondname" style="-fx-background-radius: 0; -fx-background-color: #e8e7fc;" />
+                                                <TextField fx:id="textFieldSettingEmail" prefHeight="25.0" prefWidth="200.0" promptText="change email" style="-fx-background-radius: 0; -fx-background-color: #e8e7fc;" />
+                                             </children>
+                                          </HBox>
+                                          <Button fx:id="btnSaveChanges" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveAction" prefHeight="42.0" prefWidth="193.0" style="-fx-background-radius: 28; -fx-background-color: #200f54;" text="Save Changes" textFill="WHITE">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" top="10.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="Arial Bold" size="23.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <effect>
+                                                <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                                             </effect>
+                                          </Button>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <fx:include source="JFX2UserBar.fxml" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="460.0" AnchorPane.topAnchor="530.0" />
+      <VBox fx:id="vboxForm" alignment="CENTER" layoutX="605.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="400.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 0;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="610.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="554.0" prefWidth="360.0" spacing="23.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="38.0" prefWidth="386.0" text="Party Creation Form" textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="33.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="textFieldPartyName" prefHeight="50.0" prefWidth="360.0" promptText="insert name" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="textFieldPartyAddress" prefHeight="50.0" prefWidth="360.0" promptText="insert address" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;">
+                     <font>
+                        <Font size="20.0" />
+                     </font></TextField>
+                  <TextField fx:id="textFieldPartyDate" prefHeight="50.0" prefWidth="360.0" promptText="insert date" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;">
+                     <font>
+                        <Font size="20.0" />
+                     </font></TextField>
+                  <TextField fx:id="textFieldBeginTime" prefHeight="50.0" prefWidth="360.0" promptText="insert begin time: hh:mm" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font></TextField>
+                  <Button mnemonicParsing="false" onAction="#loadPartyImg" prefHeight="45.0" prefWidth="228.0" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;" text="Load Party Image" textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                  </Button>
+                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="346.0">
+                     <children>
+                        <Label text="Duration" textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="32.0" prefWidth="346.0">
+                           <children>
+                              <Slider fx:id="sliderDuration" blockIncrement="1.0" majorTickUnit="0.5" max="5.0" minorTickCount="0" onMouseReleased="#selectDuration" prefHeight="47.0" prefWidth="270.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                              <Label fx:id="labelDuration" text="0" textFill="#200f54">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Arial Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label text="h." textFill="#003249">
+                                 <font>
+                                    <Font name="Arial Bold" size="20.0" />
+                                 </font></Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Button fx:id="btnCreateParty" mnemonicParsing="false" onAction="#createParty" prefHeight="50.0" prefWidth="175.0" style="-fx-background-radius: 28; -fx-background-color: #200f54;" text="Create Party" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="23.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

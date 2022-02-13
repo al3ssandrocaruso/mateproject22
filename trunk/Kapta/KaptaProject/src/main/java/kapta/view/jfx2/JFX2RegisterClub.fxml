@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: e5e5e5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfacetwo.JFX2RegisterClubGUIController">
+   <children>
+      <AnchorPane layoutX="42.0" layoutY="31.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <AnchorPane fx:id="step5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="349.0" prefWidth="537.0" style="-fx-background-color: white; -fx-background-radius: 28;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="84.0" prefWidth="850.0" text="5° step: tell us your contacts!" textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="50.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </Label>
+                        <VBox alignment="CENTER" prefHeight="153.0" prefWidth="537.0" spacing="30.0">
+                           <children>
+                              <TextField fx:id="textFieldWebsite" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="550.0" promptText="insert club website" style="-fx-background-radius: 28;">
+                                 <VBox.margin>
+                                    <Insets left="80.0" right="80.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="25.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="textFieldEmail" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="550.0" promptText="insert email" style="-fx-background-radius: 28;">
+                                 <font>
+                                    <Font name="Arial" size="25.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="btnNextStepInPane5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#goAfter" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" text="Next Step" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="25.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
+                           </children>
+                        </VBox>
+                        <Button fx:id="btnBackInPane5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToStep4" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: e8e7fc; -fx-background-radius: 28;" text="Back">
+                           <font>
+                              <Font name="Arial Bold" size="25.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <effect>
+                              <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="step4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="349.0" prefWidth="537.0" style="-fx-background-color: white; -fx-background-radius: 28;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="84.0" prefWidth="941.0" text="4° step : Where the club is located?" textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="50.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </Label>
+                        <VBox alignment="CENTER" prefHeight="153.0" prefWidth="537.0" spacing="30.0">
+                           <children>
+                              <TextField fx:id="textFieldCity" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="550.0" promptText="insert club city" style="-fx-background-radius: 28;">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="25.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="btnNextStepInPane4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#gotoStep5" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" text="Next Step" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="25.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
+                           </children>
+                        </VBox>
+                        <Button fx:id="btnBackInPane4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToStep3" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: e8e7fc; -fx-background-radius: 28;" text="Back">
+                           <font>
+                              <Font name="Arial Bold" size="25.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <effect>
+                              <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="step3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="349.0" prefWidth="537.0" style="-fx-background-color: white; -fx-background-radius: 28;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="84.0" prefWidth="968.0" text="3° step: What's your club address?" textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="50.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </Label>
+                        <VBox alignment="CENTER" prefHeight="153.0" prefWidth="537.0" spacing="30.0">
+                           <children>
+                              <TextField fx:id="textFieldAddress" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="550.0" promptText="insert club address " style="-fx-background-radius: 28;">
+                                 <VBox.margin>
+                                    <Insets left="80.0" right="80.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="btnNextStepInPane3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#gotoStep4" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" text="Next Step" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="25.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
+                           </children>
+                        </VBox>
+                        <Button fx:id="btnBackInPane3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToStep2" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: e8e7fc; -fx-background-radius: 28;" text="Back">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <effect>
+                              <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                           </effect>
+                           <font>
+                              <Font name="Arial Bold" size="25.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="step2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="349.0" prefWidth="537.0" style="-fx-background-color: white; -fx-background-radius: 28;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="84.0" prefWidth="946.0" text="2° step: What's your club name?" textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="55.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </Label>
+                        <VBox alignment="CENTER" prefHeight="153.0" prefWidth="537.0" spacing="30.0">
+                           <children>
+                              <TextField fx:id="textFieldName" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="550.0" promptText="insert club name " style="-fx-background-radius: 28;">
+                                 <VBox.margin>
+                                    <Insets left="80.0" right="80.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="25.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="btnNextStepInPane2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#gotoStep3" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" text="Next Step" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="25.0" />
+                                 </font>
+                                 <effect>
+                                    <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                                 </effect>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
+                           </children>
+                        </VBox>
+                        <Button fx:id="btnBackInPane2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToStep1" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: e8e7fc; -fx-background-radius: 28;" text="Back">
+                           <font>
+                              <Font name="Arial Bold" size="25.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <effect>
+                              <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

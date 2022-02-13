@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfaceone.JFX1UserSettingsGUIController">
+   <children>
+      <ImageView fitHeight="896.0" fitWidth="1267.0" layoutX="226.0" layoutY="21.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/JFX1Wallpaper.jpeg" />
+         </image>
+      </ImageView>
+      <fx:include fx:id="someId" source="JFX1UserSideBar.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox alignment="CENTER" layoutX="276.0" layoutY="38.0" prefHeight="550.0" prefWidth="740.0" spacing="10.0">
+         <children>
+            <Label text="Settings" textFill="#200f54">
+               <font>
+                  <Font name="Arial Bold" size="90.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="179.0" prefWidth="264.0" spacing="20.0">
+                     <children>
+                        <Label text="Profile Picture" textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="30.0" />
+                           </font>
+                        </Label>
+                        <Line endX="100.0" startX="-100.0" />
+                        <ImageView fx:id="img" fitHeight="229.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/ProfilePic.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Username" textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="textFieldUsername" />
+                        <Label text="E-mail" textFill="#200f54">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldEmail" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Name" textFill="#200f54">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldName" />
+                        <Label text="SecondName" textFill="#200f54">
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldSecondName" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnSaveAction" mnemonicParsing="false" onAction="#saveAction" prefWidth="200.0" style="-fx-background-color: e8e7fc; -fx-background-radius: 28;" text="Save Changes" textFill="#200f54">
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                           <effect>
+                              <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                           </effect>
+                           <font>
+                              <Font name="Arial Bold" size="20.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

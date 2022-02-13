@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: e5e5e5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfacetwo.JFX2ClubProfileGUIController">
+    <children>
+      <VBox fx:id="vBoxCreatedEvents" alignment="CENTER" layoutX="620.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="399.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 0;" AnchorPane.bottomAnchor="23.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label fx:id="labelJoinedPartyEvent" alignment="CENTER" prefHeight="42.0" prefWidth="339.0" text="Created Events" textFill="#003249">
+               <font>
+                  <Font name="Arial Bold" size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Label>
+            <ListView fx:id="listViewCreatedEvents" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="360.0">
+               <VBox.margin>
+                  <Insets bottom="40.0" top="20.0" />
+               </VBox.margin>
+            </ListView>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </VBox>
+      <HBox fx:id="noClubInProfile" alignment="CENTER" layoutX="19.0" layoutY="220.0" prefHeight="302.0" prefWidth="584.0" style="-fx-background-color: white;">
+         <children>
+            <ImageView fitHeight="229.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/LogoSmall.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <VBox fx:id="successEventVBox" alignment="CENTER" layoutX="619.0" layoutY="19.0" prefHeight="610.0" prefWidth="401.0" style="-fx-background-color: #e7e8fc;" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Label prefHeight="80.0" prefWidth="357.0" text="Event Creation Success" textAlignment="CENTER" textFill="#200f54">
+               <font>
+                  <Font name="Arial Bold" size="31.0" />
+               </font>
+            </Label>
+            <Label prefWidth="347.0" text="A confirmation email has been sent to you." textFill="#200f54">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Label>
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendSuccessToBack" prefHeight="35.0" prefWidth="193.0" style="-fx-background-radius: 28; -fx-background-color: #200f54;" text="Create new one" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+          <VBox alignment="CENTER" layoutX="552.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="400.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="23.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+              <children>
+                  <Label alignment="CENTER" prefHeight="63.0" prefWidth="391.0" text="Event Creation Form" textFill="#200f54">
+                      <font>
+                          <Font name="Arial Bold" size="36.0" />
+                      </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+                  </Label>
+                  <VBox alignment="CENTER" prefHeight="517.0" prefWidth="360.0" spacing="5.0" style="-fx-background-color: white;">
+                      <children>
+                          <TextField fx:id="textFieldEventName" maxHeight="50.0" minHeight="45.0" prefHeight="50.0" promptText="insert name" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                          <TextField fx:id="textFieldAddress" maxHeight="50.0" minHeight="45.0" prefHeight="50.0" promptText="insert address" style="-fx-background-color: #e8e7fc #e8e7fc; -fx-background-radius: 28;">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                          <TextField fx:id="textFieldBeginTime" maxHeight="50.0" minHeight="45.0" prefHeight="50.0" promptText="insert begin time:  hh:mm" style="-fx-background-color: #e8e7fc #e8e7fc; -fx-background-radius: 28;">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <VBox prefHeight="37.0" prefWidth="360.0">
+                     <children>
+                                <TextField fx:id="textFieldDate" maxHeight="50.0" minHeight="45.0" prefHeight="50.0" promptText="insert date:  dd/MM/yyyy" style="-fx-background-color: #e8e7fc #e8e7fc; -fx-background-radius: 28;">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#loadEventImg" prefHeight="58.0" prefWidth="360.0" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;" text="Load Event Image" textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <VBox alignment="CENTER" prefHeight="61.0" prefWidth="346.0">
+                     <children>
+                        <HBox prefHeight="32.0" prefWidth="346.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="23.0" prefWidth="76.0" text="Duration:" textFill="#200f54">
+                                 <font>
+                                    <Font name="Arial Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Slider fx:id="sliderDuration" blockIncrement="1.0" majorTickUnit="0.5" max="5.0" minorTickCount="0" onMouseReleased="#selectDuration" prefHeight="27.0" prefWidth="235.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                              <Label fx:id="labelDuration" prefHeight="20.0" prefWidth="32.0" text="0" textFill="#200f54">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Arial Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="25.0" text="h." textFill="#003249">
+                                 <font>
+                                    <Font name="Arial Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="55.0" prefWidth="360.0">
+                     <children>
+                        <Label text="Price: " textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="19.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="spinnerPrice" prefHeight="33.0" prefWidth="169.0" style="-fx-background-color: #e8e7fc #e8e7fc;" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="360.0" spacing="20.0">
+                     <children>
+                        <RadioButton fx:id="radioButtonGreenPass" mnemonicParsing="false" prefHeight="18.0" prefWidth="90.0" selected="true" text="Green Pass ">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="greenPass" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="98.0" text="Not required" toggleGroup="$greenPass" />
+                     </children>
+                  </HBox>
+                          <Button fx:id="createEventBtn" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmCreateEvent" prefHeight="50.0" prefWidth="196.0" style="-fx-background-radius: 28; -fx-background-color: #250f54;" text="Create Event" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                      </children>
+                  </VBox>
+              </children>
+              <padding>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+              </padding>
+          </VBox>
+        <VBox alignment="TOP_CENTER" layoutX="60.0" layoutY="221.0" prefHeight="305.0" prefWidth="580.0" spacing="10.0" AnchorPane.bottomAnchor="124.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="221.0">
+            <children>
+            <VBox alignment="TOP_CENTER" prefHeight="300.0" prefWidth="580.0" style="-fx-background-color: white;">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="46.0" prefWidth="580.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 28;">
+                     <children>
+                        <Text fill="#200f54" strokeType="OUTSIDE" strokeWidth="0.0" text="Pending requests">
+                           <font>
+                              <Font name="Arial Bold" size="31.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <ListView fx:id="pendingList" fixedCellSize="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#displaySelected" prefHeight="204.0" prefWidth="484.0" snapToPixel="false" />
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="278.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="textFieldRequest" alignment="CENTER" prefHeight="35.0" prefWidth="340.0" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font></TextField>
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#acceptRequest" prefHeight="35.0" prefWidth="60.0" style="-fx-background-color: #54e589; -fx-background-radius: 28;" text="Ok" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="16.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#rejectRequest" prefHeight="35.0" prefWidth="60.0" style="-fx-background-color: #d00000; -fx-background-radius: 28;" text="No" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            </children>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+        </VBox>
+          <HBox alignment="CENTER" layoutX="19.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="195.0" prefWidth="582.0" spacing="5.0" style="-fx-background-color: white;">
+              <children>
+            <ImageView fx:id="clubImg" fitHeight="157.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="5.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="189.0" prefWidth="250.0">
+                      <children>
+                          <Label fx:id="labelUsername" alignment="CENTER" prefHeight="50.0" prefWidth="250.0" text="\@Clubname" textFill="#200f54">
+                              <font>
+                                  <Font name="Arial Bold" size="33.0" />
+                              </font>
+                          </Label>
+                  <HBox alignment="CENTER" prefHeight="48.0" prefWidth="250.0">
+                     <children>
+                                <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="159.0" text="Created Events:" textFill="#200f54">
+                                    <font>
+                                        <Font name="Arial Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                        <Label fx:id="labelNumCreatedEvents" textFill="#200f54">
+                           <font>
+                              <Font name="Arial Bold" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Button fx:id="btnCreatedEvents" mnemonicParsing="false" onAction="#showCreatedEvents" prefHeight="38.0" prefWidth="166.0" style="-fx-background-radius: 28; -fx-background-color: #200f54;" text="Show Created" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                  </Button>
+                      </children>
+                      <HBox.margin>
+                          <Insets bottom="5.0" top="5.0" />
+                      </HBox.margin>
+                  </VBox>
+              </children>
+          </HBox>
+      <fx:include source="JFX2UserBar.fxml" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="460.0" AnchorPane.topAnchor="530.0" />
+    </children>
+</AnchorPane>

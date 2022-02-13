@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: #e8e7fc;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfaceone.register.JFX1SuperRegisterGUIController">
+   <children>
+      <VBox layoutX="50.0" layoutY="50.0" prefHeight="514.0" prefWidth="999.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0" />
+      <VBox alignment="CENTER" layoutX="47.0" layoutY="86.0" prefHeight="724.0" prefWidth="815.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 28;" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="86.0">
+         <children>
+            <HBox fx:id="radioBtnUserManager" alignment="CENTER" prefHeight="27.0" prefWidth="815.0" spacing="20.0">
+               <children>
+                  <RadioButton fx:id="radioButtonUser" mnemonicParsing="false" selected="true" text="Normal User" textFill="#200f54">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="userType" />
+                     </toggleGroup>
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonManager" mnemonicParsing="false" text="Event Manager" textFill="#200f54" toggleGroup="$userType">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></RadioButton>
+               </children>
+            </HBox>
+            <TextField fx:id="textFieldUsername" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" promptText="Username" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="textFieldEmail" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" promptText="Email" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" promptText="Password" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc #e8e7fc;">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="passwordFieldConfirmPassword" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" promptText="Confirm Password" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc #e8e7fc;">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </PasswordField>
+            <HBox alignment="CENTER" spacing="20.0">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#loadImage" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: #e8e7fc; -fx-background-radius: 28;">
+                     <graphic>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/add-image.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets top="8.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="btnContinueRegistration" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#continueRegistrationAction" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" text="Continue" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="25.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="641.0" layoutY="174.0" prefHeight="456.0" prefWidth="436.0" style="-fx-background-color: #200f54; -fx-background-radius: 0;" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="60.0">
+         <children>
+            <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/LogoBianco.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="textSignUp" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" wrappingWidth="243.1678466796875">
+               <font>
+                  <Font name="Arial Bold" size="60.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </Text>
+            <Button fx:id="btnBackToLogin" mnemonicParsing="false" onAction="#backToLoginAction" prefHeight="75.0" prefWidth="120.0" style="-fx-background-radius: 28; -fx-background-color: e8e7fc;" text="Back" textFill="#200f54">
+               <font>
+                  <Font name="Arial Bold" size="30.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

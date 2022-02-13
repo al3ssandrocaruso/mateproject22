@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: e5e5e5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfacetwo.JFX2WelcomeGUIController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="28.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="940.0" style="-fx-background-color: white; -fx-background-radius: 28;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="77.0" prefWidth="574.0" text="Welcome!" textFill="#200f54">
+               <font>
+                  <Font name="Arial Bold" size="90.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+            </Label>
+            <Text fill="#200f54" stroke="#200f54" strokeType="OUTSIDE" strokeWidth="0.5" text="Sign in or create a new account">
+               <font>
+                  <Font name="Arial" size="25.0" />
+               </font></Text>
+            <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="301.0" prefWidth="940.0">
+               <children>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="280.0" style="-fx-background-color: white; -fx-background-radius: 28;">
+                     <children>
+                        <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/LogoSmall.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="50.0" right="50.0" top="25.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="279.0" prefWidth="450.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="btnSignIn" mnemonicParsing="false" onAction="#gotoSignInPage" prefHeight="49.0" prefWidth="396.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" text="Go to Sign In" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Bold" size="25.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="30.0" radius="14.5" spread="0.15" width="30.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="or">
+                           <font>
+                              <Font name="Arial" size="20.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#gotoRegisterPage" prefHeight="49.0" prefWidth="405.0" style="-fx-background-radius: 28; -fx-background-color: e5e5e5;" text="Not account yet? Sign Up!">
+                           <font>
+                              <Font name="Arial Bold" size="25.0" />
+                           </font>
+                           <effect>
+                              <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                           </effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="25.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="900.0" spacing="10.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="3.0">
+                     <children>
+                        <Text fill="#200f54" stroke="#200f54" strokeType="OUTSIDE" strokeWidth="0.5" text="Click Here">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#200f54" stroke="#200f54" strokeType="OUTSIDE" strokeWidth="0.5" text="To Switch">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#200f54" stroke="#200f54" strokeType="OUTSIDE" strokeWidth="0.5" text="Interface">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="20.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <Button fx:id="btnSwitchInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchInterface" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #200f54;">
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/SwitchInterfaceIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets bottom="20.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

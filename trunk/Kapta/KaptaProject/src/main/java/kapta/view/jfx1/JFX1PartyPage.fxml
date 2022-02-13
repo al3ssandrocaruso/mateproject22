@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController">
+   <children>
+      <ImageView fitHeight="896.0" fitWidth="1267.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/JFX1Wallpaper.jpeg" />
+         </image>
+      </ImageView>
+      <HBox prefHeight="198.0" prefWidth="414.0" style="-fx-background-color:  #200f54; -fx-background-radius: 50;" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="198.0" prefWidth="217.0" style="-fx-background-color: #200f54; -fx-background-radius: 50;">
+               <children>
+                  <ImageView fx:id="partyImg" fitHeight="97.0" fitWidth="151.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/PartyImage.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #200f54; -fx-background-radius: 50;">
+               <children>
+                  <VBox fx:id="root" alignment="CENTER" prefHeight="198.0" prefWidth="249.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="41.0" prefWidth="227.0">
+                           <children>
+                              <Label prefHeight="21.0" prefWidth="96.0" text="CREATOR:" textFill="#e8e7fc">
+                                 <font>
+                                    <Font name="Arial Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btnUsernameCreator" mnemonicParsing="false" onAction="#goToCreatorPage" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: sb;" text="\@username" textFill="#e8e7fc">
+                                 <font>
+                                    <Font name="Arial Bold Italic" size="20.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <fx:include fx:id="someId" source="JFX1UserSideBar.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox alignment="CENTER" prefHeight="202.0" prefWidth="304.0" spacing="5.0" style="-fx-background-color: #e8e7fc; -fx-background-radius: 50;" AnchorPane.leftAnchor="725.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Text fill="#200f54" strokeType="OUTSIDE" strokeWidth="0.0" text="INFO" underline="true">
+               <font>
+                  <Font name="Arial Bold" size="45.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Text>
+            <HBox alignment="CENTER" prefHeight="23.0" prefWidth="390.0" spacing="5.0">
+               <children>
+                  <Label text="Party Name:" textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPartyName" text="nome party">
+                     <font>
+                        <Font name="Arial Italic" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="23.0" prefWidth="390.0">
+               <children>
+                  <Label text="Date: " textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPartyDate" text="data party">
+                     <font>
+                        <Font name="Arial Italic" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="23.0" prefWidth="390.0">
+               <children>
+                  <Label text="Time: " textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPartyTime" text="orario party">
+                     <font>
+                        <Font name="Arial Italic" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="23.0" prefWidth="200.0">
+               <children>
+                  <Label text="Duration: " textFill="#200f54">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPartyDuration" text="durata party">
+                     <font>
+                        <Font name="Arial Italic" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="350.0" />
+      <HBox alignment="CENTER" layoutX="206.0" layoutY="259.0" prefHeight="100.0" prefWidth="833.0">
+         <children>
+            <Label text="Participants" textFill="#200f54">
+               <font>
+                  <Font name="Arial Bold" size="60.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

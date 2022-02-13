@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="100.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfacetwo.JFX2ClubRequestItemGUIController">
+   <children>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="449.0" style="-fx-background-color: #200f54;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fx:id="imageEvent" fitHeight="80.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+               <effect>
+                  <DropShadow color="WHITE" />
+               </effect>
+            </ImageView>
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <Label fx:id="labelUsername" alignment="CENTER" prefHeight="22.0" prefWidth="184.0" text="\@USERNAME" textFill="#e8e7fc">
+                     <font>
+                        <Font name="Arial Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Line endX="-13.707107543945312" endY="0.08578646183013916" startX="-100.0" stroke="#e8e7fc" />
+                  <Label fx:id="labelEventName" text="Event Name" textFill="#e8e7fc">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
+            <VBox fx:id="vBoxGreenPass" alignment="CENTER" prefHeight="100.0" prefWidth="115.0">
+               <children>
+                  <Label fx:id="labelNumeroDosi" alignment="CENTER" prefHeight="21.0" prefWidth="97.0" text="#dosi" textFill="#54e589">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelDataVac" alignment="CENTER" prefHeight="21.0" prefWidth="100.0" text="data" textFill="#54e589">
+                     <font>
+                        <Font name="Arial Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

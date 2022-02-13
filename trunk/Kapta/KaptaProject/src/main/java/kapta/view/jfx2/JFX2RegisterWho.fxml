@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1040.0" style="-fx-background-color: e5e5e5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfacetwo.JFX2RegisterWhoGUIController">
+   <children>
+      <VBox alignment="CENTER" layoutX="32.0" layoutY="21.0" prefHeight="359.0" prefWidth="537.0" style="-fx-background-color: white; -fx-background-radius: 28;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="84.0" prefWidth="681.0" text="1° step: Who Are You?" textFill="#200f54">
+               <font>
+                  <Font name="Arial Bold" size="60.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="20.0" prefWidth="537.0">
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="238.0" prefWidth="940.0" spacing="30.0">
+               <children>
+                  <Button fx:id="btnEventManager" mnemonicParsing="false" onAction="#gotoEventManagerRegister" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #200f54; -fx-background-radius: 28;" text="Event Manager" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="25.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="btnNormalUser" mnemonicParsing="false" onAction="#gotoNormalUser" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: e5e5e5; -fx-background-radius: 28;" text="Normal user">
+                     <font>
+                        <Font name="Arial Bold" size="25.0" />
+                     </font>
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnBack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backToWelcomePane" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 28; -fx-background-color: e8e7fc;" text="Back" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="75.0">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+         <effect>
+            <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" prefHeight="150.0" prefWidth="550.0" style="-fx-background-color: #200f54; -fx-background-radius: 50;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kapta.control.guicontroller.interfaceone.item.JFX1PartyItemGUIController">
+   <children>
+      <ImageView fx:id="imageViewPartyImage" fitHeight="121.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true">
+         <HBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </HBox.margin>
+      </ImageView>
+      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="217.0" style="-fx-background-radius: 50;">
+         <children>
+            <Label fx:id="labelPartyName" text="PARTY NAME" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="30.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" startX="-100.0" stroke="WHITE" strokeWidth="3.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Line>
+            <Label fx:id="labelPartyDate" alignment="CENTER" prefHeight="23.0" prefWidth="217.0" text="Party Date" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Button fx:id="btnPartyPage" mnemonicParsing="false" onAction="#gotoPartyPage" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #0073c4; -fx-background-radius: 28;" text="Info" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="30.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+         <effect>
+            <DropShadow height="30.0" radius="14.5" spread="0.3" width="30.0" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</HBox>
