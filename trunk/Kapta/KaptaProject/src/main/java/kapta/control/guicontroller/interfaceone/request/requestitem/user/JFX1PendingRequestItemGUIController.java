@@ -10,11 +10,11 @@ import kapta.utils.bean.beanout.jfx1.JFX1RequestBeanOut;
 
 public class JFX1PendingRequestItemGUIController {
     @FXML
-    private Label labelEventName;
+    private Label labelName;
     @FXML
-    private Label labelEventDate;
+    private Label labelDate;
     @FXML
-    private ImageView eventImageView;
+    private ImageView eventImg;
 
     private RequestApplicationLayer requestApplicationLayer;
 
@@ -23,15 +23,15 @@ public class JFX1PendingRequestItemGUIController {
     }
 
     public void setEventImageView(Image eventImageView) {
-        this.eventImageView.setImage(eventImageView);
+        this.eventImg.setImage(eventImageView);
     }
 
     public void setLabelEventName(String labelEventName) {
-        this.labelEventName.setText(labelEventName);
+        this.labelName.setText(labelEventName);
     }
 
     public void setLabelEventDate(String  labelEventDate) {
-        this.labelEventDate.setText(labelEventDate);
+        this.labelDate.setText(labelEventDate);
     }
 
     public void goToEventPage(ActionEvent actionEvent) {

@@ -10,11 +10,11 @@ import kapta.utils.bean.beanout.jfx1.JFX1RequestBeanOut;
 
 public class JFX1RejectedRequestItemGUIController {
     @FXML
-    private Label labelEventName;
+    private Label EventName;
     @FXML
-    private Label labelEventDate;
+    private Label EventDate;
     @FXML
-    private ImageView eventImageView;
+    private ImageView ImageView;
 
     private RequestApplicationLayer requestApplicationLayer;
     public void setRequestApplicationLayer(RequestApplicationLayer requestApplicationLayer) {
@@ -23,15 +23,15 @@ public class JFX1RejectedRequestItemGUIController {
 
 
     public void setEventImageView(Image eventImageView) {
-        this.eventImageView.setImage(eventImageView);
+        this.ImageView.setImage(eventImageView);
     }
 
     public void setEventDate(String eventDate) {
-        this.labelEventDate.setText(eventDate);
+        this.EventDate.setText(eventDate);
     }
 
     public void setLabelEventName(String labelEventName) {
-        this.labelEventName.setText(labelEventName);
+        this.EventName.setText(labelEventName);
     }
 
     public void deleteRequest(ActionEvent actionEvent) {

@@ -16,20 +16,20 @@
    <children>
       <HBox alignment="CENTER" layoutX="-33.0" layoutY="-10.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ff9105; -fx-background-radius: 28;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fx:id="eventImageView" fitHeight="61.0" fitWidth="79.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="eventImg" fitHeight="61.0" fitWidth="79.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
             </ImageView>
             <VBox alignment="CENTER" prefHeight="80.0" prefWidth="89.0">
                <children>
-                  <Label fx:id="labelEventName" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="89.0" text="EventName" textFill="#200f54">
+                  <Label fx:id="labelName" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="89.0" text="EventName" textFill="#200f54">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <Line endX="83.53363800048828" endY="-0.4142090082168579" startX="3.6852059364318848" startY="-0.41421353816986084" stroke="#200f54" />
-                  <Label fx:id="labelEventDate" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="87.0" text="EventDate" textFill="#200f54">
+                  <Label fx:id="labelDate" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="87.0" text="EventDate" textFill="#200f54">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
