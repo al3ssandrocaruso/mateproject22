@@ -7,6 +7,7 @@ import kapta.utils.exception.*;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
 import kapta.utils.exception.myexception.WrongCrudException;
 import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.ImageConverter;
 import kapta.utils.utils.MysqlConnection;
 
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class EventDao {
 
@@ -44,7 +44,7 @@ public class EventDao {
         try {
             stm = MysqlConnection.mysqlConnection();
 
-            int creatorId = userSession.get().getClubModel().getId();
+            int creatorId =  ThreadLocalSession.getUserSession().get().getClubModel().getId();
 
             int obbG;
             if (eventModel.isGreenPass()) {

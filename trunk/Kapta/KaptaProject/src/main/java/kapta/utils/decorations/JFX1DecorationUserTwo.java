@@ -8,9 +8,9 @@ import javafx.scene.text.FontWeight;
 import kapta.application.UserProfileApplicationLayer;
 import kapta.control.appcontroller.FollowUserController;
 import kapta.control.guicontroller.interfaceone.JFX1UserProfileGuiController;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.FollowUtils;
 import kapta.utils.VisualComponent;
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 
 public class JFX1DecorationUserTwo extends Decorator {
@@ -30,7 +30,7 @@ public class JFX1DecorationUserTwo extends Decorator {
     public JFX1DecorationUserTwo(VisualComponent component, JFX1UserProfileGuiController jfx1UserProfileGuiController, UserProfileApplicationLayer userProfileApplication){
         super(component);
         setUserProfileApplication(userProfileApplication);
-        if(FollowUtils.doAFollowB(userSession.get().getUserModel(),userProfileApplication.getUserModel())) {
+        if(FollowUtils.doAFollowB( ThreadLocalSession.getUserSession().get().getUserModel(),userProfileApplication.getUserModel())) {
             button.setStyle("-fx-background-color: #d00000;" + radius + white);
             this.setToWrite("Unfollow");
         }else {
@@ -56,16 +56,16 @@ public class JFX1DecorationUserTwo extends Decorator {
 
         //PULSANTE PREMUTO
         button.setOnAction((ActionEvent ae) -> {
-            if (!FollowUtils.doAFollowB(userSession.get().getUserModel(),userProfileApplication.getUserModel())) {
+            if (!FollowUtils.doAFollowB( ThreadLocalSession.getUserSession().get().getUserModel(),userProfileApplication.getUserModel())) {
                 button.setStyle("-fx-background-color: #54e589;" + radius + white);
                 this.setToWrite("Unfollow");
                 this.addUserPanel();
-                FollowUserController.follow(userProfileApplication.getUserModel(), userSession.get().getUserModel(), userProfileApplication.getFollowerList());
+                FollowUserController.follow(userProfileApplication.getUserModel(), ThreadLocalSession.getUserSession().get().getUserModel(), userProfileApplication.getFollowerList());
             } else {
                 button.setStyle("-fx-background-color: #d00000;" + radius + white);
                 this.setToWrite("Follow");
                 this.addUserPanel();
-                FollowUserController.unfollow(userProfileApplication.getUserModel(), userSession.get().getUserModel(), userProfileApplication.getFollowerList());
+                FollowUserController.unfollow(userProfileApplication.getUserModel(),  ThreadLocalSession.getUserSession().get().getUserModel(), userProfileApplication.getFollowerList());
             }
         });
         button.setStyle("-fx-background-color: #200f54;" + radius + white);

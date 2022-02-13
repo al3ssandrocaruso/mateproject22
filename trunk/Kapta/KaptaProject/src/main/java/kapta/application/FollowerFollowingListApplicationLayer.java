@@ -9,8 +9,8 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.dao.listdao.FollowerListDao;
 import kapta.utils.dao.listdao.FollowingListDao;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class FollowerFollowingListApplicationLayer {
 
@@ -50,7 +50,7 @@ public class FollowerFollowingListApplicationLayer {
     }
 
     public void navigationBack(ActionEvent actionEvent) {
-        int type=userSession.get().getType();
+        int type= ThreadLocalSession.getUserSession().get().getType();
         ReplaceSceneAndInitializePage rp = new ReplaceSceneAndInitializePage();
 
         UserClubModel ucm = getOwner();
@@ -58,15 +58,15 @@ public class FollowerFollowingListApplicationLayer {
         //Tutti i casi possibili: sono un utente e sto nel profilo di un altro utente, sto nel mio profilo, sto nel profilo di un club ...
         switch(type){
             case 0:
-                if(ucm.getUsername().equals(userSession.get().getUserModel().getUsername())){
-                    rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1UserProfile.fxml", userSession.get().getUserModel());}
+                if(ucm.getUsername().equals( ThreadLocalSession.getUserSession().get().getUserModel().getUsername())){
+                    rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1UserProfile.fxml",  ThreadLocalSession.getUserSession().get().getUserModel());}
                 else {
                     rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1UserProfile.fxml", ucm);
                 }
                 break;
             case 1:
-                if(ucm.getUsername().equals(userSession.get().getClubModel().getUsername())){
-                    rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubProfile.fxml", userSession.get().getClubModel());
+                if(ucm.getUsername().equals( ThreadLocalSession.getUserSession().get().getClubModel().getUsername())){
+                    rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubProfile.fxml",  ThreadLocalSession.getUserSession().get().getClubModel());
                 } else {
                     rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubProfile.fxml", ucm);
                 }

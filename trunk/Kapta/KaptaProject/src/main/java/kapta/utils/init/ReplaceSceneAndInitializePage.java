@@ -15,8 +15,9 @@ import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.bean.beanin.jfx1.JFX1ProfileBean;
 import kapta.utils.pagesetter.setterjfx1.*;
+import kapta.utils.session.ThreadLocalSession;
+
 import java.io.IOException;
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class ReplaceSceneAndInitializePage {
 
@@ -31,25 +32,25 @@ public class ReplaceSceneAndInitializePage {
 
         /// ==> da usare solo nel login e anche nella barra perchè prendo info dalla sessione
         if (fxml.equals("/JFX1/JFX1UserProfile.fxml")) {
-            JFX1UserProfileSetter.setter(userSession.get().getUserModel(), loader.getController());
+            JFX1UserProfileSetter.setter( ThreadLocalSession.getUserSession().get().getUserModel(), loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1ClubProfile.fxml")) {
-            JFX1ClubProfileSetter.setter(userSession.get().getClubModel(), loader.getController());
+            JFX1ClubProfileSetter.setter( ThreadLocalSession.getUserSession().get().getClubModel(), loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1ClubRequestPage.fxml")) {
-            JFX1ClubRequestPageSetter.setter(userSession.get().getClubModel(), loader.getController());
+            JFX1ClubRequestPageSetter.setter( ThreadLocalSession.getUserSession().get().getClubModel(), loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1ClubSetting.fxml")) {
-            JFX1ClubSettingPageSetter.setter(userSession.get().getClubModel(), loader.getController());
+            JFX1ClubSettingPageSetter.setter( ThreadLocalSession.getUserSession().get().getClubModel(), loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1UserSetting.fxml")) {
-            JFX1UserSettingPageSetter.setter(userSession.get().getUserModel(), loader.getController());
+            JFX1UserSettingPageSetter.setter( ThreadLocalSession.getUserSession().get().getUserModel(), loader.getController());
         }
         if(fxml.equals("/JFX1/JFX1UserRequestPage.fxml")) {
-            JFX1UserRequestPageSetter.setter(loader.getController(), userSession.get().getUserModel());
+            JFX1UserRequestPageSetter.setter(loader.getController(),  ThreadLocalSession.getUserSession().get().getUserModel());
         }
         if(fxml.equals("/JFX1/JFX1UserCreateParty.fxml")) {
-            JFX1CreatePartySetter.setter(loader.getController(), userSession.get().getUserModel());
+            JFX1CreatePartySetter.setter(loader.getController(),  ThreadLocalSession.getUserSession().get().getUserModel());
         }
         Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

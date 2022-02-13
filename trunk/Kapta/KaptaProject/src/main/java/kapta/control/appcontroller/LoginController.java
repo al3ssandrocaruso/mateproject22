@@ -9,10 +9,8 @@ import kapta.utils.dao.UserDao;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.exception.Trigger;
 import kapta.utils.session.Session;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.Authentication;
-
-import static kapta.utils.session.ThreadLocalSession.userSession;
-import static kapta.utils.session.ThreadLocalSession.usernameSession;
 
 public class LoginController {
 
@@ -26,10 +24,10 @@ public class LoginController {
             // login MANAGER
             if (Authentication.checkIsRegistered(1, loginBean.getPassword(), loginBean.getUsername()) == 1) {
                 clubModel = ClubDao.getClubByUserName(loginBean.getUsername());
-                userSession.set(new Session(clubModel, 1));
-                userSession.get().setClubModel(clubModel); //qua email è giusta
+                ThreadLocalSession.getUserSession().set(new Session(clubModel, 1));
+                ThreadLocalSession.getUserSession().get().setClubModel(clubModel); //qua email è giusta
                 //userSession è settata bene
-                userSession.get().getClubModel().setId(ClubDao.clubIdbyClub(clubModel));
+                ThreadLocalSession.getUserSession().get().getClubModel().setId(ClubDao.clubIdbyClub(clubModel));
             }
             else{
                 Trigger.throwWrongPassword();
@@ -40,13 +38,13 @@ public class LoginController {
             // login USER
             UserModel userModel = null;
             if (Authentication.checkIsRegistered(0, loginBean.getPassword(), loginBean.getUsername()) ==1){
-                usernameSession = loginBean.getUsername();
+                ThreadLocalSession.setUsername(loginBean.getUsername());
                 userModel = UserDao.getUserByUsername(loginBean.getUsername());
-                userSession.set(new Session(userModel, 0));
-                userSession.get().setUserModel(userModel);
-                userSession.get().getUserModel().setNumFollowing(UserDao.getNumSeguiti(userModel));
-                userSession.get().getUserModel().setNumFollower(UserDao.getNumFollower(userModel));
-                userSession.get().getUserModel().setId(UserDao.getUserByUsername(userModel.getUsername()).getId());
+                ThreadLocalSession.getUserSession().set(new Session(userModel, 0));
+                ThreadLocalSession.getUserSession().get().setUserModel(userModel);
+                ThreadLocalSession.getUserSession().get().getUserModel().setNumFollowing(UserDao.getNumSeguiti(userModel));
+                ThreadLocalSession.getUserSession().get().getUserModel().setNumFollower(UserDao.getNumFollower(userModel));
+                ThreadLocalSession.getUserSession().get().getUserModel().setId(UserDao.getUserByUsername(userModel.getUsername()).getId());
             }
             else{
                 Trigger.throwWrongPassword();

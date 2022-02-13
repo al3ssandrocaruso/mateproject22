@@ -12,10 +12,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 import kapta.utils.init.ReplaceScene;
+import kapta.utils.session.ThreadLocalSession;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import static kapta.utils.session.ThreadLocalSession.userSession;
+
 
 public class JFX2BarGUIController implements Initializable {
     @FXML
@@ -51,7 +53,7 @@ public class JFX2BarGUIController implements Initializable {
     }
 
     public void goToProfile(ActionEvent event)  {
-        if(userSession.get().getUserModel() !=null) {
+        if( ThreadLocalSession.getUserSession().get().getUserModel() !=null) {
             JFX2ReplaceSceneAndInitializePage rsip1 = new JFX2ReplaceSceneAndInitializePage();
             rsip1.replaceSceneAndInitializePage(event, "/JFX2/JFX2UserProfile.fxml");
         }else{
@@ -67,7 +69,7 @@ public class JFX2BarGUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        int type=userSession.get().getType();
+        int type= ThreadLocalSession.getUserSession().get().getType();
         if(type==1){
             hboxBar.getChildren().remove(btnRequest);
             hboxBar.getChildren().remove(btnSearch);

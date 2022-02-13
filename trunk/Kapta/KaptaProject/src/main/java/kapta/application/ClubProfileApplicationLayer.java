@@ -10,8 +10,10 @@ import kapta.utils.bean.beanin.jfx2.JFX2EventBean;
 import kapta.utils.bean.beanin.TokenBeanIn;
 import kapta.utils.exception.myexception.TokenException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
+
 import java.io.File;
-import static kapta.utils.session.ThreadLocalSession.userSession;
+
 
 public class ClubProfileApplicationLayer {
 
@@ -52,7 +54,7 @@ public class ClubProfileApplicationLayer {
     }
 
     public boolean hideBtnCreateEvent() {
-        return userSession.get().getUserModel() != null;
+        return  ThreadLocalSession.getUserSession().get().getUserModel() != null;
     }
 
     public void goToGenerateToken() {

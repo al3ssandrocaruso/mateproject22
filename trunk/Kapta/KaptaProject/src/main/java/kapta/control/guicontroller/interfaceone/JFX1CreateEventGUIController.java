@@ -24,6 +24,8 @@ import kapta.utils.bean.beanin.jfx1.JFX1TokenBeanIn;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.TokenException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.utils.GetDialogStage;
+import kapta.utils.utils.GetFontedLabel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -86,17 +88,9 @@ public class JFX1CreateEventGUIController implements Initializable {
     }
     public void submitRequest(ActionEvent ae) {
         getClubProfileApplication().goToGenerateToken();
-        final Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(((Node) ae.getSource()).getScene().getWindow());
-
-        Font font1 = Font.font("Arial", FontWeight.BOLD, 25);
-        Font font2 = Font.font("Arial", FontWeight.BOLD, 20);
-        Label label1 = new Label("An email has been sent to you");
-        Label label2 = new Label("Please, insert your token to confirm");
-        label1.setFont(font2);
-        label2.setFont(font2);
-
+        final Stage dialog = GetDialogStage.startDialog(ae);
+        Label label1= GetFontedLabel.getFonted("An email has been sent to you","Arial");
+        Label label2= GetFontedLabel.getFonted("Please, insert your token to confirm","Arial");
         VBox dialogVbox = new VBox(20);
 
         TextField textField = new TextField();
@@ -110,6 +104,7 @@ public class JFX1CreateEventGUIController implements Initializable {
         dialogVbox.setPadding(new Insets(0,50,0,50));
 
         Button button=new Button("Verify");
+        Font font1 = Font.font("Arial", FontWeight.BOLD, 25);
         button.setFont(font1);
         button.setStyle("-fx-background-color: #200f54;" + "-fx-background-radius: 28;" + "-fx-text-fill: white");
 

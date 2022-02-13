@@ -14,13 +14,13 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.dao.listdao.JoinedListDAO;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.FollowUtils;
 import java.io.File;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
+
 
 public class UserProfileApplicationLayer {
-
     // queste le devo spostare nel Gui controller
     private UserClubModel whoIam;
     private UserModel userModel;
@@ -88,13 +88,13 @@ public class UserProfileApplicationLayer {
     }
 
     public void setWhoIam() {
-        int type=userSession.get().getType();
+        int type= ThreadLocalSession.getUserSession().get().getType();
         if(type==1){
-            this.whoIam=userSession.get().getClubModel();
+            this.whoIam= ThreadLocalSession.getUserSession().get().getClubModel();
             this.whoIam.setType(1);
         }
         else if(type==0){
-            this.whoIam=userSession.get().getUserModel();
+            this.whoIam= ThreadLocalSession.getUserSession().get().getUserModel();
             this.whoIam.setType(0);
         }
     }
@@ -137,8 +137,8 @@ public class UserProfileApplicationLayer {
     }
 
     public int chooseDecoration(){
-        if((userSession.get().getUserModel() != null)){
-            if((getUserModel().getUsername()).equals(userSession.get().getUserModel().getUsername())){
+        if(( ThreadLocalSession.getUserSession().get().getUserModel() != null)){
+            if((getUserModel().getUsername()).equals( ThreadLocalSession.getUserSession().get().getUserModel().getUsername())){
                 return 0;
             }
             else if(getUserModel().getType()==0){

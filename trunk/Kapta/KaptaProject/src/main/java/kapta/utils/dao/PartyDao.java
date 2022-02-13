@@ -8,6 +8,7 @@ import kapta.utils.exception.*;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
 import kapta.utils.exception.myexception.WrongCrudException;
 import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.ImageConverter;
 import kapta.utils.utils.MysqlConnection;
 import java.io.File;
@@ -22,8 +23,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class PartyDao {
 
@@ -41,7 +40,7 @@ public class PartyDao {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
-            String creatorName = userSession.get().getUserModel().getUsername();
+            String creatorName =  ThreadLocalSession.getUserSession().get().getUserModel().getUsername();
             Time sqlTime = Time.valueOf(time);
             java.sql.Date sqlPartyDate = new java.sql.Date( partyDate.getTime());
             java.sql.Date cDate = new java.sql.Date(System.currentTimeMillis());

@@ -7,11 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class JFX1BarGUIController implements Initializable {
 
@@ -31,7 +31,7 @@ public class JFX1BarGUIController implements Initializable {
 
     @FXML
     void profileAction(ActionEvent ae){
-        int type=userSession.get().getType();
+        int type= ThreadLocalSession.getUserSession().get().getType();
         //0-> user model
         //1-> club model
         if(type==1){       rsip.replaceSceneAndInitializePage(ae, "/JFX1/JFX1ClubProfile.fxml");}
@@ -46,7 +46,7 @@ public class JFX1BarGUIController implements Initializable {
 
     @FXML
     void settingAction(ActionEvent ae) {
-        int type=userSession.get().getType();
+        int type= ThreadLocalSession.getUserSession().get().getType();
         //0-> user model
         //1-> club model
         if(type==1){       rsip.replaceSceneAndInitializePage(ae, "/JFX1/JFX1ClubSetting.fxml");}
@@ -62,7 +62,7 @@ public class JFX1BarGUIController implements Initializable {
     @FXML
     void requestAction(ActionEvent ae){
 
-        if(userSession.get().getType()==0) {
+        if( ThreadLocalSession.getUserSession().get().getType()==0) {
             rsip.replaceSceneAndInitializePage(ae, "/JFX1/JFX1UserRequestPage.fxml");
         }
         else{
@@ -73,16 +73,16 @@ public class JFX1BarGUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        int type=userSession.get().getType();
+        int type= ThreadLocalSession.getUserSession().get().getType();
         //0-> sono un user model
         //1-> sono un club model
         if(type==1){
-            this.labelUsername.setText("@" + userSession.get().getClubModel().getUsername());
+            this.labelUsername.setText("@" +  ThreadLocalSession.getUserSession().get().getClubModel().getUsername());
             this.labelType.setText("Manager");
             vboxBar.getChildren().remove(btnHome);
         }
         else if(type==0){
-            this.labelUsername.setText("@" + userSession.get().getUserModel().getUsername());
+            this.labelUsername.setText("@" +  ThreadLocalSession.getUserSession().get().getUserModel().getUsername());
             this.labelType.setText("User");
         }
     }

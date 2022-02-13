@@ -11,12 +11,12 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.exception.myexception.EmailValidatorException;
 import kapta.utils.exception.myexception.InputNullException;
 import kapta.utils.pagesetter.setterjfx2.*;
+import kapta.utils.session.ThreadLocalSession;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class JFX2ReplaceSceneAndInitializePage {
 
@@ -32,13 +32,13 @@ public class JFX2ReplaceSceneAndInitializePage {
         }
 
         if(fxml.equals(jfx2Profile)) {
-            JFX2UserProfileSetter.setter(userSession.get().getUserModel(), loader.getController());
+            JFX2UserProfileSetter.setter( ThreadLocalSession.getUserSession().get().getUserModel(), loader.getController());
         }
         if(fxml.equals("/JFX2/JFX2UserRequestPage.fxml")){
-            JFX2RequestPageSetter.setter(userSession.get().getUserModel(),loader.getController());
+            JFX2RequestPageSetter.setter( ThreadLocalSession.getUserSession().get().getUserModel(),loader.getController());
         }
         if(fxml.equals("/JFX2/JFX2ClubProfile.fxml")) {
-            JFX2ClubProfileSetter.setter(userSession.get().getClubModel(), loader.getController());
+            JFX2ClubProfileSetter.setter( ThreadLocalSession.getUserSession().get().getClubModel(), loader.getController());
         }
 
         Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();

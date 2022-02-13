@@ -10,8 +10,8 @@ import kapta.utils.dao.RequestDao;
 import kapta.utils.exception.myexception.ExpiredGreenPassException;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class EventApplicationLayer {
     public void setEventModel(EventModel eventModel) {
@@ -35,11 +35,11 @@ public class EventApplicationLayer {
     }
 
     public void setWhoIam() {
-        int type=userSession.get().getType();
+        int type= ThreadLocalSession.getUserSession().get().getType();
         if(type==1){
-            this.whoIam=userSession.get().getClubModel();
+            this.whoIam= ThreadLocalSession.getUserSession().get().getClubModel();
         }
-        else if(type==0){this.whoIam=userSession.get().getUserModel();}
+        else if(type==0){this.whoIam= ThreadLocalSession.getUserSession().get().getUserModel();}
     }
 
     public int chooseDecoration(){
@@ -66,7 +66,7 @@ public class EventApplicationLayer {
     }
     public int getStatusRequest() {
         int requestId = 0;
-        requestId = RequestDao.getRequestIdentifier(this.eventModel, userSession.get().getUserModel(), this.eventModel.getEventCreator());
+        requestId = RequestDao.getRequestIdentifier(this.eventModel,  ThreadLocalSession.getUserSession().get().getUserModel(), this.eventModel.getEventCreator());
         return RequestDao.getRequestStatus(requestId);
     }
     public void goToEventPage(ActionEvent ae, String fxml){

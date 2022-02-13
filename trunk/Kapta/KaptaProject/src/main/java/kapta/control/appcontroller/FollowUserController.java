@@ -4,9 +4,8 @@ import kapta.model.lists.FollowerList;
 import kapta.model.profiles.UserModel;
 import kapta.utils.dao.listdao.FollowerListDao;
 import kapta.utils.dao.listdao.FollowingListDao;
+import kapta.utils.session.ThreadLocalSession;
 
-
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class FollowUserController {
 
@@ -17,7 +16,7 @@ public class FollowUserController {
     public static void follow(UserModel visitedUser, UserModel user, FollowerList followerList) {
             FollowerListDao.addToFollowerList(visitedUser, user);
             FollowingListDao.addToFollowingList(user, visitedUser);
-            followerList.addUser(userSession.get().getUserModel());
+            followerList.addUser( ThreadLocalSession.getUserSession().get().getUserModel());
 
     }
 
@@ -25,6 +24,6 @@ public class FollowUserController {
 
         FollowerListDao.removeFromFollowerList(visitedEventModel,user);
         FollowingListDao.removeFromFollowingList(user, visitedEventModel);
-        followerList.removeUser(userSession.get().getUserModel());
+        followerList.removeUser( ThreadLocalSession.getUserSession().get().getUserModel());
         }
 }

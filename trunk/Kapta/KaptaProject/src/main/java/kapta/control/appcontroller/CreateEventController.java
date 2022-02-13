@@ -8,12 +8,11 @@ import kapta.model.profiles.ClubModel;
 import kapta.utils.email.SendEmail;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.TokenException;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.GenerateNewToken;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class CreateEventController {
     private static final int SECOND_TOLERANCE = 120; //how many second for token.
@@ -23,8 +22,8 @@ public class CreateEventController {
     }
 
     public static EventModel createEvent(EventBean eventBean)  {
-        //qua arrivo solo se evento è confermato
-        ClubModel clubModel= userSession.get().getClubModel();
+
+        ClubModel clubModel= ThreadLocalSession.getUserSession().get().getClubModel();
         EventModel eventModel=new EventModel(eventBean.getEventName(), eventBean.getEventPrice(), 0, eventBean.getEventAddress(), eventBean.getEventDuration(), eventBean.getEventOrario(), eventBean.getEventDate(), eventBean.isGreenPass(), eventBean.getEventImg(), clubModel);
             EventDao.saveNewEvent(eventModel);
             String toWrite="Nome: "+eventModel.getName()+"\nData: "+eventModel.getDate()+"\nDuration: "+eventModel.getDuration()+"\nHour: "+eventModel.getOrario()+"\nPrice: "+eventModel.getEventPrice()+"$";
@@ -35,7 +34,7 @@ public class CreateEventController {
 
     public static TokenModel generateToken(){
         String randomToken= GenerateNewToken.generateToken();
-        SendEmail.send(userSession.get().getClubModel().getEmail(),"Mate: we need to verify you! ","Here the token to confirm your event creation: "+randomToken);
+        SendEmail.send( ThreadLocalSession.getUserSession().get().getClubModel().getEmail(),"Mate: we need to verify you! ","Here the token to confirm your event creation: "+randomToken);
         return new TokenModel(randomToken);
     }
 

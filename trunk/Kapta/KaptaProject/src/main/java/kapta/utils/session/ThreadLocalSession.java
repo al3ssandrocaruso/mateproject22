@@ -20,7 +20,7 @@ public class ThreadLocalSession implements Runnable
         userSession = new ThreadLocal<>();
     }
 
-    public void setUsername(String username) {
+    public static void setUsername(String username) {
         usernameSession = username;
     }
 

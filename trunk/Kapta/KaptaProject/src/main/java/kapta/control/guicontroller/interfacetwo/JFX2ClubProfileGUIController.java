@@ -36,11 +36,14 @@ import kapta.utils.bean.beanout.jfx2.JFX2RequestBeanOut;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.TokenException;
 import kapta.utils.Observer;
+import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.utils.GetDialogStage;
+import kapta.utils.utils.GetFontedLabel;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class JFX2ClubProfileGUIController implements Observer {
 
@@ -112,22 +115,20 @@ public class JFX2ClubProfileGUIController implements Observer {
     public void confirmCreateEvent(ActionEvent ae) {
 
         clubProfileApplicationLayer.goToGenerateToken();
-
+/*
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(((Node) ae.getSource()).getScene().getWindow());
+ */
+        Stage dialog=GetDialogStage.startDialog(ae);
 
-        Font font1 = Font.font("System", FontWeight.BOLD, 25);
-        Font font2 = Font.font("System", FontWeight.BOLD, 20);
-        Label label1 = new Label("An email has been sent to you");
-        Label label2 = new Label("Please, insert your token to confirm");
-        label1.setFont(font2);
-        label2.setFont(font2);
-
+        Label label1= GetFontedLabel.getFonted("An email has been sent to you","System");
+        Label label2=GetFontedLabel.getFonted("Please, insert your token to confirm","System");
         VBox dialogVbox = new VBox(21);
 
         TextField textField = new TextField();
         textField.setAlignment(Pos.CENTER);
+
         textField.setPromptText("Insert your token");
         textField.setStyle("-fx-background-color: #e8e7fc;" +
                 radius +
@@ -138,6 +139,7 @@ public class JFX2ClubProfileGUIController implements Observer {
         dialogVbox.setPadding(new Insets(0,50,0,50));
 
         Button button=new Button("Verify");
+        Font font1 = Font.font("System", FontWeight.BOLD, 25);
         button.setFont(font1);
         button.setStyle("-fx-background-color: #200f54;" + radius + white);
 
@@ -200,7 +202,7 @@ public class JFX2ClubProfileGUIController implements Observer {
         this.spinnerPrice.setValueFactory(gradesValueFactory);
         if(clubBeanOut.getImg()!=null){setClubImg(clubBeanOut.getImg()); }//usa e aggiorna i bean
         setLabelUsername("@"+clubBeanOut.getClubName());
-        if(userSession.get().getUserModel()!=null) {
+        if( ThreadLocalSession.getUserSession().get().getUserModel()!=null) {
             noClubInProfileOn();
         }
         btnCreatedEvents.setFont(font);

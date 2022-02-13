@@ -11,9 +11,11 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.dao.listdao.ParticipantListDao;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
+
 import java.util.List;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
+
 
 public class PartyApplicationLayer {
     private PartyModel partyModel;
@@ -66,12 +68,12 @@ public class PartyApplicationLayer {
     }
 
     public void setWhoIam() {
-        int type=userSession.get().getType();
+        int type= ThreadLocalSession.getUserSession().get().getType();
         if(type==0){
-            this.whoIam = userSession.get().getUserModel();
+            this.whoIam =  ThreadLocalSession.getUserSession().get().getUserModel();
             this.whoIam.setType(0);
         }else if(type==1){
-            this.whoIam = userSession.get().getClubModel();
+            this.whoIam =  ThreadLocalSession.getUserSession().get().getClubModel();
             this.whoIam.setType(1);
         }
     }
@@ -81,17 +83,17 @@ public class PartyApplicationLayer {
         List<UserModel> list = ParticipantListDao.getParticipantList(getPartyModel(), null).getParticipants();
 
         for(UserModel um : list) {
-            if (userSession.get().getUserModel().getId() == um.getId()) {
+            if ( ThreadLocalSession.getUserSession().get().getUserModel().getId() == um.getId()) {
                 state = true;
             }
         }
         return state;
     }
     public int goToJoinParty(){
-        return JoinPartyController.joinParty(userSession.get().getUserModel(), partyModel);
+        return JoinPartyController.joinParty( ThreadLocalSession.getUserSession().get().getUserModel(), partyModel);
     }
     public void goToLeaveParty(){
-        JoinPartyController.leaveParty(userSession.get().getUserModel(), partyModel);
+        JoinPartyController.leaveParty( ThreadLocalSession.getUserSession().get().getUserModel(), partyModel);
     }
     public void goToPartyPage(ActionEvent ae, String fxml){
         if(fxml.startsWith("/JFX1")) {

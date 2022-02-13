@@ -8,12 +8,12 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.dao.listdao.JoinedListDAO;
 import kapta.utils.dao.listdao.ParticipantListDao;
 import kapta.utils.email.SendEmail;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.FollowUtils;
 
 import java.time.LocalDate;
 import java.util.Date;
 
-import static kapta.utils.session.ThreadLocalSession.userSession;
 
 
 public class JoinPartyController {
@@ -43,12 +43,12 @@ public class JoinPartyController {
             }
         }
 
-        String toWrite="The user you follow '"+userSession.get().getUserModel().getUsername()+"' has joined party: "+partyModel.getName()+ " too!";
+        String toWrite="The user you follow '"+ ThreadLocalSession.getUserSession().get().getUserModel().getUsername()+"' has joined party: "+partyModel.getName()+ " too!";
         ParticipantsList participantList=ParticipantListDao.getParticipantList(partyModel,null);
 
         //Send Email to my followers
         for(UserModel um: participantList.getParticipants()){
-            if(FollowUtils.doAFollowB(um, userSession.get().getUserModel())){
+            if(FollowUtils.doAFollowB(um,  ThreadLocalSession.getUserSession().get().getUserModel())){
                 SendEmail.send(um.getEmail(),"A friend to go with!",toWrite);
             }
         }
