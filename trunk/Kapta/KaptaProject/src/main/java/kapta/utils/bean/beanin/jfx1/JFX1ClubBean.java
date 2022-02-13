@@ -10,11 +10,10 @@ import java.net.URL;
 
 public class JFX1ClubBean extends GenericUserBean {
 
-    public JFX1ClubBean(String username, String email, String password, File img, String clubName, String address, String city, String website) throws MalformedURLException, URISyntaxException {
+    public JFX1ClubBean(String username, String email, String password, String clubName, String address, String city, String website) throws MalformedURLException, URISyntaxException {
         setUsername(username);
         setEmail(email);
         setPassword(password);
-        setImage(img);
         setClubName(clubName);
         setAddress(address);
         setCity(city);

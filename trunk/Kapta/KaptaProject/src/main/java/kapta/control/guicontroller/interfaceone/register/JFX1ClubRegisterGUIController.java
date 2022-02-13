@@ -41,7 +41,8 @@ public class JFX1ClubRegisterGUIController {
         String city = textFieldCity.getText();
         String website = textFieldWebsite.getText();
 
-        JFX1ClubBean jfx1ClubBean = new JFX1ClubBean(username, email, password, img, clubName, address, city, website);
+        JFX1ClubBean jfx1ClubBean = new JFX1ClubBean(username, email, password, clubName, address, city, website);
+        jfx1ClubBean.setImage(img);
         RegisterController.register(jfx1ClubBean);
         ReplaceScene.replaceScene(event, "/JFX1/JFX1Login.fxml");
     }
