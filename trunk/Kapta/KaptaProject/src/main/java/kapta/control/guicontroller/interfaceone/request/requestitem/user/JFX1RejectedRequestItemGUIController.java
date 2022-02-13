@@ -23,15 +23,15 @@ public class JFX1RejectedRequestItemGUIController {
 
 
     public void setEventImageView(Image eventImageView) {
-        this.ImageView.setImage(eventImageView);
+        this.imageView.setImage(eventImageView);
     }
 
     public void setEventDate(String eventDate) {
-        this.EventDate.setText(eventDate);
+        this.eventDate.setText(eventDate);
     }
 
     public void setLabelEventName(String labelEventName) {
-        this.EventName.setText(labelEventName);
+        this.eventName.setText(labelEventName);
     }
 
     public void deleteRequest(ActionEvent actionEvent) {
