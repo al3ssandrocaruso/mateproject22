@@ -16,6 +16,7 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.bean.beanin.jfx1.JFX1ProfileBean;
 import kapta.utils.pagesetter.setterjfx1.*;
 import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.utils.StageShow;
 
 import java.io.IOException;
 
@@ -52,10 +53,7 @@ public class ReplaceSceneAndInitializePage {
         if(fxml.equals("/JFX1/JFX1UserCreateParty.fxml")) {
             JFX1CreatePartySetter.setter(loader.getController(),  ThreadLocalSession.getUserSession().get().getUserModel());
         }
-        Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        StageShow.showStage(ae,root);
     }
 
 
@@ -90,10 +88,7 @@ public class ReplaceSceneAndInitializePage {
             ClubModel clubModel = (ClubModel) ob;
             JFX1ClubProfileSetter.setter(clubModel, loader.getController());
         }
-        Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        StageShow.showStage(ae,root);
     }
 
     public void replaceSceneAndInitializeRegister(ActionEvent ae, String fxml, JFX1ProfileBean profileBean) {
@@ -114,10 +109,7 @@ public class ReplaceSceneAndInitializePage {
             crgc.setProfileBean(profileBean);
         }
 
-        Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        StageShow.showStage(ae,root);
 
     }
 
@@ -130,10 +122,7 @@ public class ReplaceSceneAndInitializePage {
             e.printStackTrace();
         }
         JFX1FollowerFollowingPageSetter.setter(owner,loader.getController(),support);
-        Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        StageShow.showStage(ae,root);
     }
 
 }
