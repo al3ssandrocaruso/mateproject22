@@ -20,7 +20,9 @@ public class MysqlConnection {
             getConnection();
             stm = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException e) {
-            Trigger.mySqlConnectionException();
+            System.out.println("DDDDD");
+            System.out.println(e.getMessage());
+            Trigger.mySqlConnectionException(e);
         }
         return stm;
     }

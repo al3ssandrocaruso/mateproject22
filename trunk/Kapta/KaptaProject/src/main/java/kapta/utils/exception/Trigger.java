@@ -41,8 +41,10 @@ public class Trigger {
         g.initCause(e.getCause());
         throw g;
     }
-    public  static void mySqlConnectionException() throws MysqlConnectionFailed {
-        throw new MysqlConnectionFailed();
+    public  static void mySqlConnectionException(Exception e ) throws MysqlConnectionFailed {
+        MysqlConnectionFailed m = new MysqlConnectionFailed();
+        m.initCause(e);
+        throw m;
     }
 
     public  static void imageNotFound() throws ImageNotFoundException {

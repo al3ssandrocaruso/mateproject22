@@ -77,6 +77,8 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
     private String radius = "-fx-background-radius: 28;";
     private String orange = "-fx-background-color: orange;";
     private String red = "-fx-background-color: red;";
+    private String leave = "Leave Party";
+    private String joinStr = "Join Party";
     private EventApplicationLayer eventApplicationLayer;
     private PartyApplicationLayer partyApplicationLayer;
 
@@ -164,7 +166,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                 break;
             }
             case "Leave Party": {
-                btnAction.setText("Join Party");
+                btnAction.setText(joinStr);
                 btnAction.setStyle("-fx-background-color: #200f54; "+radius);
                 partyApplicationLayer.goToLeaveParty();
                 break;
@@ -184,7 +186,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                 switch (ret1){
                     case 0:{
                         btnAction.setStyle("-fx-background-color: #ff9105; " + radius);
-                        btnAction.setText("Leave Party");
+                        btnAction.setText(leave);
                         break;
                     }
                     case -1:{
@@ -316,7 +318,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
         setLabelName(jfx1PartyBeanOut.getPartyName());
 
         setBtnCreator("@" + jfx1PartyBeanOut.getPartyCreator());
-        btnAction.setText("Join Party");
+        btnAction.setText(joinStr);
 
         if(jfx1PartyBeanOut.getPartyCreator().equals(partyApplicationLayer.getWhoIam().getUsername())){
             setBtnCreator("You");
@@ -324,7 +326,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
             btnAction.setStyle("-fx-background-color: red;"+radius);
         }
         else if(partyApplicationLayer.doIjoinedYet()){
-            btnAction.setText("Leave Party");
+            btnAction.setText(leave);
             btnAction.setStyle("-fx-background-color: #ff9105; "+radius);
         }
         labelPrice.setVisible(false);

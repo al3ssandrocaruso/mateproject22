@@ -41,6 +41,7 @@ public class JFX1DecorationEventTwo extends Decorator{
 
     private String radius = "-fx-background-radius: 28;";
     private String white = "-fx-text-fill: white;";
+    private String arial = "Arial";
 
 
     public JFX1DecorationEventTwo(VisualComponent component, EventApplicationLayer eventApplication) {
@@ -52,7 +53,7 @@ public class JFX1DecorationEventTwo extends Decorator{
         // "dal punto di vista dell'utente"
         switch(support){
             case -1:{ //No Request yet
-                button.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+                button.setFont(Font.font(arial, FontWeight.BOLD, 10));
                 button.setStyle("-fx-background-color: #e8e7fc; "+radius + "-fx-text-fill: black;");
                 this.setToWrite("Request");
                 break;
@@ -94,7 +95,7 @@ public class JFX1DecorationEventTwo extends Decorator{
         button.setText(this.toWrite);
         button.setMinHeight(65);
         button.setMinWidth(125);
-        Font font = Font.font("Arial", FontWeight.BOLD, 25);
+        Font font = Font.font(arial, FontWeight.BOLD, 25);
         button.setFont(font);
         new JFX1PartyPageGUIController();
 
@@ -112,7 +113,7 @@ public class JFX1DecorationEventTwo extends Decorator{
                     dialog.initModality(Modality.APPLICATION_MODAL);
                     dialog.initOwner(((Node) ae.getSource()).getScene().getWindow());
 
-                    Font font1 = Font.font("Arial", FontWeight.BOLD, 20);
+                    Font font1 = Font.font(arial, FontWeight.BOLD, 20);
                     Label label1 = new Label("Please, load and verify green pass");
                     label1.setFont(font1);
 
