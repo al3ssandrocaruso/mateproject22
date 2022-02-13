@@ -28,8 +28,12 @@ public class RegisterController {
 
     public static void register(GenericUserBean genericUserBean) {
         if (genericUserBean.getType()==0) {
-            UserModel userModel = new UserModel(genericUserBean.getUsername(), genericUserBean.getPassword(), genericUserBean.getEmail(), genericUserBean.getName(), genericUserBean.getSecondName(),genericUserBean.getGender(),0, 0, 0,genericUserBean.getImg());
+            UserModel userModel = new UserModel(genericUserBean.getUsername(), genericUserBean.getPassword(), genericUserBean.getEmail(), genericUserBean.getName(), 0, 0, genericUserBean.getImg());
+            userModel.setNumFollower(0);
+            userModel.setGender(userModel.getGender()) ;
+            userModel.setSecondName(genericUserBean.getSecondName());
             UserDao.saveUser(userModel);
+
 
         }
         else if (genericUserBean.getType()==1) {

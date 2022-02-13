@@ -3,32 +3,14 @@ import java.io.File;
 
 public class UserModel extends UserClubModel {
     private String name;
-    private String secondName;
-    private String gender;
+    private String secondName="";
+    private String gender="";
     private int numFollowing;
 
     public UserModel(String username){super(username);}
-    public UserModel(int id , String username, String email, String name , String secondName, String gender, int type, int numFollowing, int numFollower, File profileImg ) {
-
-        super(id, username, email,type, profileImg, numFollowing ) ;
-        setName(name);
-        setNumFollower(numFollower);
-        setGender(gender) ;
-        setSecondName(secondName);
-    }
-    public UserModel(String username, String email, String name , String secondName, String gender, int type, int numFollowing, int numFollower, File profileImg) {
-        super(username, email,type, profileImg, numFollowing ) ;
-        setName(name);
-        setNumFollower(numFollower);
-        setGender(gender) ;
-        setSecondName(secondName);
-    }
-    public UserModel(String username,String password , String email, String name , String secondName, String gender, int type, int numFollowing, int numFollower, File profileImg ) {
+    public UserModel(String username,String password , String email, String name ,   int type, int numFollowing,File profileImg ) {
         super(username,password,  email,type, profileImg, numFollowing ) ;
         setName(name);
-        setNumFollower(numFollower);
-        setGender(gender) ;
-        setSecondName(secondName);
     }
 
 
