@@ -12,8 +12,12 @@ import kapta.utils.dao.listdao.RequestListDao;
 import java.sql.SQLException;
 
 public class JFX2ClubProfileSetter {
-    public static void setter(ClubModel clubModel, JFX2ClubProfileGUIController clubProfileGUIController) {
 
+    private JFX2ClubProfileSetter(){
+        //ignore
+    }
+
+    public static void setter(ClubModel clubModel, JFX2ClubProfileGUIController clubProfileGUIController) {
         JFX2ClubBeanOut clubBeanOut= new JFX2ClubBeanOut(clubModel);
         try {
             new RequestList(clubModel, RequestListDao.getPendingRequestsByClubId(clubModel.getId()), clubProfileGUIController);

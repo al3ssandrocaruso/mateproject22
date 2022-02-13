@@ -8,6 +8,11 @@ import kapta.utils.dao.EventDao;
 import kapta.utils.dao.listdao.ParticipantListDao;
 
 public class JFX1EventPageSetter {
+
+    private JFX1EventPageSetter(){
+        //ignore
+    }
+
     public static void setter(EventModel eventModel, JFX1EventPageGUIController epgc)  {
         EventModel eventModel2 = EventDao.getEventbyEventId(eventModel.getId());
         JFX1EventBeanOut eventBeanOut = new JFX1EventBeanOut(eventModel2);

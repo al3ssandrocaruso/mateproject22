@@ -19,6 +19,10 @@ public class JoinEventController {
     //  -> Caricamento non valido -> popup errore (da  gestire con eccezione, vedi commento su funzione)
     //in 2ndo caso creo l'item con factory
 
+    private JoinEventController(){
+        //ignore
+    }
+
     public static void sendRequest(RequestBean requestBean, EventModel eventModel) throws ExpiredGreenPassException {
         //UserModel sender, EventModel event, int numDoses, String vaccinationDate
         if(requestBean.getNumDoses()>5) {

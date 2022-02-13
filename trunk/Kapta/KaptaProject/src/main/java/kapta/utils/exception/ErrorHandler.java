@@ -30,11 +30,9 @@ public class ErrorHandler {
         ErrorDialog errorDialog = createErrorDialog();
 
         if(e instanceof ConfirmPasswordException || e instanceof MysqlConnectionFailed ||e instanceof WrongPasswordException || e instanceof InputNullException || e instanceof EmailValidatorException || e instanceof GenericException || e instanceof TokenException ){
-            System.out.println(intrfc);
             errorDialog.createNotice(message);
         }
         if(e instanceof WrongDBOperationException || e instanceof WrongQueryException || e instanceof WrongCrudException || e instanceof  UsernameConflictException || e instanceof InavalidGreenPassException || e instanceof ExpiredGreenPassException){
-           System.out.println(intrfc);
             errorDialog.createWarning(message);
         }
     }
@@ -69,7 +67,7 @@ public class ErrorHandler {
         }
     }
 
-    public void TokenException(String tokenString) throws TokenException {
+    public void tokenException(String tokenString) throws TokenException {
         Trigger.wrongToken(tokenString);
     }
 

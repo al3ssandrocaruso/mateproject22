@@ -9,6 +9,10 @@ import java.util.Properties;
 
 public class MysqlConnection {
 
+    private MysqlConnection(){
+        //ignore
+    }
+
     private static Connection connection;
     public static Statement mysqlConnection() throws MysqlConnectionFailed {
         Statement stm = null;

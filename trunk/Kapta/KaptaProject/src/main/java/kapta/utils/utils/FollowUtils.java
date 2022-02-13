@@ -5,6 +5,11 @@ import kapta.utils.dao.listdao.FollowingListDao;
 import java.util.List;
 
 public class FollowUtils {
+
+    private FollowUtils(){
+        //ignore
+    }
+
     public static boolean doAFollowB(UserModel userA,UserModel userB)  {
             boolean followState=false;
             List<UserModel> list= FollowingListDao.getFollowing(userA);

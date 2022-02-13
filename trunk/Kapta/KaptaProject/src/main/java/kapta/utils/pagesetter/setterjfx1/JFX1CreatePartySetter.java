@@ -5,6 +5,11 @@ import kapta.control.guicontroller.interfaceone.JFX1CreatePartyGUIController;
 import kapta.model.profiles.UserModel;
 
 public class JFX1CreatePartySetter {
+
+    private JFX1CreatePartySetter(){
+        //ignore
+    }
+
     public static void setter(JFX1CreatePartyGUIController jfx1CreatePartyGUIController, UserModel userModel){
         UserProfileApplicationLayer userProfileApplication = new UserProfileApplicationLayer(jfx1CreatePartyGUIController, userModel);
         jfx1CreatePartyGUIController.setUserProfileApplication(userProfileApplication);

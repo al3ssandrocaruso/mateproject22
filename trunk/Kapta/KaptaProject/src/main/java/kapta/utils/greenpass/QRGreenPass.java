@@ -13,10 +13,10 @@ import java.io.IOException;
 public class QRGreenPass {
 
     private String semiDecodedString;
-    private int buffer_size = 1024;
+    private int bufferSize = 1024;
 
     public int getBufferSize(){
-        return buffer_size;
+        return bufferSize;
     }
 
     public void setSemiDecodedString(String semiDecodedString) {

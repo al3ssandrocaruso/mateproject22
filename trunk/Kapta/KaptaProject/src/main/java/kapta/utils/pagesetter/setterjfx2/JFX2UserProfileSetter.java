@@ -8,8 +8,14 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.bean.beanout.jfx2.JFX2UserBeanOut;
 import kapta.utils.dao.listdao.FollowerListDao;
 import kapta.utils.dao.listdao.FollowingListDao;
+import kapta.utils.pagesetter.setterjfx1.JFX1UserProfileSetter;
 
 public class JFX2UserProfileSetter {
+
+    private JFX2UserProfileSetter(){
+        //ignore
+    }
+
     public static void setter(UserModel userModel, JFX2UserProfileGUIController userProfileGUIController) {
         FollowerList followerList=new FollowerList(userModel, FollowerListDao.getFollower(userModel),userProfileGUIController);
         FollowingList followingList=new FollowingList(userModel, FollowingListDao.getFollowing(userModel),userProfileGUIController);

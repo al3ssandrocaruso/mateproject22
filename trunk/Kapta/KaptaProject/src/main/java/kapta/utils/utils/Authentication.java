@@ -12,6 +12,10 @@ import java.sql.Statement;
 
 public class Authentication {
 
+    private Authentication(){
+        //ignore
+    }
+
     public static int checkIsRegistered(int tipo, String password, String username) {
         Statement stm = null;
         try {

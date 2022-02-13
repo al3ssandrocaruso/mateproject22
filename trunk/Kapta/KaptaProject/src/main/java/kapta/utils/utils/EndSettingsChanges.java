@@ -17,6 +17,10 @@ import kapta.application.UserProfileApplicationLayer;
 
 public class EndSettingsChanges {
 
+    private EndSettingsChanges(){
+        //ignored
+    }
+
     //Prima interfaccia
     public static void endChanges1(ActionEvent ae, SettingsApplicationLayer settingsApplicationLayer){
         final Stage dialog = new Stage();

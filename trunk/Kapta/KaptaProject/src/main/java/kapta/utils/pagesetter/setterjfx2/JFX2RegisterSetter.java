@@ -10,6 +10,11 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 public class JFX2RegisterSetter {
+
+    private JFX2RegisterSetter(){
+        //ignore
+    }
+
     public static void setter(String[] preInfo, int type, JFX2ConcludeSubmitGUIController jfx2ConcludeSubmitGUIController) throws MalformedURLException, URISyntaxException, InputNullException, EmailValidatorException {
         if(type == 0){
             JFX2UserBean jfx2UserBean = new JFX2UserBean(null, preInfo[2], null,  null, preInfo[0], preInfo[1], preInfo[3]);

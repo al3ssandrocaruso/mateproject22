@@ -10,6 +10,10 @@ import kapta.utils.dao.listdao.ParticipantListDao;
 
 public class JFX1PartyPageSetter {
 
+    private JFX1PartyPageSetter(){
+        //ignore
+    }
+
     public static void setter(PartyModel partyModel, JFX1PartyPageGUIController ppgc) {
 
         ParticipantsList participantsList =ParticipantListDao.getParticipantList(partyModel, ppgc);

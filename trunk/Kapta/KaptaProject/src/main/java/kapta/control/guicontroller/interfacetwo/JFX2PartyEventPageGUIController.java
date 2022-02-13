@@ -77,7 +77,6 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
     private String radius = "-fx-background-radius: 28;";
     private String orange = "-fx-background-color: orange;";
     private String red = "-fx-background-color: red;";
-    private String deleted = "Deleted";
     private EventApplicationLayer eventApplicationLayer;
     private PartyApplicationLayer partyApplicationLayer;
 
@@ -121,7 +120,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
     }
 
 
-    public void goToCreatorProfile(ActionEvent ae) {
+    public void goToCreatorProfile() {
         if(isInParty()){ // the creator is a user
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/JFX2/JFX2UserProfile.fxml"));
             Parent root = null;
@@ -181,8 +180,8 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                 Text text = new Text();
                 text.setFont(font);
 
-                int ret = partyApplicationLayer.goToJoinParty();
-                switch (ret){
+                int ret1 = partyApplicationLayer.goToJoinParty();
+                switch (ret1){
                     case 0:{
                         btnAction.setStyle("-fx-background-color: #ff9105; " + radius);
                         btnAction.setText("Leave Party");
@@ -309,17 +308,17 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
     }
 
 
-    public void setAllParty(JFX1PartyBeanOut JFX1PartyBeanOut, PartyApplicationLayer partyApplicationLayer){
+    public void setAllParty(JFX1PartyBeanOut jfx1PartyBeanOut, PartyApplicationLayer partyApplicationLayer){
         setInParty(true);
         setPartyApplication(partyApplicationLayer);
-        setImgPic(JFX1PartyBeanOut.getPartyImg());
-        setLabelDate(JFX1PartyBeanOut.getPartyDate());
-        setLabelName(JFX1PartyBeanOut.getPartyName());
+        setImgPic(jfx1PartyBeanOut.getPartyImg());
+        setLabelDate(jfx1PartyBeanOut.getPartyDate());
+        setLabelName(jfx1PartyBeanOut.getPartyName());
 
-        setBtnCreator("@" + JFX1PartyBeanOut.getPartyCreator());
+        setBtnCreator("@" + jfx1PartyBeanOut.getPartyCreator());
         btnAction.setText("Join Party");
 
-        if(JFX1PartyBeanOut.getPartyCreator().equals(partyApplicationLayer.getWhoIam().getUsername())){
+        if(jfx1PartyBeanOut.getPartyCreator().equals(partyApplicationLayer.getWhoIam().getUsername())){
             setBtnCreator("You");
             btnAction.setText("Delete Party");
             btnAction.setStyle("-fx-background-color: red;"+radius);
@@ -333,21 +332,21 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
 
     }
 
-    public void setAllEvent(JFX1EventBeanOut JFX1EventBeanOut, EventApplicationLayer eventApplicationLayer) {
+    public void setAllEvent(JFX1EventBeanOut jfx1EventBeanOut, EventApplicationLayer eventApplicationLayer) {
             setInParty(false);
             setEventApplication(eventApplicationLayer);
-            setImgPic(JFX1EventBeanOut.getEventImg());
-            setLabelDate(JFX1EventBeanOut.getEventDate());
-            setLabelName(JFX1EventBeanOut.getEventName());
-            setLabelEventPriceDouble(JFX1EventBeanOut.getEventPrice());
-            setObbGreenPass(JFX1EventBeanOut.isGreenPass());
+            setImgPic(jfx1EventBeanOut.getEventImg());
+            setLabelDate(jfx1EventBeanOut.getEventDate());
+            setLabelName(jfx1EventBeanOut.getEventName());
+            setLabelEventPriceDouble(jfx1EventBeanOut.getEventPrice());
+            setObbGreenPass(jfx1EventBeanOut.isGreenPass());
             if(isObbGreenPass()){
                 greenPassOn();
             }
             int type= eventApplicationLayer.getWhoIam().getType();
             switch (type) {
                 case 1: {
-                    if (JFX1EventBeanOut.getEventCreator().equals(eventApplicationLayer.getWhoIam().getUsername())) {
+                    if (jfx1EventBeanOut.getEventCreator().equals(eventApplicationLayer.getWhoIam().getUsername())) {
                         setBtnCreator("You");
                         btnAction.setText("Delete Event");
                         btnAction.setStyle(red + radius);
@@ -359,25 +358,25 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                     switch (i) {
                         case -1: {                               //Non esiste
                             btnAction.setText("Join Event");
-                            setBtnCreator("@" + JFX1EventBeanOut.getEventCreator());
+                            setBtnCreator("@" + jfx1EventBeanOut.getEventCreator());
                             break;
                         }
                         case 0: {                                //Pending
                             btnAction.setText(pending);
                             btnAction.setStyle(orange + radius);
-                            setBtnCreator("@" + JFX1EventBeanOut.getEventCreator());
+                            setBtnCreator("@" + jfx1EventBeanOut.getEventCreator());
                             break;
                         }
                         case 1: {                                //Approvata
                             btnAction.setText("Approved");
                             btnAction.setStyle("-fx-background-color: green;" + radius);
-                            setBtnCreator("@" + JFX1EventBeanOut.getEventCreator());
+                            setBtnCreator("@" + jfx1EventBeanOut.getEventCreator());
                             break;
                         }
                         case 2: {                                //Rejected
                             btnAction.setText("Rejected");
                             btnAction.setStyle(red + radius);
-                            setBtnCreator("@" + JFX1EventBeanOut.getEventCreator());
+                            setBtnCreator("@" + jfx1EventBeanOut.getEventCreator());
                             break;
                         }
                         default:

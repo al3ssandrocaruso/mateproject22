@@ -6,6 +6,11 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
 
 public class JFX1UserSettingPageSetter {
+
+    private JFX1UserSettingPageSetter(){
+        //ignored
+    }
+
     public static  void setter(UserModel userModel, JFX1UserSettingsGUIController uspgc){
         JFX1UserBeanOut userBeanOut = new JFX1UserBeanOut(userModel);
         SettingsApplicationLayer settingsApplicationLayer = new SettingsApplicationLayer(userModel.getId());

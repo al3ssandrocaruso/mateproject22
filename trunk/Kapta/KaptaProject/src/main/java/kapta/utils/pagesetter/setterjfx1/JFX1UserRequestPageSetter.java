@@ -6,6 +6,11 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.dao.listdao.RequestListDao;
 
 public class JFX1UserRequestPageSetter {
+
+    private JFX1UserRequestPageSetter(){
+        //ignore
+    }
+
     public static void setter(JFX1UserRequestPageGUIController jfx1UserRequestPageGUIController, UserModel pageOwner) {
 
         new RequestList(pageOwner, RequestListDao.getAllTypeRequests(pageOwner) , jfx1UserRequestPageGUIController);

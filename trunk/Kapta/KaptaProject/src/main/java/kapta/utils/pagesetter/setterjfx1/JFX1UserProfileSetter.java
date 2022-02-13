@@ -11,6 +11,11 @@ import kapta.utils.dao.listdao.FollowingListDao;
 import kapta.utils.dao.listdao.JoinedListDAO;
 
 public class JFX1UserProfileSetter {
+
+    private JFX1UserProfileSetter(){
+        //ignored
+    }
+
     public static void setter(UserModel userModel, JFX1UserProfileGuiController jfx1UserProfileGuiController) {
 
         FollowerList followerList=new FollowerList(userModel, FollowerListDao.getFollower(userModel),jfx1UserProfileGuiController);

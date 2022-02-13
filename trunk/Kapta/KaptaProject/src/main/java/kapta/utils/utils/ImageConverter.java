@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageConverter {
+
+    private ImageConverter(){
+        //ignore
+    }
+
     private static final int DEFAULT_BUFFER_SIZE = 8192*4;
 
     public static Image convertToFxImage(BufferedImage image) {

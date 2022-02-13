@@ -9,6 +9,11 @@ import kapta.utils.GenericObservableList;
 import java.sql.SQLException;
 
 public class JFX1ClubProfileSetter {
+
+    private JFX1ClubProfileSetter(){
+        //ignore
+    }
+
     public static  void setter(ClubModel clubModel, JFX1ClubProfileGUIcontroller jfx1ClubProfileGUIController){
         try {
             JFX1ClubBeanOut clubBean = new JFX1ClubBeanOut(clubModel, ClubDao.getCreatedEventsList(clubModel, null));

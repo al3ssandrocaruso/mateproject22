@@ -40,7 +40,7 @@ public class ThreadLocalSession implements Runnable
     @Override
     public void run() {
 
-        Platform.runLater(() -> display()); //<- Forma corretta senza code smells
+        Platform.runLater(() -> display());
     }
 
     private Runnable display() {

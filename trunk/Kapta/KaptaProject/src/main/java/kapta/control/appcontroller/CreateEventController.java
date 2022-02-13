@@ -17,6 +17,11 @@ import static kapta.utils.session.ThreadLocalSession.userSession;
 
 public class CreateEventController {
     private static final int SECOND_TOLERANCE = 120; //how many second for token.
+
+    private CreateEventController(){
+        //ignore
+    }
+
     public static EventModel createEvent(EventBean eventBean)  {
         //qua arrivo solo se evento è confermato
         ClubModel clubModel= userSession.get().getClubModel();
@@ -36,16 +41,14 @@ public class CreateEventController {
 
     public static void checkToken(TokenModel token1, TokenModel token2) throws TokenException {
         if(!timeGenerationValidation(token1.getGenerationTime(),token2.getGenerationTime()) || !token1.getToken().equals(token2.getToken())){
-            ErrorHandler.getInstance().TokenException(token2.getToken());
+            ErrorHandler.getInstance().tokenException(token2.getToken());
         }
     }
     public static boolean timeGenerationValidation(LocalDateTime first, LocalDateTime second) {
         long diff = ChronoUnit.SECONDS.between(first, second);
         if(diff<=SECOND_TOLERANCE){
-            System.out.println("TRUE");
             return true;
         }
-        System.out.println("false");
         return false;
     }
 }

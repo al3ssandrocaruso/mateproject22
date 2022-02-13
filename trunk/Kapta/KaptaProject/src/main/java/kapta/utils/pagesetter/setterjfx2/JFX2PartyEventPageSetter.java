@@ -12,6 +12,10 @@ import kapta.utils.dao.listdao.ParticipantListDao;
 
 public class JFX2PartyEventPageSetter {
 
+    private JFX2PartyEventPageSetter(){
+        //ignore
+    }
+
     public static  void setter(Object ob, JFX2PartyEventPageGUIController controller)  {
         if(ob instanceof PartyModel partyModel) {
             JFX1PartyBeanOut partyBeanOut=new JFX1PartyBeanOut(partyModel);
