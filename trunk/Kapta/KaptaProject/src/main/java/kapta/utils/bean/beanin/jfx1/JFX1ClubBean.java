@@ -22,15 +22,15 @@ public class JFX1ClubBean extends GenericUserBean {
     }
 
     //set
-    public void setUsername(String username) { this.username=username;}
+    public void setUsername(String username) { this.username=username+"";}
     public void setEmail(String email) {this.email = email;}
     public void setPassword(String password) {this.password=password;}
     public void setImage(File img){this.img=img;}
-    public void setClubName(String name) {this.name = name;}
-    public void setAddress(String address){this.address = address;}
-    public void setCity(String city){this.city=city;}
+    public void setClubName(String name) {this.name = name+"";}
+    public void setAddress(String address){this.address = address+"";}
+    public void setCity(String city){this.city=city+"";}
     public void setWebsite(String website) throws URISyntaxException, MalformedURLException {
-        URI support = new URI("https://"+website);
+        URI support = new URI("https://"+website+"");
         URL url = support.toURL();
         this.website= url;
     }
