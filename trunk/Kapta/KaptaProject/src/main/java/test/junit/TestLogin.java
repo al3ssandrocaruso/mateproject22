@@ -27,7 +27,7 @@ public class TestLogin {
      */
     //SUCCESS
     @Test
-    public void testLogin() throws SQLException, WrongPasswordException {
+    public void testLogin() throws  WrongPasswordException {
 
         LoginBean loginBean1 = new JFX1LoginBean("a", "a", 0);
         LoginBean loginBean2 = new JFX2LoginBean("b", "b", 1);

@@ -21,7 +21,7 @@ public class TestAuthentication {
      * (ovvero se si tratta di uno user oppure di un clubmanager)
      */
     @Test
-    public void testAuthentication() throws SQLException {
+    public void testAuthentication(){
         int ret = Authentication.checkIsRegistered(0, "a", "a");    //SUCCESS
         int ret1 = Authentication.checkIsRegistered(1, "a", "a");   //FAILED
         int ret2 = Authentication.checkIsRegistered(0, "b", "b");   //FAILED

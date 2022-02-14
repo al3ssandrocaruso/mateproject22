@@ -40,7 +40,6 @@ public class TestUserDao {
     @Test
     public void testUserByUsername() {
         int id = 88;
-        String username = "a";
         String name = "a";
         String secondName = "a";
         String email = "a@a.com";

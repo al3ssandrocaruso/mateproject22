@@ -28,7 +28,7 @@ public class TestFollow {
      */
     //FAILED
     @Test
-    public void testFollow() throws SQLException, WrongPasswordException {
+    public void testFollow() throws  WrongPasswordException {
         LoginBean loginBean1 = new JFX2LoginBean("a", "a", 0);
         UserClubModel a = LoginController.login(loginBean1);
 
