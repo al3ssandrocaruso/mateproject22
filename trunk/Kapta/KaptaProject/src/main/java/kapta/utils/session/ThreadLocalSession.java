@@ -15,10 +15,6 @@ public class ThreadLocalSession implements Runnable
 
     public ThreadLocalSession() {}
 
-    public ThreadLocalSession(String username){
-        usernameSession = username;
-        userSession = new ThreadLocal<>();
-    }
 
     public static void setUsername(String username) {
         usernameSession = username;
