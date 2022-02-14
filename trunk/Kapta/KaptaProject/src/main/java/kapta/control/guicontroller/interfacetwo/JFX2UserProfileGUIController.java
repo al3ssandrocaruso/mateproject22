@@ -18,7 +18,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.*;
 import kapta.application.EventApplicationLayer;
 import kapta.application.PartyApplicationLayer;
