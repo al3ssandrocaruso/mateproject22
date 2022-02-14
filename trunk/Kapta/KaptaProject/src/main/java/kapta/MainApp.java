@@ -9,10 +9,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
         ThreadLocalSession firstUser = new ThreadLocalSession();
-        ThreadLocalSession secondUser = new ThreadLocalSession();
         new Thread(firstUser).start();
-        new Thread(secondUser).start();
-
     }
 
 
