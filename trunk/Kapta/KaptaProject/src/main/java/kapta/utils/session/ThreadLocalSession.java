@@ -13,7 +13,9 @@ public class ThreadLocalSession implements Runnable
     private static String usernameSession;
     private static int intrfc;
 
-    public ThreadLocalSession() {}
+    public ThreadLocalSession() {
+        //ignore
+    }
 
 
     public static void setUsername(String username) {
