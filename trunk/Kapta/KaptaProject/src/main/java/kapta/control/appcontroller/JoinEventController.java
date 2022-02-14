@@ -17,11 +17,11 @@ public class JoinEventController {
 
     public static void sendRequest(RequestBean requestBean, EventModel eventModel) throws ExpiredGreenPassException {
         //UserModel sender, EventModel event, int numDoses, String vaccinationDate
-        if(requestBean.getNumDoses()>5) {
+        if(requestBean.getNumDoses()>1 || !eventModel.isGreenPass()) {
             RequestModel toSend = new RequestModel(eventModel,  ThreadLocalSession.getUserSession().get().getUserModel(), 0, eventModel.getEventCreator(), eventModel.isGreenPass(), requestBean.getVaccinationDate(), requestBean.getNumDoses());
             RequestDao.sendNewRequest(toSend);
         }else{
-                Trigger.expiredGreenPass();
+            Trigger.expiredGreenPass();
         }
 
     }
