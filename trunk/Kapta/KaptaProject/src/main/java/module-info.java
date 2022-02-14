@@ -17,9 +17,14 @@ module kapta.classes {
     requires cose.java;
     requires cbor;
     requires java.mail;
+    requires junit;
+    requires org.seleniumhq.selenium.api;
+    requires org.seleniumhq.selenium.chrome_driver;
 
+    exports test.junit;
+    exports test.selenium;
 
-    opens kapta to javafx.fxml; //hi
+    opens kapta to javafx.fxml;
     exports kapta;
 
     exports kapta.utils.dao;
