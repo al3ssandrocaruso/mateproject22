@@ -51,10 +51,10 @@ public class RequestListDao {
                         String vaccinationDate = rs.getString(8);
                         int numDoses = rs.getInt(7);
                         //Nell'app controller andrebbe fatta l'istanziazione della model
-                        requestModel=new RequestModel(eventModel,UserDao.getUserById(idSender),status,eventModel.getEventCreator(),requestId,gp, vaccinationDate, numDoses);
+                        requestModel=new RequestModel(eventModel,UserDao.getUserById(idSender), eventModel.getEventCreator(),requestId,gp, vaccinationDate, numDoses);
                         output.add(requestModel);
                     } else {
-                        requestModel=new RequestModel(eventModel,UserDao.getUserById(idSender),status,eventModel.getEventCreator(),requestId,gp,null, 0);
+                        requestModel=new RequestModel(eventModel,UserDao.getUserById(idSender),eventModel.getEventCreator(),requestId,gp,null, 0);
                         output.add(requestModel);
                     }
                 }while(rs.next());
@@ -88,10 +88,10 @@ public class RequestListDao {
                 if(gp){
                     String vaccinationDate = rs.getString(8);
                     int numDoses = rs.getInt(7);
-                    requestModel=new RequestModel(EventDao.getEventbyEventId(idEvent), UserDao.getUserById(idSender),0,receiver,requestId,gp, vaccinationDate, numDoses);
+                    requestModel=new RequestModel(EventDao.getEventbyEventId(idEvent), UserDao.getUserById(idSender),receiver,requestId,gp, vaccinationDate, numDoses);
                     output.add(requestModel); //qua request è ok!
                 } else {
-                    requestModel=new RequestModel(EventDao.getEventbyEventId(idEvent),UserDao.getUserById(idSender),0,receiver,requestId,gp,null, 0);
+                    requestModel=new RequestModel(EventDao.getEventbyEventId(idEvent),UserDao.getUserById(idSender),receiver,requestId,gp,null, 0);
                     output.add(requestModel);
                 }
 

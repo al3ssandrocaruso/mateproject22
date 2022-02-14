@@ -10,12 +10,11 @@ public class EventModel extends PartyEventModel {
     private boolean greenPass;
     private ClubModel eventCreator;
 
-    public EventModel(String eventName, Double eventPrice, int status, String eventAddress, PartyEventSchedule partyEventSchedule,  boolean greenPass, File image, ClubModel clubModel){
+    public EventModel(String eventName, Double eventPrice, int status, String eventAddress, PartyEventSchedule partyEventSchedule,  boolean greenPass, File image){
 
         super(eventName, eventAddress, status, 1, image, partyEventSchedule);
         this.setEventPrice(eventPrice);
         this.setGreenPass(greenPass);
-        this.setEventCreator(clubModel);
     }
 
     public  EventModel (int id ){

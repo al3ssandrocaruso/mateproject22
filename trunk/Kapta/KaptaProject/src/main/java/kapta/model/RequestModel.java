@@ -12,7 +12,7 @@ public class RequestModel {
     private EventModel event;
     private int requestId;
     private int eventId;
-    private int status;
+    private int status=0;
     private ClubModel receiver;
 
 
@@ -78,10 +78,9 @@ public class RequestModel {
         this.event = event;
     }
 
-    public RequestModel(EventModel event, UserModel sender, int status, ClubModel receiver, int requestId,boolean greenPass,String vaccDate,int numDoses) {
+    public RequestModel(EventModel event, UserModel sender, ClubModel receiver, int requestId,boolean greenPass,String vaccDate,int numDoses) {
         this.setSender(sender);
         this.setEvent(event);
-        this.setStatus(status);
         this.setReceiver(receiver);
         this.setRequestId(requestId);
         this.setHasGreenPass(greenPass);
