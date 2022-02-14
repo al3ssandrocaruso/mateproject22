@@ -2,6 +2,7 @@ package kapta.utils.dao;
 
 
 import kapta.model.PartyModel;
+import kapta.utils.bean.beanin.PartyEventSchedule;
 import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;
@@ -63,13 +64,12 @@ public class PartyDao {
             rst.first();
             new SimpleDateFormat("MM/dd/yyyy");
             PartyModel pm = new PartyModel(rst.getInt(1));
-            pm.setDate(rst.getDate(4));
+            PartyEventSchedule partyEventSchedule = new PartyEventSchedule(rst.getDate(4),rst.getTime(6),rst.getObject(10, LocalTime.class) );
+            pm.setPartyEventSchedule(partyEventSchedule);
             pm.setName(rst.getString(3));
             pm.setPartyCreator(UserDao.getUserByUsername(rst.getString(2)));
             pm.setAddress(rst.getString(5));
-            pm.setDuration(rst.getTime(6));
             pm.setStatus(rst.getInt(9));
-            pm.setOrario(rst.getObject(10, LocalTime.class));list.add(pm);
             InputStream in = (rst.getBinaryStream(8));
             String filePath= pm.getName()+"pic"+".png";
             File file = new File(filePath);
@@ -96,14 +96,13 @@ public class PartyDao {
             ResultSet rst = Query.askPartyInfoById(partyId, stm);
             rst.first();
             partyModel= new PartyModel(rst.getInt(1)) ;
-            partyModel.setDate(rst.getDate(4));
+            PartyEventSchedule partyEventSchedule = new PartyEventSchedule(rst.getDate(4),rst.getTime(6),rst.getObject(10, LocalTime.class) );
             partyModel.setName(rst.getString(3));
             partyModel.setPartyCreator(UserDao.getUserByUsername(rst.getString(2)));
-            partyModel.setOrario(rst.getObject(10, LocalTime.class));
             partyModel.setStatus(rst.getInt(9));
-            partyModel.setDuration(rst.getTime(6));
             partyModel.setPartyCreator(UserDao.getUserByUsername(rst.getString(2)));
             InputStream in = (rst.getBinaryStream(8));
+            partyModel.setPartyEventSchedule(partyEventSchedule);
             String filePath= partyModel.getName()+"pic"+".png";
             File file = new File(filePath);
             ImageConverter.copyInputStreamToFile(in, file);

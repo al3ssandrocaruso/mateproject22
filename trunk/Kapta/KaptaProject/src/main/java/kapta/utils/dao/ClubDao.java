@@ -3,6 +3,7 @@ package kapta.utils.dao;
 import kapta.model.EventModel;
 import kapta.model.lists.CreatedEventList;
 import kapta.model.profiles.ClubModel;
+import kapta.utils.bean.beanin.PartyEventSchedule;
 import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;
@@ -80,13 +81,13 @@ public class ClubDao {
                 eventModel.setEventCreator(ClubDao.clubModelByID(rs.getInt(2)));
 
                 eventModel.setAddress(rs.getString(8));
-                eventModel.setDuration(rs.getTime(9));
-                eventModel.setDate(rs.getDate(7));
+                PartyEventSchedule partyEventSchedule = new PartyEventSchedule(rs.getDate(7), rs.getTime(9) , rs.getTime(12).toLocalTime());
                 InputStream in = (rs.getBinaryStream(11));
                 String filePath = eventModel.getName() + "pic" + ".png";
                 File file = new File(filePath);
                 ImageConverter.copyInputStreamToFile(in, file);
                 eventModel.setImg(file);
+                eventModel.setPartyEventSchedule(partyEventSchedule);
                 createdEventList.addEvent(eventModel);
             } while (rs.next());
         }catch (MysqlConnectionFailed | WrongQueryException e){

@@ -1,6 +1,7 @@
 package kapta.utils.dao;
 import kapta.model.EventModel;
 import kapta.model.profiles.ClubModel;
+import kapta.utils.bean.beanin.PartyEventSchedule;
 import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;
@@ -86,7 +87,8 @@ public class EventDao {
             eM.setEventCreator(ClubDao.clubModelByID(rst.getInt(2)));
             eM.setGreenPass((rst.getBoolean(4)));
             eM.setName(rst.getString(6));
-            eM.setDate(rst.getDate(7));
+            PartyEventSchedule partyEventSchedule = new PartyEventSchedule(rst.getDate(7),rst.getTime(9), rst.getObject(12, LocalTime.class) );
+            eM.setPartyEventSchedule(partyEventSchedule);
             eM.setStatus(rst.getInt(13));
             InputStream in = (rst.getBinaryStream(11));
             String filePath = eM.getName() + "pic" + ".png";
@@ -122,10 +124,9 @@ public class EventDao {
                 eM.setEventPrice(rst.getDouble(5));
                 eM.setName(rst.getString(6));
                 eM.setGreenPass(rst.getBoolean(4));
-                eM.setOrario(rst.getObject(12, LocalTime.class));
-                eM.setDuration(rst.getTime(9));
                 eM.setEventCreator(owner);
-                eM.setDate(rst.getDate(7));
+                PartyEventSchedule partyEventSchedule = new PartyEventSchedule(rst.getDate(7),rst.getTime(9), rst.getObject(12, LocalTime.class) );
+                eM.setPartyEventSchedule(partyEventSchedule);
                 eM.setStatus(rst.getInt(13));
                 InputStream in = (rst.getBinaryStream(11));
                 String filePath = eM.getName() + "pic" + ".png";

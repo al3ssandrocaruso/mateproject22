@@ -1,5 +1,6 @@
 package kapta.model;
 
+import kapta.utils.bean.beanin.PartyEventSchedule;
 import java.io.File;
 import java.sql.Time;
 import java.time.*;
@@ -12,51 +13,41 @@ public abstract class PartyEventModel implements GenericModel {
     protected int status;
     protected int id;
     protected int type; //0 ->PARTY ; 1-> EVENT
-    protected Date date;
-    protected Time duration;
-    protected LocalTime orario;
+    PartyEventSchedule partyEventSchedule;
     protected File img;
 
-    protected PartyEventModel (String name, String address, int status, int type, Date date, Time duration, LocalTime orario, File img){
+    protected PartyEventModel (String name, String address, int status, int type,  File img, PartyEventSchedule partyEventSchedule){
         setName(name);
         setAddress(address);
-        setOrario(orario);
         setStatus(status);
-
         setType(type);
-        setDate(date);
-        setDuration(duration);
         setImg(img );
+        setPartyEventSchedule(partyEventSchedule);
     }
 
-    protected PartyEventModel (String name, String address, int status, int id, int type, Date date, Time duration, LocalTime orario, File img ){
+    protected PartyEventModel (String name, String address, int status, int id, int type, File img, PartyEventSchedule partyEventSchedule ){
         setName(name);
         setAddress(address);
-        setOrario(orario);
         setStatus(status);
         setId(id);
         setType(type);
-        setDate(date);
-        setDuration(duration);
         setImg(img );
+        setPartyEventSchedule(partyEventSchedule);
     }
     protected PartyEventModel(int id, int t){
 
         setId(id);
         setType(t);
     }
+    public void setPartyEventSchedule(PartyEventSchedule partyEventSchedule){
+        this.partyEventSchedule = partyEventSchedule;
+    }
     public void setType(int type) {this.type = type;}
     public void setName(String name) {
         this.name = name;
     }
-    public void setDate(Date date) {
-        this.date = date;
-    }
     public void setAddress(String address) {
         this.address = address;
-    }
-    public void setDuration(Time  duration) {
-        this.duration=duration;
     }
     public void setImg(File img){this.img = img;}
     public void setId(int id) {
@@ -65,22 +56,19 @@ public abstract class PartyEventModel implements GenericModel {
     public void setStatus(int status) {
         this.status = status;
     }
-    public void setOrario(LocalTime orario) {
-        this.orario = orario;
-    }
 
     public int getType() {return type;}
     public String getName() {
         return name;
     }
     public Date getDate() {
-        return date;
+        return partyEventSchedule.getDate();
     }
     public String getAddress() {
         return address;
     }
     public Time getDuration() {
-        return duration;
+        return partyEventSchedule.getDuration();
     }
     public File getImg() {return img;}
     public int getId() {
@@ -90,7 +78,7 @@ public abstract class PartyEventModel implements GenericModel {
         return status;
     }
     public LocalTime getOrario() {
-        return orario;
+        return partyEventSchedule.getOrario();
     }
 }
 

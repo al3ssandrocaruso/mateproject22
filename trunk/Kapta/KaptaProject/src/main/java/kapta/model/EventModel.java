@@ -1,12 +1,8 @@
 package kapta.model;
 
 import kapta.model.profiles.ClubModel;
-
-
+import kapta.utils.bean.beanin.PartyEventSchedule;
 import java.io.File;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.Date;
 
 public class EventModel extends PartyEventModel {
 
@@ -14,8 +10,9 @@ public class EventModel extends PartyEventModel {
     private boolean greenPass;
     private ClubModel eventCreator;
 
-    public EventModel(String eventName, Double eventPrice, int status, String eventAddress, Time eventDuration, LocalTime eventOrario, Date eventDate, boolean greenPass, File image, ClubModel clubModel){
-        super(eventName, eventAddress, status, 1, eventDate, eventDuration, eventOrario, image);
+    public EventModel(String eventName, Double eventPrice, int status, String eventAddress, PartyEventSchedule partyEventSchedule,  boolean greenPass, File image, ClubModel clubModel){
+
+        super(eventName, eventAddress, status, 1, image, partyEventSchedule);
         this.setEventPrice(eventPrice);
         this.setGreenPass(greenPass);
         this.setEventCreator(clubModel);

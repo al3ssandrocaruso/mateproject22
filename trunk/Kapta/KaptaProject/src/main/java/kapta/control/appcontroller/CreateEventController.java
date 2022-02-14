@@ -3,6 +3,7 @@ package kapta.control.appcontroller;
 import kapta.model.EventModel;
 import kapta.model.TokenModel;
 import kapta.utils.bean.beanin.EventBean;
+import kapta.utils.bean.beanin.PartyEventSchedule;
 import kapta.utils.dao.EventDao;
 import kapta.model.profiles.ClubModel;
 import kapta.utils.email.SendEmail;
@@ -24,7 +25,9 @@ public class CreateEventController {
     public static EventModel createEvent(EventBean eventBean)  {
 
         ClubModel clubModel= ThreadLocalSession.getUserSession().get().getClubModel();
-        EventModel eventModel=new EventModel(eventBean.getEventName(), eventBean.getEventPrice(), 0, eventBean.getEventAddress(), eventBean.getEventDuration(), eventBean.getEventOrario(), eventBean.getEventDate(), eventBean.isGreenPass(), eventBean.getEventImg(), clubModel);
+
+        PartyEventSchedule partyEventSchedule = new PartyEventSchedule(eventBean.getEventDate(), eventBean.getEventDuration(), eventBean.getEventOrario());
+        EventModel eventModel=new EventModel(eventBean.getEventName(), eventBean.getEventPrice(), 0, eventBean.getEventAddress(), partyEventSchedule,  eventBean.isGreenPass(), eventBean.getEventImg(), clubModel);
             EventDao.saveNewEvent(eventModel);
             String toWrite="Nome: "+eventModel.getName()+"\nData: "+eventModel.getDate()+"\nDuration: "+eventModel.getDuration()+"\nHour: "+eventModel.getOrario()+"\nPrice: "+eventModel.getEventPrice()+"$";
             SendEmail.send(clubModel.getEmail(),"Evento creato con successo!",toWrite);

@@ -2,6 +2,8 @@ package kapta.model;
 
 
 import kapta.model.profiles.UserModel;
+import kapta.utils.bean.beanin.PartyEventSchedule;
+
 import java.io.File;
 import java.sql.Time;
 import java.time.LocalTime;
@@ -11,13 +13,13 @@ public class PartyModel extends PartyEventModel {
 
     private UserModel partyCreator;
 
-    public PartyModel(String eventName,  int status, String eventAddress, Time eventDuration, LocalTime eventOrario, Date eventDate,File image, UserModel creator){
-        super(eventName, eventAddress, status, 0,  eventDate, eventDuration, eventOrario, image);
+    public PartyModel(String eventName,  int status, String eventAddress,File image, UserModel creator, PartyEventSchedule partyEventSchedule){
+        super(eventName, eventAddress, status, 0, image, partyEventSchedule);
         this.setPartyCreator(creator);
     }
 
-    public PartyModel(String eventName, int id ,  int status, String eventAddress, Time eventDuration, LocalTime eventOrario, Date eventDate,File image, UserModel creator){
-        super(eventName, eventAddress, status, id,0 ,eventDate, eventDuration, eventOrario, image);
+    public PartyModel(String eventName, int id ,  int status, String eventAddress,File image, UserModel creator, PartyEventSchedule partyEventSchedule){
+        super(eventName, eventAddress, status, id,0 , image,partyEventSchedule);
         this.setPartyCreator(creator);
     }
     public PartyModel(int id){
