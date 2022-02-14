@@ -77,8 +77,10 @@ public class JFX1CreateEventGUIController implements Initializable {
     }
 
     public void confirmCreateEventAction(ActionEvent actionEvent){
-        JFX1EventBean eventBean =new JFX1EventBean(textFieldEventName.getText(),textFieldEventPrice.getText(),textFieldEventAddress.getText(),textFieldEventDuration.getText(), textFieldEventTimeH.getText(),textFieldEventTimeM.getText(), clubProfileApplicationLayer.getImgEvent(), datePickerEventDate.getValue(), checkBoxGreenPass.isSelected());
+        JFX1EventBean eventBean =new JFX1EventBean(textFieldEventName.getText(),textFieldEventPrice.getText(),textFieldEventAddress.getText(),textFieldEventDuration.getText(), textFieldEventTimeH.getText(),textFieldEventTimeM.getText(),  datePickerEventDate.getValue());
         CreateEventController.createEvent(eventBean);
+        eventBean.setEventImg(clubProfileApplicationLayer.getImgEvent());
+        eventBean.setGreenPass(checkBoxGreenPass.isSelected());
         ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
         rsip.replaceSceneAndInitializePage(actionEvent, "/JFX1/JFX1ClubProfile.fxml");
     }

@@ -14,6 +14,7 @@ public class MysqlConnection {
     }
 
     private static Connection connection;
+
     public static Statement mysqlConnection() throws MysqlConnectionFailed {
         Statement stm = null;
         try {

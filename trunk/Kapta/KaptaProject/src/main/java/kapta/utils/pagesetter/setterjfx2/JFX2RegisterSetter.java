@@ -20,7 +20,7 @@ public class JFX2RegisterSetter {
             JFX2UserBean jfx2UserBean = new JFX2UserBean(null, preInfo[2], null, preInfo[0], preInfo[1], preInfo[3]);
             jfx2ConcludeSubmitGUIController.setAll(jfx2UserBean, type);
         } else {
-            JFX2ClubBean jfx2ClubBean = new JFX2ClubBean(null, preInfo[4], null,  null, preInfo[0], preInfo[1], preInfo[2], preInfo[3]);
+            JFX2ClubBean jfx2ClubBean = new JFX2ClubBean(null, preInfo[4], null, preInfo[0], preInfo[1], preInfo[2], preInfo[3]);
             jfx2ConcludeSubmitGUIController.setAll(jfx2ClubBean, type);
         }
     }

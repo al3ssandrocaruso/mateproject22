@@ -13,11 +13,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class JFX2ClubBean extends GenericUserBean {
-    public JFX2ClubBean(String username, String email, String password, File img, String clubName, String address, String city, String website) throws MalformedURLException, URISyntaxException, InputNullException, EmailValidatorException {
+    public JFX2ClubBean(String username, String email, String password, String clubName, String address, String city, String website) throws MalformedURLException, URISyntaxException, InputNullException, EmailValidatorException {
         setUsername(username);
         setEmail(email);
         setPassword(password);
-        setImage(img);
         setClubName(clubName);
         setAddress(address);
         setCity(city);

@@ -52,6 +52,7 @@ public class RequestListDao {
                         int numDoses = rs.getInt(7);
                         //Nell'app controller andrebbe fatta l'istanziazione della model
                         requestModel=new RequestModel(eventModel,UserDao.getUserById(idSender), eventModel.getEventCreator(),requestId,gp, vaccinationDate, numDoses);
+                        requestModel.setStatus(status);
                         output.add(requestModel);
                     } else {
                         requestModel=new RequestModel(eventModel,UserDao.getUserById(idSender),eventModel.getEventCreator(),requestId,gp,null, 0);

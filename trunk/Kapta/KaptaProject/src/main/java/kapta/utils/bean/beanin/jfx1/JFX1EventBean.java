@@ -11,15 +11,13 @@ import java.time.LocalTime;
 
 public class JFX1EventBean extends EventBean {
 
-    public JFX1EventBean(String eventName, String eventPrice, String eventAddress, String eventDuration, String eventTimeH, String eventTimeM, File img, LocalDate eventDate, boolean selected){
+    public JFX1EventBean(String eventName, String eventPrice, String eventAddress, String eventDuration, String eventTimeH, String eventTimeM, LocalDate eventDate){
         setEventName(eventName);
         setEventPrice(eventPrice);
         setEventAddress(eventAddress);
         setEventDuration(eventDuration);
         setEventTime(eventTimeH,eventTimeM);
-        setEventImg(img);
         setEventDate(eventDate);
-        setGreenPass(selected);
     }
 
     //Set

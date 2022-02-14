@@ -1,6 +1,5 @@
 package kapta.utils.bean.beanin;
 
-import java.io.File;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Date;

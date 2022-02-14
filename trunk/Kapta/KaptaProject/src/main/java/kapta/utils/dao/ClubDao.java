@@ -178,6 +178,7 @@ public class ClubDao {
     private static void setInfo(ResultSet rs, ClubModel clubModel) {
         try {
             InfoLogged infoLogged = new InfoLogged(rs.getString(2), rs.getString(4), null, 1);
+            clubModel.setInfoLogged(infoLogged);
             clubModel.setNumFollower(rs.getInt(5));
             clubModel.setCity(rs.getString(6));
             clubModel.setAddress(rs.getString(7));

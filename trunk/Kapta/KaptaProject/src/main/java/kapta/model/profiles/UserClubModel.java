@@ -33,7 +33,7 @@ public abstract class UserClubModel implements GenericModel {
         setProfileImg(profileImg);
     }
 
-    private void setInfoLogged(InfoLogged infoLogged) {this.infoLogged = infoLogged;}
+    public void setInfoLogged(InfoLogged infoLogged) {this.infoLogged = infoLogged;}
     public void setNumFollower(int numFollower) {this.numFollower = numFollower;}
     public void setId(int id) {this.id = id;}
     public void setProfileImg(File profileImg) {this.profileImg= profileImg ;}
