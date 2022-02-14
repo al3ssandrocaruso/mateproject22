@@ -13,11 +13,12 @@ public class FillDialogBox {
         //ignored
     }
     public static int fill(Label label1, Button button, Label label2, int numSbagliate) {
+
         label1.setVisible(false);
         button.setVisible(false);
         label2.setText("Retry in ");
         Timeline tm = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<>() {
-            int i = (5*numSbagliate)+1;
+            int i = 5*numSbagliate ;
             @Override
             public void handle(ActionEvent actionEvent) {
                 label2.setText("Retry in "+i);

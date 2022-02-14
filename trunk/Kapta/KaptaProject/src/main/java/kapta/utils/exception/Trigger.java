@@ -25,9 +25,7 @@ public class Trigger {
     public static void emptyField(String field) throws InputNullException {
         throw new InputNullException(field);
     }
-    public static void urlWrong(String site) throws WrongURLException {
-        throw new WrongURLException(site);
-    }
+
 
     public static void wrongToken(String token) throws TokenException {
         throw new TokenException(token);

@@ -58,7 +58,7 @@ public class JFX1CreateEventGUIController implements Initializable {
     @FXML
     private Button btnSubmitRequest;
 
-    private int numSbagliate=0;
+    private int numSbagliate=1;
     private String arial="Arial";
     private ClubProfileApplicationLayer clubProfileApplicationLayer;
 
@@ -122,8 +122,8 @@ public class JFX1CreateEventGUIController implements Initializable {
                 this.getBtnSubmitRequest().setVisible(false);
                 dialog.close();
             }catch (TokenException t){
-                ErrorHandler.getInstance().reportFinalException(t);
                 numSbagliate = FillDialogBox.fill(label1, button, label2, numSbagliate);
+                ErrorHandler.getInstance().reportFinalException(t);
             }
         });
     }
