@@ -76,4 +76,6 @@ module kapta.classes {
     opens kapta.utils.bean.beanin.jfx1 to javafx.fxml;
     exports kapta.utils.bean.beanin.jfx2;
     opens kapta.utils.bean.beanin.jfx2 to javafx.fxml;
+    exports kapta.utils.bean;
+    opens kapta.utils.bean to javafx.fxml;
 }
