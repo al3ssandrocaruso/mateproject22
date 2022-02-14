@@ -5,9 +5,6 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.bean.beanin.PartyEventSchedule;
 
 import java.io.File;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.Date;
 
 public class PartyModel extends PartyEventModel {
 

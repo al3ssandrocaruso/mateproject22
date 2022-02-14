@@ -61,6 +61,7 @@ public class CRUD {
         try {
             stm.executeUpdate(saveStm);
             PreparedStatement preparedStatement = MysqlConnection.upProfileEventPhotoPS();
+            if(img==null){System.out.println("CIAO");}
             InputStream in = new FileInputStream(img);
             preparedStatement.setBlob(1, in);
             preparedStatement.setInt(2, EventDao.getIdByEventName(eventName));
