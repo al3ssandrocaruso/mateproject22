@@ -3,7 +3,7 @@ package kapta.control.appcontroller;
 import kapta.model.PartyModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.bean.beanin.PartyBean;
-import kapta.utils.bean.beanin.PartyEventSchedule;
+import kapta.utils.bean.PartyEventSchedule;
 import kapta.utils.dao.PartyDao;
 import kapta.utils.session.ThreadLocalSession;
 

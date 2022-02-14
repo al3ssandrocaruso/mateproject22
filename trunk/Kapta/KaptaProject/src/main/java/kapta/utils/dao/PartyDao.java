@@ -2,7 +2,7 @@ package kapta.utils.dao;
 
 
 import kapta.model.PartyModel;
-import kapta.utils.bean.beanin.PartyEventSchedule;
+import kapta.utils.bean.PartyEventSchedule;
 import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;
@@ -18,11 +18,9 @@ import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class PartyDao {

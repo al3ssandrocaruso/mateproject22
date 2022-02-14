@@ -1,9 +1,10 @@
-package kapta.utils.bean.beanin;
+package kapta.utils.bean;
 
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Date;
 
+//POJO
 public class PartyEventSchedule {
 
     public PartyEventSchedule(Date date, Time duration, LocalTime orario) {

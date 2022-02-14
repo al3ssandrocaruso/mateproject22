@@ -1,7 +1,8 @@
 package kapta.utils.dao;
 import kapta.model.EventModel;
 import kapta.model.profiles.ClubModel;
-import kapta.utils.bean.beanin.PartyEventSchedule;
+import kapta.utils.bean.InfoEvent;
+import kapta.utils.bean.PartyEventSchedule;
 import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;
@@ -18,7 +19,6 @@ import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -36,10 +36,7 @@ public class EventDao {
 
     public static void saveNewEvent(EventModel eventModel) {
         String eventName = eventModel.getName();
-        LocalTime eventTime = eventModel.getOrario();
-        Time eventDuration = eventModel.getDuration();
         String eventAddress = eventModel.getAddress();
-        Date eventPartyDate = eventModel.getDate();
 
         Statement stm = null;
         try {
@@ -55,12 +52,9 @@ public class EventDao {
             }
 
             Double price = eventModel.getEventPrice();
-            Time sqlOrarioEvento = Time.valueOf(eventTime);
-            java.sql.Date sqlEventDate = new java.sql.Date(eventPartyDate.getTime());
-            new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-            Date date = new Date(System.currentTimeMillis());
-            java.sql.Date sqlCreationDate = new java.sql.Date(date.getTime());
-            CRUD.saveNewEvent(stm, eventName, sqlOrarioEvento, eventDuration, eventAddress, creatorId, obbG, sqlEventDate, sqlCreationDate, 0, price, eventModel.getImg());
+            new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
+            InfoEvent infoEvent = new InfoEvent(eventAddress, price, obbG);
+            CRUD.saveNewEvent(stm, eventModel.getPartyEventSchedule(), eventName, infoEvent, creatorId, eventModel.getImg());
         } catch (MysqlConnectionFailed | WrongCrudException e) {
             ErrorHandler.getInstance().reportFinalException(e);
         }

@@ -1,6 +1,7 @@
 package kapta.utils.db;
 
-import kapta.utils.bean.beanin.PartyEventSchedule;
+import kapta.utils.bean.InfoEvent;
+import kapta.utils.bean.PartyEventSchedule;
 import kapta.utils.dao.EventDao;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
@@ -48,25 +49,29 @@ public class CRUD {
         }
     }
 
-    public static void saveNewEvent(Statement stm, String eventName, Time sqlOrarioEvento, Time eventDuration, String eventAddress, int idCreator, int obb, Date sqlEventDate,Date creationDate,  int status, double price, File img) throws  MysqlConnectionFailed, WrongCrudException {
-        String stringOrarioEvento = sqlOrarioEvento.toString();
-        String durationToString = eventDuration.toString();
-        String sqlEventDateString = sqlEventDate.toString();
-
-        String priceS = price + "";
+    public static void saveNewEvent(Statement stm, PartyEventSchedule partyEventSchedule, String eventName, InfoEvent infoEvent, int idCreator, File img) throws  MysqlConnectionFailed, WrongCrudException {
+        String stringOrarioEvento = partyEventSchedule.getOrario().toString();
+        Time sqlOrarioEvento = Time.valueOf(partyEventSchedule.getOrario());
+        java.sql.Date sqlEventDate = new  java.sql.Date(partyEventSchedule.getDate().getTime());
+        String  durationToString= sqlOrarioEvento.toString();
+        String sqlEventDateString= sqlEventDate.toString();
+        String priceS = infoEvent.getPrice() + "";
+        java.sql.Date cdate = new java.sql.Date(System.currentTimeMillis());
+        String creationDate = cdate.toString();
 
         String saveStm = String.format("INSERT INTO `Evento` ( `Creator`, `numRequest`, `obbGreenPass`, `price`, `name`, `date`, `address`, `duration`, `creationDate`, `orario`, `status` ) " +
-                "VALUES ('%d', '%d', '%d','%s', '%s'  , '%s', '%s','%s', '%s','%s' ,'%d');", idCreator , 0,obb , priceS,eventName ,  sqlEventDateString, eventAddress, durationToString, creationDate,  stringOrarioEvento,status);
+                "VALUES ('%d', '%d', '%d','%s', '%s'  , '%s', '%s','%s', '%s','%s' ,'%d');", idCreator , 0, infoEvent.getObb() , priceS,eventName ,  sqlEventDateString, infoEvent.getAddress(), durationToString, creationDate,  stringOrarioEvento,0);
 
+        System.out.println(saveStm);
         try {
             stm.executeUpdate(saveStm);
             PreparedStatement preparedStatement = MysqlConnection.upProfileEventPhotoPS();
-            if(img==null){System.out.println("CIAO");}
             InputStream in = new FileInputStream(img);
             preparedStatement.setBlob(1, in);
             preparedStatement.setInt(2, EventDao.getIdByEventName(eventName));
             preparedStatement.executeUpdate();
         } catch (SQLException | FileNotFoundException e) {
+            System.out.println(e.getMessage());
             if(e instanceof  SQLException sql ){
                 ErrorHandler.getInstance().sqlexceptioncrudhandler(sql);
             }

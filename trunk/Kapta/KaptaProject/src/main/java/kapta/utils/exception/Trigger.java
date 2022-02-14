@@ -37,6 +37,7 @@ public class Trigger {
         throw  new DBConnectionException();
     }
     public static void triggerGenericException(Exception e) throws GenericException {
+        System.out.println(e.getCause());
         GenericException g = new GenericException();
         g.initCause(e.getCause());
         throw g;

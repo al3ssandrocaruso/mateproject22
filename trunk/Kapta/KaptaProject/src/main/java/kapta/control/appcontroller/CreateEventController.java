@@ -3,7 +3,7 @@ package kapta.control.appcontroller;
 import kapta.model.EventModel;
 import kapta.model.TokenModel;
 import kapta.utils.bean.beanin.EventBean;
-import kapta.utils.bean.beanin.PartyEventSchedule;
+import kapta.utils.bean.PartyEventSchedule;
 import kapta.utils.dao.EventDao;
 import kapta.model.profiles.ClubModel;
 import kapta.utils.email.SendEmail;

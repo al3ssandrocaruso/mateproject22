@@ -4,7 +4,7 @@ import kapta.model.EventModel;
 import kapta.model.lists.CreatedEventList;
 import kapta.model.profiles.ClubModel;
 import kapta.utils.bean.InfoLogged;
-import kapta.utils.bean.beanin.PartyEventSchedule;
+import kapta.utils.bean.PartyEventSchedule;
 import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;

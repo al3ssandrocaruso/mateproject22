@@ -2,7 +2,7 @@ package kapta.model;
 
 
 import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanin.PartyEventSchedule;
+import kapta.utils.bean.PartyEventSchedule;
 
 import java.io.File;
 

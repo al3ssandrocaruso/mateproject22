@@ -1,5 +1,6 @@
 package kapta.utils.bean;
 
+//POJO
 public class InfoLogged {
     private String username;
     private String password;

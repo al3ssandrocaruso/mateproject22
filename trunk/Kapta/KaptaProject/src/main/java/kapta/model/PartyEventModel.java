@@ -1,6 +1,6 @@
 package kapta.model;
 
-import kapta.utils.bean.beanin.PartyEventSchedule;
+import kapta.utils.bean.PartyEventSchedule;
 import java.io.File;
 import java.sql.Time;
 import java.time.*;
