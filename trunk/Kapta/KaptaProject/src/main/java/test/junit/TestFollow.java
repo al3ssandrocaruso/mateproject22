@@ -10,8 +10,6 @@ import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.utils.FollowUtils;
 import org.junit.Test;
 
-import java.sql.SQLException;
-
 import static org.junit.Assert.assertEquals;
 
 /*

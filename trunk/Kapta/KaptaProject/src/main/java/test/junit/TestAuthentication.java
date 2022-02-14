@@ -3,7 +3,6 @@ package test.junit;
 import kapta.utils.utils.Authentication;
 import org.junit.Test;
 
-import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 

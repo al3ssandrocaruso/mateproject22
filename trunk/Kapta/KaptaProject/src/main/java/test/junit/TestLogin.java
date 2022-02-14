@@ -8,7 +8,6 @@ import kapta.utils.bean.beanin.LoginBean;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import org.junit.Test;
 
-import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 
