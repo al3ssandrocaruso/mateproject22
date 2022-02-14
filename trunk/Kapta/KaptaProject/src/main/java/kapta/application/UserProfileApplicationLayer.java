@@ -173,7 +173,7 @@ public class UserProfileApplicationLayer {
         return FollowUtils.doAFollowB((UserModel)getWhoIam(), getUserModel());
     }
     public void getJoinedVisitedUserList(){
-        JoinedListDAO.getJoined((UserModel) getWhoIam(), getJFX2UserProfileGUIController());
+        JoinedListDAO.getJoined(getUserModel(), getJFX2UserProfileGUIController());
     }
     public void followVisitedUser(){
         FollowUserController.follow(getUserModel(), (UserModel) getWhoIam(), getFollowerList());

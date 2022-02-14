@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import kapta.control.appcontroller.DeletePartyEventController;
 import kapta.control.appcontroller.JoinEventController;
 import kapta.model.EventModel;
+import kapta.model.lists.ParticipantsList;
 import kapta.model.profiles.UserClubModel;
 import kapta.utils.bean.beanin.RequestBean;
 import kapta.utils.dao.RequestDao;
@@ -33,6 +34,8 @@ public class EventApplicationLayer {
     public UserClubModel getWhoIam() {
         return whoIam;
     }
+
+
 
     public void setWhoIam() {
         int type= ThreadLocalSession.getUserSession().get().getType();

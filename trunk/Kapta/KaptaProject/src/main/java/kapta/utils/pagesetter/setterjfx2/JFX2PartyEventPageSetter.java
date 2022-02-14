@@ -20,14 +20,14 @@ public class JFX2PartyEventPageSetter {
         if(ob instanceof PartyModel partyModel) {
             JFX1PartyBeanOut partyBeanOut=new JFX1PartyBeanOut(partyModel);
             PartyApplicationLayer partyApplication=new PartyApplicationLayer(partyModel);
+            partyApplication.setParticipantsList(ParticipantListDao.getParticipantList(partyModel, controller));
             controller.setAllParty(partyBeanOut,partyApplication);
-            ParticipantListDao.getParticipantList(partyModel, controller);
         }
         else if(ob instanceof EventModel eventModel){
             JFX1EventBeanOut eventBeanOut=new JFX1EventBeanOut(eventModel);
             EventApplicationLayer eventApplication= new EventApplicationLayer(eventModel);
-            controller.setAllEvent(eventBeanOut,eventApplication);
             ParticipantListDao.getParticipantList(eventModel, controller);
+            controller.setAllEvent(eventBeanOut,eventApplication);
         }
     }
 }

@@ -351,7 +351,10 @@ public class JFX2UserProfileGUIController implements Observer {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(((Node)ae.getSource()).getScene().getWindow());
         VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(new Text("Success!"));
+        dialogVbox.setAlignment(Pos.CENTER);
+        Label text=new Label("Successful Party Creation!");
+        text.setStyle("-fx-font-weight: bold;"+"-fx-font-family: Arial; -fx-font-size: 20;"+"-fx-text-fill: #200f54");
+        dialogVbox.getChildren().add(text);
         Scene dialogScene = new Scene(dialogVbox, 300, 200);
         dialog.setScene(dialogScene);
         dialog.show();

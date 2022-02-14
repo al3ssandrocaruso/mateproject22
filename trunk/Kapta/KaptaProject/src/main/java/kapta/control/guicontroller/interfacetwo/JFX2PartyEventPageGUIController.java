@@ -170,6 +170,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                 btnAction.setText(joinStr);
                 btnAction.setStyle("-fx-background-color: #200f54; "+radius);
                 partyApplicationLayer.goToLeaveParty();
+                partyApplicationLayer.goToPartyPage(actionEvent,"/JFX2/JFX2PartyEventPage.fxml");
                 break;
             }
             case "Join Party": {

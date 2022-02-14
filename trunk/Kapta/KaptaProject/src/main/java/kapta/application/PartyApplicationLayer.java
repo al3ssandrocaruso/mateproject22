@@ -25,6 +25,7 @@ public class PartyApplicationLayer {
     private JFX1PartyItemGUIController jfx1PartyItemGUIController;
 
 
+
     public PartyApplicationLayer(PartyModel partyModel, JFX1PartyItemGUIController jfx1PartyItemGUIController){
         setPartyModel(partyModel);
         setPartyItemGUIController(jfx1PartyItemGUIController);
@@ -90,6 +91,7 @@ public class PartyApplicationLayer {
         return state;
     }
     public int goToJoinParty(){
+        participantsList.addParticipant(ThreadLocalSession.getUserSession().get().getUserModel());
         return JoinPartyController.joinParty( ThreadLocalSession.getUserSession().get().getUserModel(), partyModel);
     }
     public void goToLeaveParty(){
