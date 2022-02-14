@@ -25,8 +25,7 @@ public class LoginController {
             if (Authentication.checkIsRegistered(1, loginBean.getPassword(), loginBean.getUsername()) == 1) {
                 clubModel = ClubDao.getClubByUserName(loginBean.getUsername());
                 ThreadLocalSession.getUserSession().set(new Session(clubModel, 1));
-                ThreadLocalSession.getUserSession().get().setClubModel(clubModel); //qua email è giusta
-                //userSession è settata bene
+                ThreadLocalSession.getUserSession().get().setClubModel(clubModel);
                 ThreadLocalSession.getUserSession().get().getClubModel().setId(ClubDao.clubIdbyClub(clubModel));
             }
             else{
@@ -51,7 +50,5 @@ public class LoginController {
             }
             return userModel;
         }
-
     }
-
 }

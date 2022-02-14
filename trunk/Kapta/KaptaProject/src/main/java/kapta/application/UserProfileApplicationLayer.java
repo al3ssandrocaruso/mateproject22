@@ -91,11 +91,11 @@ public class UserProfileApplicationLayer {
         int type= ThreadLocalSession.getUserSession().get().getType();
         if(type==1){
             this.whoIam= ThreadLocalSession.getUserSession().get().getClubModel();
-            this.whoIam.setType(1);
+            this.whoIam.getInfoLogged().setType(1);
         }
         else if(type==0){
             this.whoIam= ThreadLocalSession.getUserSession().get().getUserModel();
-            this.whoIam.setType(0);
+            this.whoIam.getInfoLogged().setType(0);
         }
     }
 

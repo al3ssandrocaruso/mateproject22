@@ -3,6 +3,7 @@ package kapta.utils.dao;
 import kapta.model.EventModel;
 import kapta.model.lists.CreatedEventList;
 import kapta.model.profiles.ClubModel;
+import kapta.utils.bean.InfoLogged;
 import kapta.utils.bean.beanin.PartyEventSchedule;
 import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
@@ -176,14 +177,12 @@ public class ClubDao {
 
     private static void setInfo(ResultSet rs, ClubModel clubModel) {
         try {
-            clubModel.setUsername(rs.getString(2));
-            clubModel.setEmail(rs.getString(4));
+            InfoLogged infoLogged = new InfoLogged(rs.getString(2), rs.getString(4), null, 1);
             clubModel.setNumFollower(rs.getInt(5));
             clubModel.setCity(rs.getString(6));
             clubModel.setAddress(rs.getString(7));
             clubModel.setClubName(rs.getString(8));
             clubModel.setWebsite(rs.getURL(9));
-            clubModel.setType(1);
         } catch (SQLException throwables) {
             //ignored
         }

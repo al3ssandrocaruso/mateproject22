@@ -2,6 +2,7 @@ package kapta.control.appcontroller;
 
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
+import kapta.utils.bean.InfoLogged;
 import kapta.utils.bean.beanin.GenericUserBean;
 import kapta.utils.bean.beanin.jfx1.JFX1ProfileBean;
 import kapta.utils.dao.ClubDao;
@@ -28,7 +29,8 @@ public class RegisterController {
 
     public static void register(GenericUserBean genericUserBean) {
         if (genericUserBean.getType()==0) {
-            UserModel userModel = new UserModel(genericUserBean.getUsername(), genericUserBean.getPassword(), genericUserBean.getEmail(), genericUserBean.getName(), 0, 0, genericUserBean.getImg());
+            InfoLogged infoLogged = new InfoLogged(genericUserBean.getUsername(), genericUserBean.getPassword(), genericUserBean.getEmail(), 0);
+            UserModel userModel = new UserModel( infoLogged, genericUserBean.getName(), 0, genericUserBean.getImg());
             userModel.setNumFollower(0);
             userModel.setGender(userModel.getGender()) ;
             userModel.setSecondName(genericUserBean.getSecondName());
@@ -37,7 +39,8 @@ public class RegisterController {
 
         }
         else if (genericUserBean.getType()==1) {
-            ClubModel clubModel = new ClubModel(genericUserBean.getUsername(), genericUserBean.getPassword(), genericUserBean.getEmail(), genericUserBean.getName(), genericUserBean.getCity(), genericUserBean.getWebsite(), genericUserBean.getAddress(), 0, 1, genericUserBean.getImg());
+            InfoLogged infoLogged1 = new InfoLogged(genericUserBean.getUsername(), genericUserBean.getPassword(), genericUserBean.getEmail(), 0);
+            ClubModel clubModel = new ClubModel(infoLogged1, genericUserBean.getName(), genericUserBean.getCity(), genericUserBean.getWebsite(), genericUserBean.getAddress(), 0, genericUserBean.getImg());
             ClubDao.saveClub(clubModel);
         }
     }

@@ -76,7 +76,7 @@ public  class UserDao {
             if(rs.next()){
                 rs.first();
                 userModel = new UserModel(rs.getString(5));
-                userModel.setEmail(rs.getString(8));
+                userModel.getInfoLogged().setEmail(rs.getString(8));
                 userModel.setNumFollower(rs.getInt(10));
                 userModel.setName(rs.getString(11));
                 userModel.setGender(rs.getString(12));
@@ -115,7 +115,7 @@ public  class UserDao {
             um.setName(rs.getString(11));
             um.setSecondName(rs.getString(15));
             um.setGender(rs.getString(12));
-            um.setEmail(rs.getString(8));
+            um.getInfoLogged().setEmail(rs.getString(8));
             um.setNumFollowing(getNumSeguiti(um));
             um.setNumFollower(getNumFollower(um));
             um.setId(rs.getInt(1));
@@ -151,11 +151,11 @@ public  class UserDao {
             um.setName(rs.getString(11));
             um.setSecondName(rs.getString(15));
             um.setGender(rs.getString(12));
-            um.setEmail(rs.getString(8));
+            um.getInfoLogged().setEmail(rs.getString(8));
             um.setNumFollowing(getNumSeguiti(um));
             um.setNumFollower(getNumFollower(um));
             um.setId(rs.getInt(1));
-            um.setType(0);
+            um.getInfoLogged().setType(0);
             InputStream in = (rs.getBinaryStream(7));
             String filePath= username+"pic"+".png";
             File file = new File(filePath);

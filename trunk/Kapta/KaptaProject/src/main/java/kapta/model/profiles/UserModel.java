@@ -1,4 +1,6 @@
 package kapta.model.profiles;
+import kapta.utils.bean.InfoLogged;
+
 import java.io.File;
 
 public class UserModel extends UserClubModel {
@@ -8,8 +10,8 @@ public class UserModel extends UserClubModel {
     private int numFollowing;
 
     public UserModel(String username){super(username);}
-    public UserModel(String username,String password , String email, String name ,   int type, int numFollowing,File profileImg ) {
-        super(username,password,  email,type, profileImg, numFollowing ) ;
+    public UserModel(InfoLogged infoLogged, String name , int numFollowing, File profileImg ) {
+        super(infoLogged, profileImg, numFollowing ) ;
         setName(name);
     }
 

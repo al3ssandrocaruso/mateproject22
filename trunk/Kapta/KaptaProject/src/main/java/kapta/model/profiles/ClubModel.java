@@ -1,4 +1,6 @@
 package kapta.model.profiles;
+import kapta.utils.bean.InfoLogged;
+
 import java.io.File;
 import java.net.URL;
 
@@ -10,8 +12,8 @@ public class ClubModel extends UserClubModel {
     private String city;
 
     //ricorda che gli eventi creati nel db sono numfollowers => cambiamento durante la progettazione
-    public ClubModel(String username, String password, String email, String clubName, String city, URL website , String clubAddress, int createdEvent, int type, File profileImg){
-        super(username, password, email,type, profileImg, createdEvent ) ;
+    public ClubModel(InfoLogged infoLogged,  String clubName, String city, URL website , String clubAddress, int createdEvent, File profileImg){
+        super(infoLogged, profileImg, createdEvent ) ;
         setClubName(clubName);
         setAddress(clubAddress);
         setWebsite(website);
