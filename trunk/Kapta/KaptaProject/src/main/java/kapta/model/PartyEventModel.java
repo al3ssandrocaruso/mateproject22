@@ -14,6 +14,7 @@ public abstract class PartyEventModel implements GenericModel {
     protected int id;
     protected int type; //0 ->PARTY ; 1-> EVENT
     PartyEventSchedule partyEventSchedule;
+
     protected File img;
 
     protected PartyEventModel (String name, String address, int status, int type,  File img, PartyEventSchedule partyEventSchedule){
@@ -79,6 +80,9 @@ public abstract class PartyEventModel implements GenericModel {
     }
     public LocalTime getOrario() {
         return partyEventSchedule.getOrario();
+    }
+    public PartyEventSchedule getPartyEventSchedule() {
+        return partyEventSchedule;
     }
 }
 

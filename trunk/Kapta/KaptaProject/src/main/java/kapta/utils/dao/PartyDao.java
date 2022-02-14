@@ -33,20 +33,14 @@ public class PartyDao {
 
     public static void saveNewParty(PartyModel party) {
         String nameParty = party.getName();
-        LocalTime time = party.getOrario();
-        Time duration = party.getDuration();
         String address = party.getAddress();
-        Date partyDate = party.getDate();
 
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             String creatorName =  ThreadLocalSession.getUserSession().get().getUserModel().getUsername();
-            Time sqlTime = Time.valueOf(time);
-            java.sql.Date sqlPartyDate = new java.sql.Date( partyDate.getTime());
-            java.sql.Date cDate = new java.sql.Date(System.currentTimeMillis());
 
-            CRUD.saveNewParty(stm, nameParty, sqlTime, duration, address, creatorName, cDate, 0, sqlPartyDate, party.getImg());
+            CRUD.saveNewParty(stm, nameParty, party.getPartyEventSchedule(), address, creatorName, 0, party.getImg());
 
         } catch (MysqlConnectionFailed | WrongCrudException e) {
             ErrorHandler.getInstance().reportFinalException(e);

@@ -1,5 +1,6 @@
 package kapta.utils.db;
 
+import kapta.utils.bean.beanin.PartyEventSchedule;
 import kapta.utils.dao.EventDao;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
@@ -26,11 +27,12 @@ public class CRUD {
         }
     }
 
-    public static void saveNewParty(Statement stm, String nameParty, Time time, Time duration, String address, String usernameCreator, Date creationDate, int status, Date partyDate, File image) throws MysqlConnectionFailed, WrongCrudException {
-        String timeToString = time.toString();
-        String durationToString = duration.toString();
-        String creationDateToString = creationDate.toString();
-        String saveStm = String.format("INSERT INTO `Party` (`Creator`, `name`, `date` ,`address`, `duration` , `creationDate`, `status` ,`orario` ) VALUES ( '%s', '%s','%s', '%s', '%s', '%s','%s', '%s' );", usernameCreator,nameParty,  partyDate.toString(), address,durationToString,  creationDateToString, status, timeToString );
+    public static void saveNewParty(Statement stm, String nameParty, PartyEventSchedule partyEventSchedule, String address, String usernameCreator, int status, File image) throws MysqlConnectionFailed, WrongCrudException {
+        String timeToString = partyEventSchedule.getOrario().toString();
+        String durationToString = partyEventSchedule.getDuration().toString();
+        java.sql.Date cDate = new java.sql.Date(System.currentTimeMillis());
+        String creationDateToString = cDate.toString();
+        String saveStm = String.format("INSERT INTO `Party` (`Creator`, `name`, `date` ,`address`, `duration` , `creationDate`, `status` ,`orario` ) VALUES ( '%s', '%s','%s', '%s', '%s', '%s','%s', '%s' );", usernameCreator,nameParty,  partyEventSchedule.getDate().toString(), address,durationToString,  creationDateToString, status, timeToString );
 
         try {
             stm.executeUpdate(saveStm);
