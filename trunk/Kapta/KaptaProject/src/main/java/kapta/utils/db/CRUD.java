@@ -62,7 +62,6 @@ public class CRUD {
         String saveStm = String.format("INSERT INTO `Evento` ( `Creator`, `numRequest`, `obbGreenPass`, `price`, `name`, `date`, `address`, `duration`, `creationDate`, `orario`, `status` ) " +
                 "VALUES ('%d', '%d', '%d','%s', '%s'  , '%s', '%s','%s', '%s','%s' ,'%d');", idCreator , 0, infoEvent.getObb() , priceS,eventName ,  sqlEventDateString, infoEvent.getAddress(), durationToString, creationDate,  stringOrarioEvento,0);
 
-        System.out.println(saveStm);
         try {
             stm.executeUpdate(saveStm);
             PreparedStatement preparedStatement = MysqlConnection.upProfileEventPhotoPS();
@@ -71,7 +70,6 @@ public class CRUD {
             preparedStatement.setInt(2, EventDao.getIdByEventName(eventName));
             preparedStatement.executeUpdate();
         } catch (SQLException | FileNotFoundException e) {
-            System.out.println(e.getMessage());
             if(e instanceof  SQLException sql ){
                 ErrorHandler.getInstance().sqlexceptioncrudhandler(sql);
             }
