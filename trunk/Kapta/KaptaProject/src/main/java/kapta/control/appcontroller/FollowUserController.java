@@ -23,7 +23,7 @@ public class FollowUserController {
         FollowerListDao.addToFollowerList(visitedUser, user);
         FollowingListDao.addToFollowingList(user, visitedUser);
         // eee lo voglio come parametro
-        UserModel me = UserDao.getUserById(ThreadLocalSession.getUserSession().get().getUserBean().getId());
+        UserDao.getUserById(ThreadLocalSession.getUserSession().get().getUserBean().getId());
 
     }
 
