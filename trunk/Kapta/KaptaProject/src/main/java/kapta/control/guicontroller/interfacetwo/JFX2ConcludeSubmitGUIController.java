@@ -5,9 +5,9 @@ import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import kapta.control.appcontroller.RegisterController;
-import kapta.utils.bean.beanin.GenericUserBean;
-import kapta.utils.bean.beanin.jfx2.JFX2ClubBean;
-import kapta.utils.bean.beanin.jfx2.JFX2UserBean;
+import kapta.utils.bean.GenericUserBean;
+import kapta.utils.bean.J2.JFX2ClubBean;
+import kapta.utils.bean.J2.JFX2UserBean;
 import kapta.utils.init.ReplaceScene;
 import javafx.scene.control.TextField;
 
@@ -36,15 +36,15 @@ public class JFX2ConcludeSubmitGUIController {
         String username = textFieldUsername.getText();
         String password = textFieldPassword.getText();
         if(this.getType() == 0){
-            jfx2UserBean.setUsername(username);
-            jfx2UserBean.setPassword(password);
-            jfx2UserBean.setImage(img);
+            jfx2UserBean.setUsernameOut(username);
+            jfx2UserBean.setPasswordOut(password);
+            jfx2UserBean.setImageOut(img);
             RegisterController.register(jfx2UserBean);
         }
         else {
-            jfx2ClubBean.setUsername(username);
-            jfx2ClubBean.setPassword(password);
-            jfx2ClubBean.setImage(img);
+            jfx2ClubBean.setUsernameOut(username);
+            jfx2ClubBean.setPasswordOut(password);
+            jfx2ClubBean.setImageOut(img);
             RegisterController.register(jfx2ClubBean);
         }
 

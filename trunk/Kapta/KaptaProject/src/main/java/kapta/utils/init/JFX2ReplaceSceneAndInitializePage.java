@@ -8,6 +8,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
+import kapta.utils.bean.J2.JFX2ClubBean;
+import kapta.utils.bean.J2.JFX2PartyBean;
+import kapta.utils.bean.J2.JFX2UserBean;
+import kapta.utils.dao.UserDao;
 import kapta.utils.exception.myexception.EmailValidatorException;
 import kapta.utils.exception.myexception.InputNullException;
 import kapta.utils.pagesetter.setterjfx2.*;
@@ -23,6 +27,22 @@ public class JFX2ReplaceSceneAndInitializePage {
     private String jfx2Profile = "/JFX2/JFX2UserProfile.fxml";
 
     public void replaceSceneAndInitializePage(ActionEvent ae, String fxml)  {
+        JFX2ClubBean clubBean = null;
+        JFX2UserBean userBean=null;
+        UserModel userModel = null;
+
+
+        // eeee
+        if (ThreadLocalSession.getUserSession().get().getType() ==0){
+            userBean =  new JFX2UserBean(ThreadLocalSession.getUserSession().get().getUserBean());
+
+            // eee
+             userModel = UserDao.getUserById(userBean.getId());
+        }
+        else{
+            clubBean=  (JFX2ClubBean)(ThreadLocalSession.getUserSession().get().getClubBean());
+        }
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
         try {
@@ -32,13 +52,13 @@ public class JFX2ReplaceSceneAndInitializePage {
         }
 
         if(fxml.equals(jfx2Profile)) {
-            JFX2UserProfileSetter.setter( ThreadLocalSession.getUserSession().get().getUserModel(), loader.getController());
+            JFX2UserProfileSetter.setter( userBean, loader.getController());
         }
         if(fxml.equals("/JFX2/JFX2UserRequestPage.fxml")){
-            JFX2RequestPageSetter.setter( ThreadLocalSession.getUserSession().get().getUserModel(),loader.getController());
+            JFX2RequestPageSetter.setter( userModel, loader.getController());
         }
         if(fxml.equals("/JFX2/JFX2ClubProfile.fxml")) {
-            JFX2ClubProfileSetter.setter( ThreadLocalSession.getUserSession().get().getClubModel(), loader.getController());
+            JFX2ClubProfileSetter.setter( clubBean, loader.getController());
         }
 
         Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
@@ -58,15 +78,22 @@ public class JFX2ReplaceSceneAndInitializePage {
 
         //Questi due sotto mi servono per popolare la pagina del creator di un party o di un evento
         if(fxml.equals(jfx2Profile)) {
-            UserModel um = (UserModel) ob;
+            JFX2UserBean um = (JFX2UserBean) ob;
             JFX2UserProfileSetter.setter(um, loader.getController());
         }
         if(fxml.equals("/JFX2/JFX2ClubProfile.fxml")) {
+
+            // eeee
             ClubModel cm = (ClubModel) ob;
-            JFX2ClubProfileSetter.setter(cm, loader.getController());
+            JFX2ClubBean clubBean = new JFX2ClubBean(cm);
+            JFX2ClubProfileSetter.setter(clubBean, loader.getController());
         }
 
         if (fxml.equals("/JFX2/JFX2PartyEventPage.fxml" )) {
+            System.out.println("90q9iue2390");
+            if(ob instanceof JFX2ClubBean || ob instanceof JFX2PartyBean){
+                System.out.println("bingooooo");
+            }
             JFX2PartyEventPageSetter.setter(ob, loader.getController());
         }
 
@@ -85,7 +112,7 @@ public class JFX2ReplaceSceneAndInitializePage {
             e.printStackTrace();
         }
         if (fxml.equals(jfx2Profile)) {
-            UserModel um = (UserModel) ob;
+            JFX2UserBean um = (JFX2UserBean) ob;
             JFX2UserProfileSetter.setter(um, loader.getController());
         }
         Scene scene = new Scene(root);

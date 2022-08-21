@@ -5,27 +5,34 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import kapta.application.PartyApplicationLayer;
+import kapta.control.appcontroller.DeletePartyEventController;
 import kapta.utils.VisualComponent;
+import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 
-//This class is used to initialize the party page in base of the user who visited this page is the creator of the party
 public class JFX1DecorationPartyOne extends Decorator{
 
     private String toWrite;
-    private PartyApplicationLayer partyApplication;
+    private JFX1PartyBean partyBean;
 
-    public void setPartyApplication(PartyApplicationLayer partyApplication) {
-        this.partyApplication = partyApplication;
+
+    public void setPartyBean(JFX1PartyBean partyBean) {
+        this.partyBean = partyBean;
+    }
+
+    public JFX1PartyBean getPartyBean() {
+        return partyBean;
     }
 
     public void setToWrite(String toWrite) {
         this.toWrite = toWrite;
     }
 
-    public JFX1DecorationPartyOne(VisualComponent component, PartyApplicationLayer partyApplication) {
+    public JFX1DecorationPartyOne(VisualComponent component, JFX1PartyBean partyBean) {
         super(component);
-        setPartyApplication(partyApplication);
+        setPartyBean(partyBean);
+
     }
 
     protected VBox applyDecorationPartyOne(VBox input){
@@ -38,10 +45,15 @@ public class JFX1DecorationPartyOne extends Decorator{
         button.setFont(font);
         button.setStyle("-fx-background-color: #d00000;" + "-fx-background-radius: 28;" + "-fx-text-fill: white;");
 
-        button.setOnAction((ActionEvent ae) -> this.partyApplication.goToDeleteParty(ae,"/JFX1/JFX1UserProfile.fxml"));
+        button.setOnAction((ActionEvent ae) -> goToDeleteParty(ae,"/JFX1/JFX1UserProfile.fxml"));
         output.setStyle("-fx-background-color: #200f54");
         output.getChildren().add(button);
         return output;
+    }
+    private void goToDeleteParty(ActionEvent ae,String fxml){
+        DeletePartyEventController.delete(getPartyBean());
+        ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
+        rsip.replaceSceneAndInitializePage(ae, fxml);
     }
 
     @Override

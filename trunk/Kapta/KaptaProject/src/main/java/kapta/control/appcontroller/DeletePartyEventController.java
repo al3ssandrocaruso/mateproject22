@@ -3,6 +3,8 @@ package kapta.control.appcontroller;
 import kapta.model.EventModel;
 import kapta.model.PartyEventModel;
 import kapta.model.PartyModel;
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.PartyBean;
 import kapta.utils.dao.EventDao;
 import kapta.utils.dao.PartyDao;
 
@@ -23,4 +25,17 @@ public class DeletePartyEventController {
 
             }
         }
+        public static void delete(PartyBean partyBean){
+            PartyModel pm = PartyDao.getPartyById(partyBean.getId());
+            PartyDao.removeParty(pm);
+        }
+
+        public static void delete (EventBean eventBean){
+            EventModel eventModel = EventDao.getEventbyEventId(eventBean.getEventId());
+            EventDao.deleteEvent(eventModel);
+
+
+        }
+
+
     }

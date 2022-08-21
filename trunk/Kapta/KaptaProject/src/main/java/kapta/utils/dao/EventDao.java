@@ -42,7 +42,7 @@ public class EventDao {
         try {
             stm = MysqlConnection.mysqlConnection();
 
-            int creatorId =  ThreadLocalSession.getUserSession().get().getClubModel().getId();
+            int creatorId =  ThreadLocalSession.getUserSession().get().getClubBean().getId();
 
             int obbG;
             if (eventModel.isGreenPass()) {

@@ -6,17 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import kapta.application.EventApplicationLayer;
-import kapta.application.UserProfileApplicationLayer;
-import kapta.control.appcontroller.Search;
 import kapta.control.guicontroller.interfaceone.item.JFX1EventItemGUIController;
 import kapta.control.guicontroller.interfaceone.item.JFX1UserItemGUIController;
-import kapta.model.EventModel;
-import kapta.model.PartyModel;
-import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanout.jfx1.JFX1EventBeanOut;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
-import kapta.utils.GenericObservableList;
+import kapta.engineering.ManageSearch;
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.PartyBean;
+import kapta.utils.bean.UserBean;
+import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import kapta.utils.Observer;
 import kapta.utils.utils.UpdateHandlerUno;
@@ -32,13 +30,12 @@ public class JFX1UserHomePageGUIController implements Observer {
     @FXML
     private TextField searchBar;
 
+
+
     @FXML
     void search()  {
         String input = searchBar.getText();
-        GenericObservableList list = new GenericObservableList(this);
-        list.addAllUsersToList(Search.searchUserByUsername(input));
-        list.addAllEventsToList(Search.searchByEventName(input));
-        list.addAllPartyToList(Search.searchByPartyName(input));
+        ManageSearch.search(this, input);
     }
 
     @Override
@@ -46,39 +43,38 @@ public class JFX1UserHomePageGUIController implements Observer {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
 
-        if(ob instanceof UserModel userModel) {
+        if(ob instanceof UserBean userBean) {
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            JFX1UserBeanOut jfx1UserBeanOut = new JFX1UserBeanOut(userModel);
+            JFX1UserBean jfx1UserBean = new JFX1UserBean(userBean);
             JFX1UserItemGUIController uigc = fxmlLoader.getController();
-            UserProfileApplicationLayer userProfileApplicationLayer = new UserProfileApplicationLayer(uigc , userModel);
-            uigc.setAll(jfx1UserBeanOut, userProfileApplicationLayer);
+            uigc.setAll(jfx1UserBean);
             this.listView.getItems().add(pane);
         }
-        if(ob instanceof PartyModel partyModel){
+        // ee non errore ma da notare ...
+        if(ob instanceof PartyBean partyBean){
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1PartyItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            UpdateHandlerUno.handler(fxmlLoader,partyModel);
+            JFX1PartyBean partyBean1 = new JFX1PartyBean(partyBean);
+            UpdateHandlerUno.handler(fxmlLoader, partyBean1);
             this.listView.getItems().add(pane);
         }
-        if(ob instanceof EventModel eventModel){
+        if(ob instanceof EventBean eventBean){
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1EventItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX1EventItemGUIController pigc = fxmlLoader.getController();
-
-            JFX1EventBeanOut jfx1EventBeanOut = new JFX1EventBeanOut(eventModel);
-            EventApplicationLayer ea = new EventApplicationLayer(eventModel);
-            pigc.setAll(jfx1EventBeanOut,ea);
+            JFX1EventBean jfx1EventBean = new JFX1EventBean(eventBean);
+            pigc.setAll(jfx1EventBean);
             this.listView.getItems().add(pane);
         }
     }

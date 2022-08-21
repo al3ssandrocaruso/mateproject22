@@ -5,7 +5,11 @@ import kapta.model.profiles.UserClubModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.GenericObservableList;
 import kapta.utils.Observer;
+import kapta.utils.bean.GenericListInfoBean;
+import kapta.utils.bean.UserBean;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FollowerList extends GenericObservableList {
@@ -26,15 +30,31 @@ public class FollowerList extends GenericObservableList {
 
     public void addUser(UserModel pm) {
         this.follList.add(pm);
-        this.notifyObservers(pm);
+        UserBean ub = new UserBean(pm);
+        GenericListInfoBean gl = new GenericListInfoBean(follList.size(),1);
+        this.notifyObservers(ub,gl);
     }
     public void removeUser(UserModel pm) {
-        for(UserModel um: this.follList){
-            if(um.getId()==pm.getId()){
-                this.follList.remove(um);
-                notifyObservers(um);
+        Iterator<UserModel> it = this.follList.iterator();
+        while(it.hasNext()){
+            UserModel um = it.next();
+            if (um.getId()== pm.getId()){
+                it.remove();
             }
         }
+        GenericListInfoBean gl = new GenericListInfoBean(follList.size(),1);
+        UserBean ub = new UserBean(pm);
+        this.notifyObservers(ub,gl);
+
+
+        /*for(UserModel um: this.follList){
+            if(um.getId()==pm.getId()){
+                GenericListInfoBean gl = new GenericListInfoBean();
+                gl.setSize(follList.size());
+                UserBean ub = new UserBean(pm);
+                this.notifyObservers(ub,gl);
+            }
+        }*/
 
     }
 

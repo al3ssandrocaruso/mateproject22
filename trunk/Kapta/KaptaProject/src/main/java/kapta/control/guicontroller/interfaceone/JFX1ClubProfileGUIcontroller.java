@@ -9,17 +9,21 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import kapta.application.ClubProfileApplicationLayer;
-import kapta.application.EventApplicationLayer;
 import kapta.control.guicontroller.interfaceone.item.JFX1EventItemGUIController;
-import kapta.model.EventModel;
-import kapta.model.lists.CreatedEventList;
-import kapta.utils.bean.beanout.jfx1.JFX1ClubBeanOut;
-import kapta.utils.bean.beanout.jfx1.JFX1EventBeanOut;
 import kapta.utils.Observer;
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.GenericListInfoBean;
+import kapta.utils.bean.J1.JFX1ClubBean;
+import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
+
 import java.io.IOException;
 
 public class JFX1ClubProfileGUIcontroller implements Observer {
+
+    private JFX1ClubBean clubBean;
+
 
     @FXML
     private ImageView imageViewImgProfile;
@@ -34,15 +38,14 @@ public class JFX1ClubProfileGUIcontroller implements Observer {
     @FXML
     private Button btnCreateEvent;
 
-    public ClubProfileApplicationLayer getClubProfileApplication() {
-        return clubProfileApplicationLayer;
+
+    public void setClubBean(JFX1ClubBean clubBean) {
+        this.clubBean = clubBean;
     }
 
-    public void setClubProfileApplication(ClubProfileApplicationLayer clubProfileApplicationLayer) {
-        this.clubProfileApplicationLayer = clubProfileApplicationLayer;
+    public JFX1ClubBean getClubBean() {
+        return clubBean;
     }
-
-    private ClubProfileApplicationLayer clubProfileApplicationLayer;
 
     public void setLabelUserName(String username) {
         this.labelUsername.setText("@"+username);
@@ -56,25 +59,38 @@ public class JFX1ClubProfileGUIcontroller implements Observer {
     public void setImageViewImgProfile(Image imageViewImgProfile) {this.imageViewImgProfile.setImage(imageViewImgProfile);}
 
     public void goToCreateEventAction(ActionEvent actionEvent)  {
-        clubProfileApplicationLayer.navigateToClubCreateEvent(actionEvent);
+        navigateToClubCreateEvent(actionEvent);
         }
 
-    public void setAll(JFX1ClubBeanOut jfx1ClubBeanOut, ClubProfileApplicationLayer clubProfileApplicationLayer) {
-        setLabelUserName(jfx1ClubBeanOut.getUsername());
-        setLabelAddress(jfx1ClubBeanOut.getClubAddress());
-        setLabelCreatedEvents(jfx1ClubBeanOut.getNumCreatedEvents());
-        setImageViewImgProfile(jfx1ClubBeanOut.getImage());
-        setClubProfileApplication(clubProfileApplicationLayer);
+    private void navigateToClubCreateEvent(ActionEvent actionEvent) {
+        ReplaceSceneAndInitializePage rsip =  new ReplaceSceneAndInitializePage();
+        rsip.replaceSceneAndInitializePage(actionEvent, "/JFX1/JFX1ClubCreateEvent.fxml",getClubBean() );
+    }
 
-        if(clubProfileApplicationLayer.hideBtnCreateEvent()){
+    public void setAll(JFX1ClubBean jfx1ClubBean) {
+        setLabelUserName(jfx1ClubBean.getUsernameOut());
+        setLabelAddress(jfx1ClubBean.getClubAddressOut());
+
+        // !!!
+        setLabelCreatedEvents(jfx1ClubBean.getNumCreatedEventsOut());
+        setImageViewImgProfile(jfx1ClubBean.getImageOut());
+        setClubBean(jfx1ClubBean);
+
+        if(hideBtnCreateEvent()){
             btnCreateEvent.setVisible(false);
         }
 
     }
 
+    private  boolean hideBtnCreateEvent() {
+        return  ThreadLocalSession.getUserSession().get().getUserBean() != null;
+    }
+
+
     @Override
     public void update(Object ob) {
-        EventModel eventModel=(EventModel) ob;
+        JFX1EventBean jfx1EventBean = new JFX1EventBean((EventBean) ob);
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
         try{
@@ -83,9 +99,7 @@ public class JFX1ClubProfileGUIcontroller implements Observer {
             e.printStackTrace();
         }
         JFX1EventItemGUIController eigc = fxmlLoader.getController();
-        EventApplicationLayer ea = new EventApplicationLayer(eventModel);
-        JFX1EventBeanOut jfx1EventBeanOut = new JFX1EventBeanOut(eventModel);
-        eigc.setAll(jfx1EventBeanOut, ea );
+        eigc.setAll(jfx1EventBean );
 
         this.listViewCreatedEvents.getItems().add(pane);
 
@@ -93,6 +107,6 @@ public class JFX1ClubProfileGUIcontroller implements Observer {
 
     @Override
     public void updateFrom(Object ob, Object objectFrom) {
-        setLabelCreatedEvents(((CreatedEventList) objectFrom).getSize().toString());
+        setLabelCreatedEvents( String.valueOf (((GenericListInfoBean) objectFrom).getSize()));
     }
 }

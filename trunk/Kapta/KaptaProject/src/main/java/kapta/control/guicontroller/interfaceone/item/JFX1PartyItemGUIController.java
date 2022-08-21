@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.application.PartyApplicationLayer;
-import kapta.utils.bean.beanout.jfx1.JFX1PartyBeanOut;
+import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1PartyItemGUIController {
 
@@ -20,12 +20,14 @@ public class JFX1PartyItemGUIController {
     @FXML
     private Label labelPartyDate;
 
-    private PartyApplicationLayer partyApplicationLayer;
+
+    private JFX1PartyBean partyBean;
+
 
     public void gotoPartyPage(ActionEvent ae) {
-        partyApplicationLayer.goToPartyPage(ae,"/JFX1/JFX1PartyPage.fxml");
+        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+        replaceSceneAndInitializePage.replaceSceneAndInitializePage(ae, "/JFX1/JFX1PartyPage.fxml", this.partyBean);
     }
-
     private void setImageViewPartyImage(Image image) {
         this.imageViewPartyImage.setImage(image);
     }
@@ -34,18 +36,18 @@ public class JFX1PartyItemGUIController {
         this.labelPartyDate.setText(partyDate);
     }
 
-    public void setPartyApplication(PartyApplicationLayer partyApplicationLayer) {
-        this.partyApplicationLayer = partyApplicationLayer;
-    }
 
     private void setLabelPartyName(String partyName) {
         this.labelPartyName.setText(partyName);
     }
 
-    public void setAll(JFX1PartyBeanOut jfx1PartyBeanOut, PartyApplicationLayer partyApplicationLayer){
-        setPartyApplication(partyApplicationLayer);
-        this.setLabelPartyName(jfx1PartyBeanOut.getPartyName());
-        this.setLabelPartyDate(jfx1PartyBeanOut.getPartyDate());
-        this.setImageViewPartyImage(jfx1PartyBeanOut.getPartyImg());
+    public void setAll(JFX1PartyBean jfx1PartyBean){
+        this.partyBean =jfx1PartyBean;
+        this.setLabelPartyName(jfx1PartyBean.getPartyNameOut());
+        this.setLabelPartyDate(jfx1PartyBean.getPartyDateOut());
+        this.setImageViewPartyImage(jfx1PartyBean.getPartyImgOut());
+
     }
+
+
 }

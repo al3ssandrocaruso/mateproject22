@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.application.RequestApplicationLayer;
-import kapta.utils.bean.beanout.jfx1.JFX1RequestBeanOut;
+import kapta.utils.bean.J1.JFX1RequestBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1RejectedRequestItemGUIController {
     @FXML
@@ -16,10 +16,16 @@ public class JFX1RejectedRequestItemGUIController {
     @FXML
     private ImageView imageView;
 
-    private RequestApplicationLayer requestApplicationLayer;
-    public void setRequestApplicationLayer(RequestApplicationLayer requestApplicationLayer) {
-        this.requestApplicationLayer = requestApplicationLayer;
+    private JFX1RequestBean requestBean;
+
+    public void setRequestBean(JFX1RequestBean requestBean) {
+        this.requestBean = requestBean;
     }
+
+    public JFX1RequestBean getRequestBean() {
+        return requestBean;
+    }
+
 
 
     public void setEventImageView(Image eventImageView) {
@@ -35,12 +41,14 @@ public class JFX1RejectedRequestItemGUIController {
     }
 
     public void deleteRequest(ActionEvent actionEvent) {
-        this.requestApplicationLayer.goToDeleteRequest(actionEvent,"/JFX1/JFX1UserRequestPage.fxml");
+        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+        replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent, "/JFX1/JFX1UserRequestPage.fxml");
     }
-    public void setAll(JFX1RequestBeanOut jfx1RequestBeanOut, RequestApplicationLayer requestApplicationLayer){
-        setRequestApplicationLayer(requestApplicationLayer);
-        setLabelEventName(jfx1RequestBeanOut.getEventName());
-        setEventDate(jfx1RequestBeanOut.getEventDate());
-        setEventImageView(jfx1RequestBeanOut.getEventImage());
+    public void setAll(JFX1RequestBean jfx1RequestBean){
+
+        setRequestBean(jfx1RequestBean);
+        setLabelEventName(jfx1RequestBean.getEventNameOut());
+        setEventDate(jfx1RequestBean.getEventDateOut());
+        setEventImageView(jfx1RequestBean.getEventImageOut());
     }
 }

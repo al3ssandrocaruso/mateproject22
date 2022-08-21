@@ -7,8 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import kapta.application.UserProfileApplicationLayer;
-import kapta.utils.bean.beanout.jfx2.JFX2UserBeanOut;
+
+import kapta.utils.bean.J2.JFX2UserBean;
+import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 
 
 public class JFX2UserItemGUIController {
@@ -20,12 +21,11 @@ public class JFX2UserItemGUIController {
     private Label labelUsername;
 
     private JFX2UserProfileGUIController upgc;
-    private UserProfileApplicationLayer userProfileApplicationLayer;
     private AnchorPane stageToGet;
 
-    public void setUserProfileApplication(UserProfileApplicationLayer userProfileApplicationLayer) {
-        this.userProfileApplicationLayer = userProfileApplicationLayer;
-    }
+    private JFX2UserBean jfx2UserBean;
+
+
 
     public AnchorPane getStageToGet() {
         return stageToGet;
@@ -56,16 +56,18 @@ public class JFX2UserItemGUIController {
         Stage stage = (Stage) getStageToGet().getScene().getWindow();
         if(getUpgc()!=null){
             getUpgc().hidePopUp();
-            userProfileApplicationLayer.navigationUserProfile(stage);
+            JFX2ReplaceSceneAndInitializePage rsip = new JFX2ReplaceSceneAndInitializePage();
+            rsip.replaceSceneAndInitializePage("/JFX2/JFX2UserProfile.fxml",this.jfx2UserBean,stage);
         }else{
-            userProfileApplicationLayer.navigationUserProfile(actionEvent,"/JFX2/JFX2UserProfile.fxml");
+            JFX2ReplaceSceneAndInitializePage rsip = new JFX2ReplaceSceneAndInitializePage();
+            rsip.replaceSceneAndInitializePage(actionEvent, "/JFX2/JFX2UserProfile.fxml", jfx2UserBean);
         }
     }
-    public void setAll(JFX2UserBeanOut jfx2UserBeanOut, AnchorPane ap, UserProfileApplicationLayer userProfileApplicationLayer, JFX2UserProfileGUIController upgc){
-        setLabelUsername(jfx2UserBeanOut.getUsername());
-        setImageProfile(jfx2UserBeanOut.getImage());
+    public void setAll(JFX2UserBean jfx2UserBean, AnchorPane ap, JFX2UserProfileGUIController upgc){
+        setLabelUsername(jfx2UserBean.getUsernameOut());
+        setImageProfile(jfx2UserBean.getImageOut());
         setStageToGet(ap);
-        setUserProfileApplication(userProfileApplicationLayer);
+        this.jfx2UserBean = jfx2UserBean;
         setUpgc(upgc);
     }
 }

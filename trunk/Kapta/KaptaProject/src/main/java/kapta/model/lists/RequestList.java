@@ -4,6 +4,7 @@ import kapta.model.profiles.UserClubModel;
 import kapta.model.RequestModel;
 import kapta.utils.GenericObservableList;
 import kapta.utils.Observer;
+import kapta.utils.bean.RequestBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +15,21 @@ public class RequestList extends GenericObservableList {
     private UserClubModel owner;
 
     public RequestList(UserClubModel userClub, List<RequestModel> list, Observer obs){
+
             super(obs);
             for ( RequestModel rm : list ){
+                System.out.println("here status ==>"+ rm.getStatus());
                 this.addRequest(rm);
             }
             this.owner = userClub;
     }
 
+
+
     public void addRequest(RequestModel rm){
         this.reqList.add(rm);
-        this.notifyObservers(rm);
+        RequestBean requestBean = new RequestBean(rm) ;
+        notifyObservers(requestBean);
     }
 
     public void setListCreator(UserClubModel creator) {
@@ -46,7 +52,8 @@ public class RequestList extends GenericObservableList {
         for (RequestModel rq : this.reqList ){
             if(rq.getRequestId() == rm.getRequestId()){
                     this.reqList.remove(rq);
-                    notifyObservers(rq);
+                RequestBean requestBean = new RequestBean(rq) ;
+                    notifyObservers(requestBean);
             }
         }
     }

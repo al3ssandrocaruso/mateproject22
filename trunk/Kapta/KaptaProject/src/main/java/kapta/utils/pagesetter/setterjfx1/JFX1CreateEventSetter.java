@@ -1,8 +1,7 @@
 package kapta.utils.pagesetter.setterjfx1;
 
-import kapta.application.ClubProfileApplicationLayer;
 import kapta.control.guicontroller.interfaceone.JFX1CreateEventGUIController;
-import kapta.model.profiles.ClubModel;
+import kapta.utils.bean.J1.JFX1ClubBean;
 
 public class JFX1CreateEventSetter {
 
@@ -10,9 +9,8 @@ public class JFX1CreateEventSetter {
         //ignore
     }
 
-    public static void setter(ClubModel clubModel, JFX1CreateEventGUIController jfx1CreateEventGUIControllereateEventGUIController) {
-        ClubProfileApplicationLayer clubProfileApplication = new ClubProfileApplicationLayer(clubModel);
-        jfx1CreateEventGUIControllereateEventGUIController.setClubProfileApplication(clubProfileApplication);
+    public static void setter(JFX1ClubBean clubBean, JFX1CreateEventGUIController jfx1CreateEventGUIControllereateEventGUIController) {
+        jfx1CreateEventGUIControllereateEventGUIController.setClubBean(clubBean);
     }
 }
 

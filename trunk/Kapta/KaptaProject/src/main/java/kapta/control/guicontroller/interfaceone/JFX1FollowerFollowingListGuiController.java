@@ -6,14 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import kapta.application.FollowerFollowingListApplicationLayer;
-import kapta.application.UserProfileApplicationLayer;
 import kapta.control.guicontroller.interfaceone.item.JFX1UserItemGUIController;
-import kapta.model.lists.FollowerList;
-import kapta.model.lists.FollowingList;
-import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
 import kapta.utils.Observer;
+import kapta.utils.bean.GenericListInfoBean;
+import kapta.utils.bean.GenericUserBean;
+import kapta.utils.bean.UserBean;
+import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
+
 import java.io.IOException;
 
 public class JFX1FollowerFollowingListGuiController implements Observer {
@@ -26,26 +27,49 @@ public class JFX1FollowerFollowingListGuiController implements Observer {
     @FXML
     private AnchorPane apFollower;
 
-    private FollowerFollowingListApplicationLayer followerFollowingListApplicationLayer;
+    // eee
+    private GenericUserBean owner;
+    private int support;
 
-    public void setFollowerFollowingListApplication(FollowerFollowingListApplicationLayer followerFollowingListApplicationLayer) {
-        this.followerFollowingListApplicationLayer = followerFollowingListApplicationLayer;
+    public void setSupport(int i ){
+        this.support=i;
+        switch (support) {
+            case 0:{
+                swapToFollower();
+                break;
+            }
+            case 1: {
+                swapToFollowing();
+                break;
+            }
+            default: break;
+        }
+
     }
+
+    public void setOwner(GenericUserBean owner) {
+        this.owner = owner;
+    }
+
+
 
     public AnchorPane getApFollowing() {return apFollowing;}
 
     public AnchorPane getApFollower() {return apFollower;}
 
     public void actionBackToProfile(ActionEvent ae){
-        followerFollowingListApplicationLayer.navigationBack(ae);
+        navigationBack(ae);
     }
 
     public void swapToFollower() {
-        followerFollowingListApplicationLayer.navigationFollower();
+        this.getApFollowing().toBack();
+        this.getApFollower().toFront();
+
     }
 
     public void swapToFollowing() {
-        followerFollowingListApplicationLayer.navigationFollowing();
+        this.getApFollowing().toFront();
+        this.getApFollower().toBack();
     }
 
     @Override
@@ -55,8 +79,9 @@ public class JFX1FollowerFollowingListGuiController implements Observer {
 
     @Override
     public void updateFrom(Object ob, Object from) {
-        UserModel userModel = (UserModel) ob;
+        JFX1UserBean jfx1UserBean = new JFX1UserBean( (UserBean) ob);
         FXMLLoader fxmlLoader = new FXMLLoader();
+        GenericListInfoBean b = (GenericListInfoBean) from;
         Pane pane = null;
         try {
             pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserItem.fxml").openStream());
@@ -65,16 +90,40 @@ public class JFX1FollowerFollowingListGuiController implements Observer {
         }
         JFX1UserItemGUIController uigc = fxmlLoader.getController();
 
-        JFX1UserBeanOut jfx1UserBeanOut = new JFX1UserBeanOut(userModel);
-        UserProfileApplicationLayer userProfileApplicationLayer = new UserProfileApplicationLayer(uigc,  userModel);
-        uigc.setAll(jfx1UserBeanOut, userProfileApplicationLayer);
-        if(from instanceof FollowerList){
+        uigc.setAll(jfx1UserBean);
+        if(b.getType() ==1){
             listViewFollower.getItems().add(pane);
         }
-        if(from instanceof FollowingList){
+        if(b.getType()==0){
             listViewFollowing.getItems().add(pane);
 
         }
 
     }
+
+    private void navigationBack(ActionEvent actionEvent) {
+        int type= ThreadLocalSession.getUserSession().get().getType();
+        ReplaceSceneAndInitializePage rp = new ReplaceSceneAndInitializePage();
+
+        //Tutti i casi possibili: sono un utente e sto nel profilo di un altro utente, sto nel mio profilo, sto nel profilo di un club ...
+        switch(type){
+            case 0:
+                if(owner.getUsername().equals( ThreadLocalSession.getUserSession().get().getUserBean().getUsername())){
+                    JFX1UserBean jfx1UserBean =new  JFX1UserBean(ThreadLocalSession.getUserSession().get().getUserBean());
+                    rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1UserProfile.fxml", jfx1UserBean); }
+                else {
+                    rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1UserProfile.fxml", owner);
+                }
+                break;
+            case 1:
+                if(owner.getUsername().equals( ThreadLocalSession.getUserSession().get().getClubBean().getUsername())){
+                    rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubProfile.fxml",  ThreadLocalSession.getUserSession().get().getClubBean());
+                } else {
+                    rp.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubProfile.fxml", owner);
+                }
+                break;
+            default:
+        }
+    }
+
 }

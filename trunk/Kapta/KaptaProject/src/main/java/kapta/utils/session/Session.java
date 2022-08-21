@@ -1,7 +1,7 @@
 package kapta.utils.session;
 
-import kapta.model.profiles.ClubModel;
-import kapta.model.profiles.UserModel;
+import kapta.utils.bean.ClubBean;
+import kapta.utils.bean.UserBean;
 
 public class Session {
 
@@ -9,41 +9,55 @@ public class Session {
     // 1 per Club
     private int type;
     private int id;
-    private UserModel eventModel;
-    private ClubModel clubModel;
+
+    private UserBean userBean;
+    private ClubBean clubBean;
+
+    public void setClubBean(ClubBean clubBean) {
+        this.clubBean = clubBean;
+    }
+
+    public void setUserBean(UserBean userBean) {
+        this.userBean = userBean;
+    }
+
+    public ClubBean getClubBean() {
+        return clubBean;
+    }
+
+    public UserBean getUserBean() {
+        return userBean;
+    }
 
 
-    // Costruttore
-    public Session(UserModel userModel, int type) {
-        this.setType(type);
-        this.setUserModel(userModel);
-        this.setId(userModel.getId());
+
+
+
+
+
+    public Session(UserBean userBean) {
+        this.setType(0);
+        this.setUserBean(userBean);
+        this.setId(userBean.getId());
 
     }
 
-    public Session(ClubModel clubModel, int type) {
-        this.setType(type);
-        this.setClubModel(clubModel);
-        this.setId(clubModel.getId());
+    public Session(ClubBean clubBean) {
+        this.setType(1);
+        this.setClubBean(clubBean);
+        this.setId(clubBean.getId());
     }
+
+
+
 
     //Set e Get
     public int getType() {
         return type;
     }
     public void setType(int type){this.type = type;}
-    public UserModel getUserModel() {
-        return eventModel;
-    }
-    public void setUserModel(UserModel eventModel) {
-        this.eventModel = eventModel;
-    }
-    public ClubModel getClubModel() {
-        return clubModel;
-    }
-    public void setClubModel(ClubModel clubModel) {
-        this.clubModel = clubModel;
-    }
+
+
     public void setId(int  id) {
         this.id = id;
     }

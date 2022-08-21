@@ -2,6 +2,7 @@ package kapta.model;
 
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
+import kapta.utils.bean.RequestBean;
 
 public class RequestModel {
 
@@ -14,6 +15,13 @@ public class RequestModel {
     private int eventId;
     private int status=0;
     private ClubModel receiver;
+
+
+
+    public RequestModel(RequestBean requestBean, EventModel eventModel) {
+        this.event=eventModel;
+
+    }
 
 
     // Set e Get

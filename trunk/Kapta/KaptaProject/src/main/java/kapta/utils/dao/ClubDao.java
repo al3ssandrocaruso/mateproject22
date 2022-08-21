@@ -69,6 +69,7 @@ public class ClubDao {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
+
             ResultSet rs = Query.askCreatedEventListByClubId(clubModel.getId(), stm);
             if (!rs.next()) {
                 return createdEventList;
@@ -94,7 +95,7 @@ public class ClubDao {
         }catch (MysqlConnectionFailed | WrongQueryException e){
             ErrorHandler.getInstance().reportFinalException(e);
         } catch (IOException e) {
-            // non gestita
+           // non gestita
         }
         return createdEventList;
     }
@@ -178,6 +179,8 @@ public class ClubDao {
     private static void setInfo(ResultSet rs, ClubModel clubModel) {
         try {
             InfoLogged infoLogged = new InfoLogged(rs.getString(2), rs.getString(4), null, 1);
+
+            clubModel.setId(rs.getInt(1));
             clubModel.setInfoLogged(infoLogged);
             clubModel.setNumFollower(rs.getInt(5));
             clubModel.setCity(rs.getString(6));

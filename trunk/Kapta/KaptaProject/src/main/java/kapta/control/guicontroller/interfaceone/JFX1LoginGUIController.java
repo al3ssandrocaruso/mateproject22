@@ -8,7 +8,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import kapta.control.appcontroller.LoginController;
-import kapta.utils.bean.beanin.jfx1.JFX1LoginBean;
+// external
+import kapta.utils.bean.J1.JFX1LoginBean;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.init.ReplaceScene;

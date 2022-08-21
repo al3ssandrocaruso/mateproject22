@@ -5,9 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import kapta.application.UserProfileApplicationLayer;
 import kapta.control.appcontroller.FollowUserController;
 import kapta.control.guicontroller.interfaceone.JFX1UserProfileGuiController;
+import kapta.engineering.ManageFollowerFollowingList;
+import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.FollowUtils;
 import kapta.utils.VisualComponent;
@@ -15,22 +16,27 @@ import kapta.utils.VisualComponent;
 
 public class JFX1DecorationUserTwo extends Decorator {
     private String toWrite;
-    private UserProfileApplicationLayer userProfileApplication;
     private JFX1UserProfileGuiController upgc;
     Button button = new Button();
+    private  JFX1UserBean userBean;
+    private ManageFollowerFollowingList man;
 
-    public void setUserProfileApplication(UserProfileApplicationLayer userProfileApplication) {
-        this.userProfileApplication = userProfileApplication;
-    }
+
+    private JFX1UserBean whoIamUser;
+
+
 
     private String radius = "-fx-background-radius: 28;";
     private String white = "-fx-text-fill: white;";
 
 
-    public JFX1DecorationUserTwo(VisualComponent component, JFX1UserProfileGuiController jfx1UserProfileGuiController, UserProfileApplicationLayer userProfileApplication){
+    public JFX1DecorationUserTwo(VisualComponent component, JFX1UserProfileGuiController jfx1UserProfileGuiController, JFX1UserBean userBean, ManageFollowerFollowingList  man){
         super(component);
-        setUserProfileApplication(userProfileApplication);
-        if(FollowUtils.doAFollowB( ThreadLocalSession.getUserSession().get().getUserModel(),userProfileApplication.getUserModel())) {
+        // eee solo per ora ..
+        this.whoIamUser = new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean());
+        this.userBean = userBean;
+        this.man = man;
+        if(FollowUtils.doAFollowB( this.whoIamUser,this.userBean)) {
             button.setStyle("-fx-background-color: #d00000;" + radius + white);
             this.setToWrite("Unfollow");
         }else {
@@ -54,18 +60,28 @@ public class JFX1DecorationUserTwo extends Decorator {
         Font font = Font.font("Arial", FontWeight.BOLD, 25);
         button.setFont(font);
 
+
+
         //PULSANTE PREMUTO
         button.setOnAction((ActionEvent ae) -> {
-            if (!FollowUtils.doAFollowB( ThreadLocalSession.getUserSession().get().getUserModel(),userProfileApplication.getUserModel())) {
+            // eee solo per ora ...
+
+            if (!FollowUtils.doAFollowB( whoIamUser,this.userBean)) {
                 button.setStyle("-fx-background-color: #54e589;" + radius + white);
                 this.setToWrite("Unfollow");
                 this.addUserPanel();
-                FollowUserController.follow(userProfileApplication.getUserModel(), ThreadLocalSession.getUserSession().get().getUserModel(), userProfileApplication.getFollowerList());
+                FollowUserController.follow(this.userBean, whoIamUser);
+                man.addUserFollowerList(this.userBean);
+
+
+
             } else {
                 button.setStyle("-fx-background-color: #d00000;" + radius + white);
                 this.setToWrite("Follow");
                 this.addUserPanel();
-                FollowUserController.unfollow(userProfileApplication.getUserModel(),  ThreadLocalSession.getUserSession().get().getUserModel(), userProfileApplication.getFollowerList());
+                FollowUserController.unfollow(this.userBean,  whoIamUser);
+                man.removeUserFollowerList(this.userBean);
+
             }
         });
         button.setStyle("-fx-background-color: #200f54;" + radius + white);

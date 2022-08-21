@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.application.RequestApplicationLayer;
-import kapta.utils.bean.beanout.jfx2.JFX2RequestBeanOut;
+import kapta.utils.bean.J2.JFX2RequestBean;
+import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 
 public class JFX2UserAcceptedRequestItemGUIController {
 
@@ -19,10 +19,19 @@ public class JFX2UserAcceptedRequestItemGUIController {
     @FXML
     private ImageView eventPic;
 
-    private RequestApplicationLayer requestApplicationLayer;
-    public void setRequestApplicationLayer(RequestApplicationLayer requestApplicationLayer) {
-        this.requestApplicationLayer = requestApplicationLayer;
+    private JFX2RequestBean requestBean;
+
+    public void setRequestBean(JFX2RequestBean requestBean) {
+        this.requestBean = requestBean;
     }
+
+    public JFX2RequestBean getRequestBean() {
+        return requestBean;
+    }
+
+
+
+
     public void setEventPic(Image eventPic) {this.eventPic.setImage(eventPic);}
     public void setLabelEventName(String labelEventName) {
         this.labelEventName.setText(labelEventName);
@@ -35,14 +44,16 @@ public class JFX2UserAcceptedRequestItemGUIController {
     }
 
     public void infoEvent(ActionEvent ae) {
-        requestApplicationLayer.navigateToEventPage(ae,"/JFX2/JFX2PartyEventPage.fxml");
+        JFX2ReplaceSceneAndInitializePage rsip = new JFX2ReplaceSceneAndInitializePage();
+        rsip.replaceSceneAndInitializePage(ae, "/JFX2/JFX2PartyEventPage.fxml", getRequestBean().getEventBean());
     }
 
-    public void setAll(JFX2RequestBeanOut jfx2RequestBeanOut, RequestApplicationLayer requestApplicationLayer){
-        setEventPic(jfx2RequestBeanOut.getRelatedEventImg());
-        setLabelEventName(jfx2RequestBeanOut.getRelatedEvent());
-        setLabelEventDate(jfx2RequestBeanOut.getDate());
-        setRequestApplicationLayer(requestApplicationLayer);
+    public void setAll(JFX2RequestBean jfx2RequestBean){
+
+        setRequestBean(jfx2RequestBean);
+        setEventPic(jfx2RequestBean.getRelatedEventImgOut());
+        setLabelEventName(jfx2RequestBean.getRelatedEventOut());
+        setLabelEventDate(jfx2RequestBean.getDateOut());
     }
 
 }

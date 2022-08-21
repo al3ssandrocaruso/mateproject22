@@ -48,6 +48,7 @@ public class ErrorHandler {
 
     public void sqlexceptionqueryhandler(SQLException sql ) throws MysqlConnectionFailed,  WrongQueryException {
         int errorCode = sql.getErrorCode();
+        sql.printStackTrace();
         if(errorCode ==0){
             throw new MysqlConnectionFailed();
         }
@@ -58,6 +59,7 @@ public class ErrorHandler {
 
     public void sqlexceptioncrudhandler(SQLException sql ) throws MysqlConnectionFailed, WrongCrudException {
         int errorCode = sql.getErrorCode();
+        sql.printStackTrace();
         if(errorCode ==0){
             throw new MysqlConnectionFailed();
         }

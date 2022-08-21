@@ -22,6 +22,7 @@ public class ParticipantListDao {
     }
 
     public static ParticipantsList getParticipantList(PartyEventModel partyEventModel, Observer ob) {
+
         Statement stm = null;
         ParticipantsList participantsList = new ParticipantsList(partyEventModel, ob);
         try {

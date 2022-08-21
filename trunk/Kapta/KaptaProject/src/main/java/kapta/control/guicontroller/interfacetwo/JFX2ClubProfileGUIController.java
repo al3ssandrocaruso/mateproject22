@@ -16,24 +16,25 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import kapta.application.ClubProfileApplicationLayer;
-import kapta.application.EventApplicationLayer;
+
+import kapta.control.appcontroller.CreateEventController;
 import kapta.control.appcontroller.JoinEventController;
-import kapta.model.EventModel;
-import kapta.model.lists.CreatedEventList;
-import kapta.model.RequestModel;
-import kapta.utils.bean.beanin.jfx2.JFX2EventBean;
-import kapta.utils.bean.beanin.jfx2.JFX2TokenBeanIn;
-import kapta.utils.bean.beanout.jfx2.JFX2ClubBeanOut;
-import kapta.utils.bean.beanout.jfx2.JFX2EventBeanOut;
-import kapta.utils.bean.beanout.jfx2.JFX2RequestBeanOut;
+
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.GenericListInfoBean;
+import kapta.utils.bean.RequestBean;
+import kapta.utils.bean.TokenBean;
+import kapta.utils.bean.J2.JFX2ClubBean;
+import kapta.utils.bean.J2.JFX2EventBean;
+import kapta.utils.bean.J2.JFX2RequestBean;
+import kapta.utils.bean.J2.JFX2TokenBean;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.TokenException;
 import kapta.utils.Observer;
 import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.GetDialogStage;
 import kapta.utils.utils.GetFontedLabel;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,12 +79,12 @@ public class JFX2ClubProfileGUIController implements Observer {
     @FXML
     private Label labelUsername;
 
-    private ClubProfileApplicationLayer clubProfileApplicationLayer;
+
     private int numSbagliate=0;
     private boolean state=false;
     private String system="System";
 
-    private Map<Pane,RequestModel> map=new HashMap<>();
+    private Map<Pane,JFX2RequestBean> map=new HashMap<>();
     private Font font = Font.font("Arial",FontWeight.BOLD, 15);
 
     //Stringhe create per evitare code smells
@@ -92,15 +93,17 @@ public class JFX2ClubProfileGUIController implements Observer {
     private String supportFor = " FOR ";
     private String supportRequestFrom = " REQUEST FROM ";
 
+    private TokenBean token1; //the right token
+    private File imgEvent;
+
+
     public void setLabelUsername(String username) {
         this.labelUsername.setText(username);
     }
     public void setClubImg(Image clubImg) {
         this.clubImg.setImage(clubImg);
     }
-    public void setClubProfileApplication(ClubProfileApplicationLayer clubProfileApplicationLayer) {this.clubProfileApplicationLayer = clubProfileApplicationLayer;}
 
-    public ClubProfileApplicationLayer getClubProfileApplication() {return clubProfileApplicationLayer;}
     public void noClubInProfileOn(){
         vBoxCreatedEvents.toFront();
         noClubInProfile.toFront();
@@ -109,7 +112,7 @@ public class JFX2ClubProfileGUIController implements Observer {
     
     public void confirmCreateEvent(ActionEvent ae) {
 
-        clubProfileApplicationLayer.goToGenerateToken();
+        goToGenerateToken();
 
         Stage dialog=GetDialogStage.startDialog(ae);
 
@@ -145,12 +148,12 @@ public class JFX2ClubProfileGUIController implements Observer {
 
         button.setOnAction(e-> {
             String insertedToken = textField.getText();
-            JFX2TokenBeanIn jfx2TokenBeanIn = new JFX2TokenBeanIn(insertedToken);
+            JFX2TokenBean jfx2TokenBeanIn = new JFX2TokenBean(insertedToken);
             try {
-                getClubProfileApplication().goToCompareToken(jfx2TokenBeanIn);
+                goToCompareToken(jfx2TokenBeanIn);
                 //evento creato con successo
                 JFX2EventBean eventBean = new JFX2EventBean(textFieldEventName.getText(), textFieldAddress.getText(), textFieldBeginTime.getText(), textFieldDate.getText(), sliderDuration.getValue(), spinnerPrice.getValue(), radioButtonGreenPass.isSelected());
-                clubProfileApplicationLayer.goToCreateEvent(eventBean);
+                goToCreateEvent(eventBean);
                 //evento creato con successo
                 textFieldEventName.setText("");
                 textFieldAddress.setText("");
@@ -167,13 +170,12 @@ public class JFX2ClubProfileGUIController implements Observer {
         });
     }
 
-    public void setAll(JFX2ClubBeanOut clubBeanOut, ClubProfileApplicationLayer clubProfileApplicationLayer){
-        setClubProfileApplication(clubProfileApplicationLayer);
+    public void setAll(JFX2ClubBean clubBean){
         SpinnerValueFactory<Double> gradesValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0,500,0, 0.5);
         this.spinnerPrice.setValueFactory(gradesValueFactory);
-        if(clubBeanOut.getImg()!=null){setClubImg(clubBeanOut.getImg()); }//usa e aggiorna i bean
-        setLabelUsername("@"+clubBeanOut.getClubName());
-        if( ThreadLocalSession.getUserSession().get().getUserModel()!=null) {
+        if(clubBean.getImg()!=null){setClubImg(clubBean.getImgOut()); }//usa e aggiorna i bean
+        setLabelUsername("@"+clubBean.getUsernameOut());
+        if( ThreadLocalSession.getUserSession().get().getUserBean()!=null) {
             noClubInProfileOn();
         }
         btnCreatedEvents.setFont(font);
@@ -190,29 +192,29 @@ public class JFX2ClubProfileGUIController implements Observer {
 
     public void displaySelected() {
         Pane selected = pendingList.getSelectionModel().getSelectedItem();
-        RequestModel selectedRequest=map.get(selected);
-        JFX2RequestBeanOut jfx2RequestBeanOut = new JFX2RequestBeanOut(selectedRequest);
-        textFieldRequest.setText(supportRequestFrom+ jfx2RequestBeanOut.getSenderName()+ supportFor +jfx2RequestBeanOut.getRelatedEvent());
+        JFX2RequestBean selectedRequest=map.get(selected);
+        JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(selectedRequest);
+        textFieldRequest.setText(supportRequestFrom+ jfx2RequestBean.getSenderNameOut()+ supportFor +jfx2RequestBean.getRelatedEventOut());
     }
 
     public void acceptRequest() {
         Pane selected = pendingList.getSelectionModel().getSelectedItem();
-        RequestModel selectedRequest=map.get(selected);
+        JFX2RequestBean selectedRequest=map.get(selected);
         pendingList.getItems().removeAll(selected);
         JoinEventController.acceptRequest(selectedRequest);
-        JFX2RequestBeanOut jfx2RequestBeanOut = new JFX2RequestBeanOut(selectedRequest);
-
-        textFieldRequest.setText(supportRequestFrom + jfx2RequestBeanOut.getSenderName()+ supportFor +jfx2RequestBeanOut.getRelatedEvent()+ " ACCEPTED");
+        JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(selectedRequest);
+        textFieldRequest.setText(supportRequestFrom + jfx2RequestBean.getSenderNameOut()+ supportFor +jfx2RequestBean.getRelatedEventOut()+ " ACCEPTED");
         textFieldRequest.setStyle("-fx-background-color:  #54e589;" + radius + white);
     }
 
     public void rejectRequest() {
         Pane selected = pendingList.getSelectionModel().getSelectedItem();
-        RequestModel selectedRequest=map.get(selected);
+        JFX2RequestBean selectedRequest=map.get(selected);
         pendingList.getItems().removeAll(selected);
-        JoinEventController.rejectRequest(selectedRequest);
-        JFX2RequestBeanOut jfx2RequestBeanOut = new JFX2RequestBeanOut(selectedRequest);
-        textFieldRequest.setText(supportRequestFrom + jfx2RequestBeanOut.getSenderName()+ supportFor +jfx2RequestBeanOut.getRelatedEvent()+ " REJECTED");
+       // ee to insert
+        // JoinEventController.rejectRequest(selectedRequest);
+        JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(selectedRequest);
+        textFieldRequest.setText(supportRequestFrom + jfx2RequestBean.getSenderNameOut()+ supportFor +jfx2RequestBean.getRelatedEventOut()+ " REJECTED");
         textFieldRequest.setStyle("-fx-background-color: #d00000;" + radius + white);
     }
 
@@ -221,33 +223,33 @@ public class JFX2ClubProfileGUIController implements Observer {
     public void update(Object ob) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
-        if(ob instanceof RequestModel requestModel) {
+        if(ob instanceof RequestBean requestBean) {
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX2/JFX2RequestItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            map.put(pane, requestModel); //map here ??
+            JFX2RequestBean request = new JFX2RequestBean(requestBean);
+            map.put(pane, request); //map here ??
             JFX2ClubRequestItemGUIController crigc = fxmlLoader.getController();
-            JFX2RequestBeanOut jfx2RequestBeanOut = new JFX2RequestBeanOut(requestModel);
-            crigc.setLabelUsername(jfx2RequestBeanOut.getSenderName());
-            crigc.setLabelEventName(jfx2RequestBeanOut.getRelatedEvent());
-            crigc.setImageProfile(jfx2RequestBeanOut.getRelatedEventImg());
-            if (jfx2RequestBeanOut.isGreenPass()) {
-                crigc.greenPassOn(jfx2RequestBeanOut.getNumDoses(),  requestModel.getVaccinationDate());
+            JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(request);
+            crigc.setLabelUsername(jfx2RequestBean.getSenderNameOut());
+            crigc.setLabelEventName(jfx2RequestBean.getRelatedEventOut());
+            crigc.setImageProfile(jfx2RequestBean.getRelatedEventImgOut());
+            if (jfx2RequestBean.isGreenPassOut()) {
+                crigc.greenPassOn(jfx2RequestBean.getNumDosesOut(),  request.getVaccinationDate());
             }
             pendingList.getItems().add(pane);
         }
-        else if(ob instanceof EventModel eventModel){
+        else if(ob instanceof EventBean eventBean){
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX2/JFX2EventItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX2EventItemGUIController eigc = fxmlLoader.getController();
-            JFX2EventBeanOut jfx2EventBeanOut = new JFX2EventBeanOut(eventModel);
-            EventApplicationLayer eventApplicationLayer = new EventApplicationLayer(eventModel);
-            eigc.setAll(jfx2EventBeanOut, eventApplicationLayer);
+            JFX2EventBean jfx2EventBean = new JFX2EventBean(eventBean);
+            eigc.setAll(jfx2EventBean);
             this.listViewCreatedEvents.getItems().add(pane);
 
         }
@@ -255,8 +257,8 @@ public class JFX2ClubProfileGUIController implements Observer {
 
     @Override
     public void updateFrom(Object ob, Object from) {
-        if(from instanceof CreatedEventList createdEventList1) {
-            labelNumCreatedEvents.setText(createdEventList1.getSize().toString());
+        if(from instanceof GenericListInfoBean gen && gen.getType()==2) {
+            labelNumCreatedEvents.setText(String.valueOf(gen.getSize()));
         }
     }
 
@@ -264,7 +266,7 @@ public class JFX2ClubProfileGUIController implements Observer {
         Stage stage = (Stage) successEventVBox.getScene().getWindow();
         FileChooser fileChooser=new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imagine Files","*.png","*.jpg"));
-        clubProfileApplicationLayer.setImgEvent(fileChooser.showOpenDialog(stage));
+        setImgEvent(fileChooser.showOpenDialog(stage));
     }
 
 
@@ -281,4 +283,18 @@ public class JFX2ClubProfileGUIController implements Observer {
             btnCreatedEvents.setFont(font);
         }
     }
+
+    private void goToGenerateToken() {
+        setToken1(CreateEventController.generateToken());
+    }
+    private void goToCompareToken(TokenBean tokenBeanIn) throws TokenException {
+        CreateEventController.checkToken(this.getToken1(),tokenBeanIn);
+    }
+    private void goToCreateEvent(JFX2EventBean eventBean){
+        eventBean.setEventImgOut(imgEvent);
+    }
+
+    private TokenBean getToken1() {return token1;}
+    private  void setToken1(TokenBean token1) {this.token1 = token1;}
+    private  void setImgEvent(File imgEvent) {this.imgEvent = imgEvent;}
 }

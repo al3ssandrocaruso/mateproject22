@@ -9,12 +9,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import kapta.control.appcontroller.Search;
-import kapta.model.EventModel;
-import kapta.model.PartyModel;
-import kapta.model.profiles.UserModel;
+
+import kapta.engineering.ManageSearch;
+
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.PartyBean;
+import kapta.utils.bean.UserBean;
+import kapta.utils.bean.J2.JFX2EventBean;
+import kapta.utils.bean.J2.JFX2PartyBean;
+import kapta.utils.bean.J2.JFX2UserBean;
 import kapta.utils.pagesetter.setterjfx2.JFX2PartyEventPageSetter;
 import kapta.utils.pagesetter.setterjfx2.JFX2UserProfileSetter;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -29,12 +35,12 @@ public class JFX2SearchPageGUIController{
     @FXML
     public void search(ActionEvent actionEvent) {
         String input = searchBar.getText();
-        List<UserModel> support;
-        List<EventModel> support1;
-        List<PartyModel> support2;
-        support= Search.searchUserByUsername(input);
+        List<UserBean> support;
+        List<EventBean> support1;
+        List<PartyBean> support2;
+        support= ManageSearch.searchUser(input);
         if(!support.isEmpty()){
-            UserModel userModel=support.get(0);
+            UserBean userBean=support.get(0);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/JFX2/JFX2UserProfile.fxml"));
             Parent root1 = null;
             try {
@@ -43,19 +49,23 @@ public class JFX2SearchPageGUIController{
                 e.printStackTrace();
             }
             Objects.requireNonNull(root1).setVisible(true); //linea di codice che serve per evitare code smells
-            JFX2UserProfileSetter.setter(userModel, loader.getController());
+
+            // ee
+            JFX2UserBean userBean1 = new JFX2UserBean(userBean);
+
+            JFX2UserProfileSetter.setter(userBean1, loader.getController());
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root1);
             stage.setScene(scene);
             stage.show();
             return;
         }
-        support1= Search.searchByEventName(input);
-        support2= Search.searchByPartyName(input);
+        support1= ManageSearch.searchEvent(input);
+        support2= ManageSearch.searchParty(input);
         if((!support1.isEmpty()) || (!support2.isEmpty())){
             Object ob;
-            if((!support1.isEmpty())){ob= support1.get(0);}
-            else{ob= support2.get(0);}
+            if((!support1.isEmpty())){ob= new JFX2EventBean(support1.get(0));}
+            else{ob=  new JFX2PartyBean(support2.get(0));}
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/JFX2/JFX2PartyEventPage.fxml" ));
             Parent parentRoot = null;
             try {

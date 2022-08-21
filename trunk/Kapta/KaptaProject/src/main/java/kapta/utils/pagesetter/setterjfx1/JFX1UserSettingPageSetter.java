@@ -1,9 +1,8 @@
 package kapta.utils.pagesetter.setterjfx1;
 
-import kapta.application.SettingsApplicationLayer;
 import kapta.control.guicontroller.interfaceone.JFX1UserSettingsGUIController;
 import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
+import kapta.utils.bean.J1.JFX1UserBean;
 
 public class JFX1UserSettingPageSetter {
 
@@ -12,8 +11,7 @@ public class JFX1UserSettingPageSetter {
     }
 
     public static  void setter(UserModel userModel, JFX1UserSettingsGUIController uspgc){
-        JFX1UserBeanOut userBeanOut = new JFX1UserBeanOut(userModel);
-        SettingsApplicationLayer settingsApplicationLayer = new SettingsApplicationLayer(userModel.getId());
-        uspgc.setAll(userBeanOut, settingsApplicationLayer);
+        JFX1UserBean userBean = new JFX1UserBean(userModel);
+        uspgc.setAll(userBean);
     }
 }

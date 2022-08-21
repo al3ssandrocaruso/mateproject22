@@ -5,6 +5,8 @@ import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserClubModel;
 import kapta.utils.Observer;
 import kapta.utils.Subject;
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.GenericListInfoBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,9 @@ public class CreatedEventList extends Subject {
 
         public void addEvent(EventModel em) {
             this.creatEvList.add(em);
-            this.notifyObservers(em);
+            EventBean eventBean = new EventBean(em);
+            GenericListInfoBean g = new GenericListInfoBean(creatEvList.size(), 2);
+            this.notifyObservers(eventBean,g);
         }
 
         public void removeElement(EventModel eventModel) {

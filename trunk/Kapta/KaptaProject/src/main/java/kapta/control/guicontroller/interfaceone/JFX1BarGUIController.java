@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import kapta.utils.session.ThreadLocalSession;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -77,12 +76,12 @@ public class JFX1BarGUIController implements Initializable {
         //0-> sono un user model
         //1-> sono un club model
         if(type==1){
-            this.labelUsername.setText("@" +  ThreadLocalSession.getUserSession().get().getClubModel().getUsername());
+            this.labelUsername.setText("@" +  ThreadLocalSession.getUserSession().get().getClubBean().getUsername());
             this.labelType.setText("Manager");
             vboxBar.getChildren().remove(btnHome);
         }
         else if(type==0){
-            this.labelUsername.setText("@" +  ThreadLocalSession.getUserSession().get().getUserModel().getUsername());
+            this.labelUsername.setText("@" +  ThreadLocalSession.getUserSession().get().getUserBean().getUsername());
             this.labelType.setText("User");
         }
     }

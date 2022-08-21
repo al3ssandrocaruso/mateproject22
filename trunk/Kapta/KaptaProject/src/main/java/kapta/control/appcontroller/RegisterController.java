@@ -3,8 +3,8 @@ package kapta.control.appcontroller;
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.bean.InfoLogged;
-import kapta.utils.bean.beanin.GenericUserBean;
-import kapta.utils.bean.beanin.jfx1.JFX1ProfileBean;
+import kapta.utils.bean.GenericUserBean;
+import kapta.utils.bean.J1.JFX1ProfileBean;
 import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.UserDao;
 import kapta.utils.exception.Trigger;
@@ -12,9 +12,8 @@ import kapta.utils.exception.myexception.UsernameConflictException;
 import kapta.utils.utils.Authentication;
 
 public class RegisterController {
-    /*
-    Controlli semantici
-     */
+
+
 
     private RegisterController(){
         //ignored

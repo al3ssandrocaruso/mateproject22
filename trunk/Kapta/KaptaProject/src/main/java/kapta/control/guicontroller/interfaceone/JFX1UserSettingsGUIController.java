@@ -4,10 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import kapta.application.SettingsApplicationLayer;
 import kapta.control.appcontroller.SettingsPageController;
-import kapta.utils.bean.beanin.UserSettingsBean;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
+import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.utils.EndSettingsChanges;
 
 public class JFX1UserSettingsGUIController {
@@ -23,9 +21,11 @@ public class JFX1UserSettingsGUIController {
     @FXML
     private ImageView img;
 
-    private SettingsApplicationLayer settingsApplicationLayer;
+    private JFX1UserBean userBean;
 
-    public void setSettingsApplicationLayer(SettingsApplicationLayer settingsApplicationLayer) {this.settingsApplicationLayer = settingsApplicationLayer;}
+
+
+
     public void setTextFieldUsername(String username) {
         this.textFieldUsername.setText(username);
     }
@@ -39,13 +39,14 @@ public class JFX1UserSettingsGUIController {
         this.textFieldSecondName.setText(secondName);
     }
 
-    public void setAll(JFX1UserBeanOut jfx1UserBeanOut, SettingsApplicationLayer settingsApplicationLayer) {
-        setSettingsApplicationLayer(settingsApplicationLayer);
-        setTextFieldUsername(jfx1UserBeanOut.getUsername());
-        setTextFieldName(jfx1UserBeanOut.getName());
-        setTextFieldSecondName(jfx1UserBeanOut.getSecondName());
-        setTextFieldEmail(jfx1UserBeanOut.getEmail());
-        this.img.setImage(jfx1UserBeanOut.getProfileImg());
+    public void setAll(JFX1UserBean jfx1UserBean) {
+
+        this.userBean=jfx1UserBean;
+        setTextFieldUsername(jfx1UserBean.getUsernameOut());
+        setTextFieldName(jfx1UserBean.getNameOut());
+        setTextFieldSecondName(jfx1UserBean.getSecondNameOut());
+        setTextFieldEmail(jfx1UserBean.getEmailOut());
+        this.img.setImage(jfx1UserBean.getProfileImgOut());
     }
 
     public void saveAction(ActionEvent ae) {
@@ -54,9 +55,9 @@ public class JFX1UserSettingsGUIController {
         String name = textFieldName.getText();
         String secondName = textFieldSecondName.getText();
 
-        UserSettingsBean userSettingsBean = new UserSettingsBean(username, email, name, secondName, settingsApplicationLayer.getId());
-        SettingsPageController.saveSettings(userSettingsBean);
-        EndSettingsChanges.endChanges1(ae, settingsApplicationLayer);
+        JFX1UserBean bean = new JFX1UserBean(username, email, name, secondName, this.userBean.getId());
+        SettingsPageController.saveSettings(bean);
+        EndSettingsChanges.endChanges1(ae);
 
     }
 }

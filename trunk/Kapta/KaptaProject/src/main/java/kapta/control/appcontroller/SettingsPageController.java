@@ -1,8 +1,6 @@
 package kapta.control.appcontroller;
 
-import kapta.utils.bean.beanin.ClubSettingsBean;
-import kapta.utils.bean.beanin.UserSettingsBean;
-import kapta.utils.bean.beanin.SettingsBean;
+import kapta.utils.bean.GenericUserBean;
 import kapta.utils.dao.SettingDao;
 
 public class SettingsPageController {
@@ -11,21 +9,21 @@ public class SettingsPageController {
         //ignored
     }
 
-    public static void saveSettings(SettingsBean settingsBean) {
-        if(settingsBean instanceof UserSettingsBean userSettingBean){
-            String username =  userSettingBean.getUsername();
-            String name = userSettingBean.getName();
-            String secondName = userSettingBean.getSecondName();
-            String email = userSettingBean.getEmail();
-            int id = userSettingBean.getId();
+    public static void saveSettings(GenericUserBean bean) {
+        if(bean.getType()   == 0 ){
+            String username =  bean.getUsername();
+            String name = bean.getName();
+            String secondName = bean.getSecondName();
+            String email = bean.getEmail();
+            int id = bean.getId();
             SettingDao.setUser(username, name, secondName, email, id);
         }
-        if(settingsBean instanceof ClubSettingsBean clubSettingBean){
-            String username =  clubSettingBean.getUsername();
-            String address = clubSettingBean.getAddress();
-            String city = clubSettingBean.getCity();
-            String email = clubSettingBean.getEmail();
-            int id = clubSettingBean.getId();
+        else{
+            String username =  bean.getUsername();
+            String address = bean.getAddress();
+            String city = bean.getCity();
+            String email = bean.getEmail();
+            int id = bean.getId();
             SettingDao.setClub(username, city, address, email, id);
         }
     }

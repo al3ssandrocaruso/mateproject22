@@ -29,8 +29,16 @@ public abstract class Subject {
     public void notifyObservers(Object ob){
         for(Observer o : observers){
             o.update(ob);
-            o.updateFrom(ob,this);
+           // o.updateFrom(ob,this);
         }
+    }
+    public  void notifyObservers(Object ob, Object from){
+            for(Observer o : observers){
+                o.update(ob);
+                o.updateFrom(ob,from);
+            }
+
+
     }
 
 

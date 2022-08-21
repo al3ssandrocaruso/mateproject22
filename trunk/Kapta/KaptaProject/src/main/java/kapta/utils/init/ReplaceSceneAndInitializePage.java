@@ -6,11 +6,12 @@ import javafx.scene.Parent;
 import kapta.control.guicontroller.interfaceone.JFX1CreateEventGUIController;
 import kapta.control.guicontroller.interfaceone.register.JFX1ClubRegisterGUIController;
 import kapta.control.guicontroller.interfaceone.register.JFX1UserRegisterGUIController;
-import kapta.model.EventModel;
-import kapta.model.PartyModel;
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanin.jfx1.JFX1ProfileBean;
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.J1.*;
+import kapta.utils.dao.ClubDao;
+import kapta.utils.dao.UserDao;
 import kapta.utils.pagesetter.setterjfx1.*;
 import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.StageShow;
@@ -28,27 +29,44 @@ public class ReplaceSceneAndInitializePage {
             e.printStackTrace();
         }
 
+        ///eee solo provvisorio
+        JFX1UserBean userBean = null;
+        JFX1ClubBean clubBean = null;
+
+        ClubModel clubModel = null;
+        UserModel userModel =null;
+        int type = ThreadLocalSession.getUserSession().get().getType();
+        if (type==0){
+            // sono di tipo utente
+            userBean = new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean());
+            userModel = UserDao.getUserById(userBean.getId());
+        }
+        else if(type == 1 ){
+            clubBean= new JFX1ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
+            clubModel= ClubDao.getClubByUserName(clubBean.getUsername());
+        }
+
         /// ==> da usare solo nel login e anche nella barra perchè prendo info dalla sessione
         if (fxml.equals("/JFX1/JFX1UserProfile.fxml")) {
-            JFX1UserProfileSetter.setter( ThreadLocalSession.getUserSession().get().getUserModel(), loader.getController());
+            JFX1UserProfileSetter.setter( userBean, loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1ClubProfile.fxml")) {
-            JFX1ClubProfileSetter.setter( ThreadLocalSession.getUserSession().get().getClubModel(), loader.getController());
+            JFX1ClubProfileSetter.setter(clubBean, loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1ClubRequestPage.fxml")) {
-            JFX1ClubRequestPageSetter.setter( ThreadLocalSession.getUserSession().get().getClubModel(), loader.getController());
+            JFX1ClubRequestPageSetter.setter( clubModel, loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1ClubSetting.fxml")) {
-            JFX1ClubSettingPageSetter.setter( ThreadLocalSession.getUserSession().get().getClubModel(), loader.getController());
+            JFX1ClubSettingPageSetter.setter( clubModel ,loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1UserSetting.fxml")) {
-            JFX1UserSettingPageSetter.setter( ThreadLocalSession.getUserSession().get().getUserModel(), loader.getController());
+            JFX1UserSettingPageSetter.setter( userModel, loader.getController());
         }
         if(fxml.equals("/JFX1/JFX1UserRequestPage.fxml")) {
-            JFX1UserRequestPageSetter.setter(loader.getController(),  ThreadLocalSession.getUserSession().get().getUserModel());
+            JFX1UserRequestPageSetter.setter(loader.getController(), userModel);
         }
         if(fxml.equals("/JFX1/JFX1UserCreateParty.fxml")) {
-            JFX1CreatePartySetter.setter(loader.getController(),  ThreadLocalSession.getUserSession().get().getUserModel());
+            JFX1CreatePartySetter.setter(loader.getController(),  userBean);
         }
         StageShow.showStage(ae,root);
     }
@@ -63,27 +81,28 @@ public class ReplaceSceneAndInitializePage {
             e.printStackTrace();
         }
         if (fxml.equals("/JFX1/JFX1UserProfile.fxml")) {
-            JFX1UserProfileSetter.setter((UserModel) ob, loader.getController());
+            JFX1UserProfileSetter.setter((JFX1UserBean)  ob, loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1EventPage.fxml")) {
-            JFX1EventPageSetter.setter((EventModel) ob, loader.getController());
+            JFX1EventBean eb = new JFX1EventBean((EventBean) ob);
+            JFX1EventPageSetter.setter(eb, loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1PartyPage.fxml")) {
-            PartyModel pm = (PartyModel) ob;
-            JFX1PartyPageSetter.setter(pm, loader.getController());
+            JFX1PartyBean pb  = (JFX1PartyBean) ob;
+            JFX1PartyPageSetter.setter(pb, loader.getController());
         }
         if (fxml.equals("/JFX1/JFX1ClubFollowersList.fxml")) {
             ClubModel clubModel = (ClubModel) ob;
             JFX1ClubFollowersPageSetter.setter(clubModel, loader.getController());
         }
         if(fxml.equals("/JFX1/JFX1ClubCreateEvent.fxml")){
-            ClubModel clubModel = (ClubModel) ob;
+            JFX1ClubBean clubBean = (JFX1ClubBean) ob;
             JFX1CreateEventGUIController cegc = loader.getController();
-            JFX1CreateEventSetter.setter(clubModel, cegc);
+            JFX1CreateEventSetter.setter(clubBean, cegc);
         }
         if(fxml.equals("/JFX1/JFX1ClubProfile.fxml")){
-            ClubModel clubModel = (ClubModel) ob;
-            JFX1ClubProfileSetter.setter(clubModel, loader.getController());
+            JFX1ClubBean jfx1ClubBean = (JFX1ClubBean) ob;
+            JFX1ClubProfileSetter.setter(jfx1ClubBean, loader.getController());
         }
         StageShow.showStage(ae,root);
     }
@@ -110,7 +129,7 @@ public class ReplaceSceneAndInitializePage {
 
     }
 
-    public void replaceSceneAndInitializePage(ActionEvent ae, String fxml, int support, UserModel owner){
+    public void replaceSceneAndInitializePage(ActionEvent ae, String fxml, int support, JFX1UserBean owner){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
         try {

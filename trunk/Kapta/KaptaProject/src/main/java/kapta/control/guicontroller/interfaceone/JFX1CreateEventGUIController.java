@@ -11,17 +11,18 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import kapta.application.ClubProfileApplicationLayer;
 import kapta.control.appcontroller.CreateEventController;
 import kapta.control.guicontroller.interfacetwo.FillDialogBox;
-import kapta.utils.bean.beanin.jfx1.JFX1EventBean;
-import kapta.utils.bean.beanin.jfx1.JFX1TokenBeanIn;
+import kapta.utils.bean.TokenBean;
+import kapta.utils.bean.J1.JFX1ClubBean;
+import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.bean.J1.JFX1TokenBean;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.TokenException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import kapta.utils.utils.GetDialogStage;
 import kapta.utils.utils.GetFontedLabel;
-
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -57,18 +58,20 @@ public class JFX1CreateEventGUIController implements Initializable {
 
     @FXML
     private Button btnSubmitRequest;
+    private TokenBean token1; //the right token
+    private JFX1ClubBean clubBean;
+    private File imgEvent;
+
 
     private int numSbagliate=1;
     private String arial="Arial";
-    private ClubProfileApplicationLayer clubProfileApplicationLayer;
 
-    public ClubProfileApplicationLayer getClubProfileApplication() {
-        return clubProfileApplicationLayer;
+
+    public void setClubBean(JFX1ClubBean clubBean) {
+        this.clubBean = clubBean;
     }
 
-    public void setClubProfileApplication(ClubProfileApplicationLayer clubProfileApplicationLayer) {
-        this.clubProfileApplicationLayer = clubProfileApplicationLayer;
-    }
+
 
     @FXML
     void backToHomeAction(ActionEvent ae) {
@@ -78,14 +81,14 @@ public class JFX1CreateEventGUIController implements Initializable {
 
     public void confirmCreateEventAction(ActionEvent actionEvent){
         JFX1EventBean eventBean =new JFX1EventBean(textFieldEventName.getText(),textFieldEventPrice.getText(),textFieldEventAddress.getText(),textFieldEventDuration.getText(), textFieldEventTimeH.getText(),textFieldEventTimeM.getText(),  datePickerEventDate.getValue());
-        eventBean.setEventImg(clubProfileApplicationLayer.getImgEvent());
-        eventBean.setGreenPass(checkBoxGreenPass.isSelected());
+        eventBean.setEventImgOut(getImgEvent());
+        eventBean.setGreenPassOut(checkBoxGreenPass.isSelected());
         CreateEventController.createEvent(eventBean);
         ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
         rsip.replaceSceneAndInitializePage(actionEvent, "/JFX1/JFX1ClubProfile.fxml");
     }
     public void submitRequest(ActionEvent ae) {
-        getClubProfileApplication().goToGenerateToken();
+        goToGenerateToken();
         final Stage dialog = GetDialogStage.startDialog(ae);
         Label label1= GetFontedLabel.getFonted("An email has been sent to you",arial);
         Label label2= GetFontedLabel.getFonted("Please, insert your token to confirm",arial);
@@ -115,9 +118,9 @@ public class JFX1CreateEventGUIController implements Initializable {
         dialog.show();
 
         button.setOnAction(e->{
-            JFX1TokenBeanIn jfx1TokenBeanIn=new JFX1TokenBeanIn(textField.getText());
+            JFX1TokenBean jfx1TokenBeanIn=new JFX1TokenBean(textField.getText());
             try{
-                getClubProfileApplication().goToCompareToken(jfx1TokenBeanIn);
+                goToCompareToken(jfx1TokenBeanIn);
                 this.getBtnConfirmCreateEvent().setVisible(true);
                 this.getBtnSubmitRequest().setVisible(false);
                 dialog.close();
@@ -132,12 +135,23 @@ public class JFX1CreateEventGUIController implements Initializable {
         Stage stage = (Stage) textFieldEventName.getScene().getWindow();
         FileChooser fileChooser=new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imagine Files","*.png","*.jpg"));
-        this.clubProfileApplicationLayer.setImgEvent(fileChooser.showOpenDialog(stage).getAbsoluteFile());
+        setImgEvent(fileChooser.showOpenDialog(stage).getAbsoluteFile());
     }
 
+    private  void goToCompareToken(TokenBean tokenBeanIn) throws TokenException {
+        CreateEventController.checkToken(this.getToken1(),tokenBeanIn);
+    }
+
+    private TokenBean getToken1() {return token1;}
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btnConfirmCreateEvent.setVisible(false);
     }
 
+    private void goToGenerateToken() {
+        setToken1(CreateEventController.generateToken());
+    }
+    private void setToken1(TokenBean token1) {this.token1 = token1;}
+    private File getImgEvent() {return imgEvent;}
+    private void setImgEvent(File imgEvent) {this.imgEvent = imgEvent;}
 }

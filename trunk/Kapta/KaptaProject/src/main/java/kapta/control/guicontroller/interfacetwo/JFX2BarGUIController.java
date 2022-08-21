@@ -53,7 +53,7 @@ public class JFX2BarGUIController implements Initializable {
     }
 
     public void goToProfile(ActionEvent event)  {
-        if( ThreadLocalSession.getUserSession().get().getUserModel() !=null) {
+        if( ThreadLocalSession.getUserSession().get().getUserBean() !=null) {
             JFX2ReplaceSceneAndInitializePage rsip1 = new JFX2ReplaceSceneAndInitializePage();
             rsip1.replaceSceneAndInitializePage(event, "/JFX2/JFX2UserProfile.fxml");
         }else{

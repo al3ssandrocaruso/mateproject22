@@ -4,8 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import kapta.control.appcontroller.RegisterController;
-import kapta.utils.bean.beanin.jfx1.JFX1ClubBean;
-import kapta.utils.bean.beanin.jfx1.JFX1ProfileBean;
+import kapta.utils.bean.J1.JFX1ClubBean;
+import kapta.utils.bean.J1.JFX1ProfileBean;
 import kapta.utils.init.ReplaceScene;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -42,10 +42,11 @@ public class JFX1ClubRegisterGUIController {
         String website = textFieldWebsite.getText();
 
         JFX1ClubBean jfx1ClubBean = new JFX1ClubBean(username, email, password, clubName, address, city, website);
-        jfx1ClubBean.setImage(img);
+        jfx1ClubBean.setImageOut(img);
         RegisterController.register(jfx1ClubBean);
         ReplaceScene.replaceScene(event, "/JFX1/JFX1Login.fxml");
     }
+
 
     public void setProfileBean(JFX1ProfileBean profileBean){
         this.profileBean = profileBean;

@@ -45,8 +45,6 @@ module kapta.classes {
     exports kapta.control.guicontroller.interfacetwo;
     opens kapta.control.guicontroller.interfacetwo to javafx.fxml;
 
-    exports kapta.utils.bean.beanin;
-    opens kapta.utils.bean.beanin to javafx.fxml;
 
     exports kapta.utils.init;
     opens kapta.utils.init to javafx.fxml;
@@ -72,12 +70,10 @@ module kapta.classes {
     opens kapta.utils.email to javafx.fxml;
     exports kapta.utils.utils;
     opens kapta.utils.utils to javafx.fxml;
-    exports kapta.utils.bean.beanout.jfx1;
-    opens kapta.utils.bean.beanout.jfx1 to javafx.fxml;
-    exports kapta.utils.bean.beanin.jfx1;
-    opens kapta.utils.bean.beanin.jfx1 to javafx.fxml;
-    exports kapta.utils.bean.beanin.jfx2;
-    opens kapta.utils.bean.beanin.jfx2 to javafx.fxml;
     exports kapta.utils.bean;
     opens kapta.utils.bean to javafx.fxml;
+    exports kapta.utils.bean.J1;
+    opens kapta.utils.bean.J1 to javafx.fxml;
+    exports kapta.utils.bean.J2;
+    opens kapta.utils.bean.J2 to javafx.fxml;
 }

@@ -5,8 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.application.RequestApplicationLayer;
-import kapta.utils.bean.beanout.jfx1.JFX1RequestBeanOut;
+import kapta.control.appcontroller.JoinEventController;
+import kapta.utils.bean.J1.JFX1RequestBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1ClubRequestGreenPassItemGUIController {
 
@@ -28,11 +29,18 @@ public class JFX1ClubRequestGreenPassItemGUIController {
     @FXML
     private Label labelDoses;
 
-    private RequestApplicationLayer requestApplicationLayer;
 
-    public void setRequestApplicationLayer(RequestApplicationLayer requestApplicationLayer) {
-        this.requestApplicationLayer = requestApplicationLayer;
+    JFX1RequestBean requestBean;
+
+
+    public void setRequestBean(JFX1RequestBean requestBean) {
+        this.requestBean = requestBean;
     }
+
+    public JFX1RequestBean getRequestBean() {
+        return requestBean;
+    }
+
 
     public void setLabelDoses(String labelDoses) {
         this.labelDoses.setText(labelDoses);
@@ -60,19 +68,23 @@ public class JFX1ClubRequestGreenPassItemGUIController {
 
 
     public void rejectRequest(ActionEvent actionEvent) {
-       this.requestApplicationLayer.goToRejectRequest(actionEvent);
+        JoinEventController.rejectRequest(getRequestBean());
+        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+        replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
     }
 
     public void acceptRequest(ActionEvent actionEvent) {
-        this.requestApplicationLayer.goToAcceptRequest(actionEvent);
+        JoinEventController.acceptRequest(getRequestBean());
+        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+        replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
     }
-    public void setAll(JFX1RequestBeanOut jfx1RequestBeanOut, RequestApplicationLayer requestApplicationLayer){
-        setLabelEventName(jfx1RequestBeanOut.getEventName());
-        setLabelEventDate(jfx1RequestBeanOut.getEventDate());
-        setLabelUsername(jfx1RequestBeanOut.getSender());
-        setLabelDate(jfx1RequestBeanOut.getVaccinationDate());
-        setLabelDoses(jfx1RequestBeanOut.getNumDoses());
-        setImageViewProfilePic(jfx1RequestBeanOut.getSenderImage());
-        setRequestApplicationLayer(requestApplicationLayer);
+    public void setAll(JFX1RequestBean jfx1RequestBean){
+        setRequestBean(jfx1RequestBean);
+        setLabelEventName(jfx1RequestBean.getEventNameOut());
+        setLabelEventDate(jfx1RequestBean.getEventDateOut());
+        setLabelUsername(jfx1RequestBean.getSenderOut());
+        setLabelDate(jfx1RequestBean.getVaccinationDateOut());
+        setLabelDoses(jfx1RequestBean.getDosesOut());
+        setImageViewProfilePic(jfx1RequestBean.getSenderImageOut());
     }
 }

@@ -2,9 +2,9 @@ package test.junit;
 
 import kapta.control.appcontroller.LoginController;
 import kapta.model.profiles.UserClubModel;
-import kapta.utils.bean.beanin.jfx1.JFX1LoginBean;
-import kapta.utils.bean.beanin.jfx2.JFX2LoginBean;
-import kapta.utils.bean.beanin.LoginBean;
+import kapta.utils.bean.LoginBean;
+import kapta.utils.bean.J1.JFX1LoginBean;
+import kapta.utils.bean.J2.JFX2LoginBean;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import org.junit.Test;
 

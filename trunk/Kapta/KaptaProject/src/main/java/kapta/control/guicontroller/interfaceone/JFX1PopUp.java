@@ -4,7 +4,6 @@ package kapta.control.guicontroller.interfaceone;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import kapta.utils.utils.GetDialogStage;
-
 import java.io.IOException;
 
 public class JFX1PopUp {

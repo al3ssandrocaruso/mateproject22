@@ -4,6 +4,8 @@ import kapta.model.profiles.UserClubModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.GenericObservableList;
 import kapta.utils.Observer;
+import kapta.utils.bean.GenericListInfoBean;
+import kapta.utils.bean.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,9 @@ public class FollowingList extends GenericObservableList {
         for(UserModel um: this.follList){
             if(um.getId()==pm.getId()){
                 this.follList.remove(um);
-                notifyObservers(um);
+                UserBean ub = new UserBean(pm);
+                GenericListInfoBean g = new GenericListInfoBean(follList.size(), 0);
+                this.notifyObservers(ub,g);
             }
         }
 
@@ -33,9 +37,11 @@ public class FollowingList extends GenericObservableList {
         return this.follList.size();
     }
 
-    private void addParticipant(UserModel pm) {
+    public void addParticipant(UserModel pm) {
         this.follList.add(pm);
-        this.notifyObservers(pm);
+        UserBean ub = new UserBean(pm);
+        GenericListInfoBean g = new GenericListInfoBean(follList.size(), 0);
+        this.notifyObservers(ub,g);
     }
 
     public void setFollowingList(List<UserModel> followingList) {

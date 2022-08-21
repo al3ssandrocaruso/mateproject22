@@ -59,10 +59,12 @@ public  class UserDao {
             ps.setBlob(7,in);
             ps.executeUpdate();
 
+
         } catch ( MysqlConnectionFailed | WrongCrudException |  WrongQueryException e ){
+                e.printStackTrace();
                 ErrorHandler.getInstance().reportFinalException(e);
         } catch (SQLException | FileNotFoundException throwables) {
-            // non gestita
+            throwables.printStackTrace();
         }
     }
 

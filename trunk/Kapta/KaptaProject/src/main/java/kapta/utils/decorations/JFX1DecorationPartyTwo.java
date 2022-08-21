@@ -10,9 +10,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import kapta.application.PartyApplicationLayer;
+import kapta.control.appcontroller.JoinPartyController;
 import kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController;
+import kapta.model.lists.ParticipantsList;
 import kapta.utils.VisualComponent;
+import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
 
 public class JFX1DecorationPartyTwo extends Decorator {
 
@@ -21,30 +26,29 @@ public class JFX1DecorationPartyTwo extends Decorator {
     private String radius = "-fx-background-radius: 28;";
     private String white = "-fx-text-fill: white;";
     private String toWrite;
-    private PartyApplicationLayer partyApplicationLayer;
+    private JFX1PartyBean partyBean;
+    private ParticipantsList participantsList;
 
-    public void setPartyApplication(PartyApplicationLayer partyApplication) {
-        this.partyApplicationLayer = partyApplication;
-    }
 
-    public PartyApplicationLayer getPartyApplication() {
-        return partyApplicationLayer;
-    }
+
+
+
 
     public void setToWrite(String write) {
         this.toWrite = write;
     }
 
 
-    public JFX1DecorationPartyTwo(VisualComponent component, PartyApplicationLayer partyApplication) {
+    public JFX1DecorationPartyTwo(VisualComponent component, JFX1PartyBean partyBean) {
         super(component);
-        setPartyApplication(partyApplication);
+        this.partyBean =partyBean ;
         //In generale setto il tasto su Join ma se partecipo già all'evento allora mostro Leave
         this.setToWrite("Join");
-        if(!this.partyApplicationLayer.doIjoinedYet()){
+        //aaa do I joined yet dovrebbe essere fatta in fase di inizializzazione, potrebbe anche avere a che fare con lo stratto soot .
+        if(!doIjoinedYet()){
             button.setStyle("-fx-background-color: #0073c4;" + radius + white);
             this.setToWrite("Join");
-        } else if(this.partyApplicationLayer.doIjoinedYet()) {
+        } else if(doIjoinedYet()) {
             button.setStyle("-fx-background-color: #d00000;" + radius + white);
             this.setToWrite("Leave");
         }
@@ -52,7 +56,21 @@ public class JFX1DecorationPartyTwo extends Decorator {
 
     }
 
+
+    ///aaa capire bene cosa fare con questa qui sotto , per ora è messa qui per elimianare lo strato application
+
+    private boolean doIjoinedYet() { //fatta funzione in utils, sostituire con quella
+
+        // eee solo per ora
+        JFX1UserBean userBean =  new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean()) ;
+        return JoinPartyController.joinedYetInfo(partyBean, userBean);
+    }
+
+
+
+
     protected VBox applyDecorationPartyTwo(VBox input){
+        JFX1UserBean userBean =  new JFX1UserBean  (ThreadLocalSession.getUserSession().get().getUserBean());
         VBox output=input;
         output.getChildren().clear();
         button.setText(this.toWrite);
@@ -63,7 +81,7 @@ public class JFX1DecorationPartyTwo extends Decorator {
 
         new JFX1PartyPageGUIController();
         button.setOnAction((ActionEvent ae) -> { //button controller
-            if (!this.partyApplicationLayer.doIjoinedYet()) {
+            if (!doIjoinedYet()) {
                 button.setStyle("-fx-background-color: #d00000;" + radius + white);
 
                 //Setto l'avviso
@@ -75,7 +93,12 @@ public class JFX1DecorationPartyTwo extends Decorator {
                 text.setFont(font);
                 vBox.setAlignment(Pos.CENTER);
 
-                int ret = this.partyApplicationLayer.goToJoinParty();
+
+                //ee
+
+
+                int ret = JoinPartyController.joinParty( userBean, partyBean);
+
                 switch (ret){
                     case 0:{
                         this.setToWrite("Leave");
@@ -105,11 +128,15 @@ public class JFX1DecorationPartyTwo extends Decorator {
 
             } else {
                 button.setStyle("-fx-background-color: #0073c4;" + radius + white);
-                this.partyApplicationLayer.goToLeaveParty();
+                // eee solo per ora ...
+                JoinPartyController.leaveParty( userBean, partyBean);
+
                 this.setToWrite("Join");
                 this.addUserPanel();
             }
-            this.partyApplicationLayer.goToPartyPage(ae,"/JFX1/JFX1PartyPage.fxml");
+
+            ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+            replaceSceneAndInitializePage.replaceSceneAndInitializePage(ae, "/JFX1/JFX1PartyPage.fxml", partyBean);
 
         });
         output.getChildren().add(button);

@@ -10,16 +10,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import kapta.application.EventApplicationLayer;
-import kapta.application.UserProfileApplicationLayer;
 import kapta.control.guicontroller.interfaceone.item.JFX1UserItemGUIController;
-import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanout.jfx1.JFX1EventBeanOut;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
+import kapta.utils.bean.UserBean;
+import kapta.utils.bean.J1.JFX1ClubBean;
+import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.decorations.JFX1DecorationEventOne;
 import kapta.utils.decorations.JFX1DecorationEventTwo;
 import kapta.utils.Observer;
 import kapta.utils.VisualComponent;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
 
 import java.io.IOException;
 
@@ -50,12 +51,18 @@ public class JFX1EventPageGUIController implements Observer {
     private VBox addedVBox;
     private JFX1UserPanel jfx1UserPanel;
 
-    private EventApplicationLayer eventApplicationLayer;
+
+    private JFX1EventBean eventBean;
+    private JFX1UserBean whoIamUser;
+    private JFX1ClubBean whoIamClub;
+    private int type;
+
+    private JFX1ClubBean creator;
+
+
 
     //Setter & getter
-    public void setEventApplication(EventApplicationLayer eventApplicationLayer) {
-        this.eventApplicationLayer = eventApplicationLayer;
-    }
+
     public void setLabelEventName(String name) {
         this.labelEventName.setText(name);
     }
@@ -79,21 +86,41 @@ public class JFX1EventPageGUIController implements Observer {
     }
     public void setContents(VisualComponent contents){this.contents= contents;}
 
-    public void setAll(JFX1EventBeanOut jfx1EventBeanOut, EventApplicationLayer eventApplicationLayer){
-        setEventApplication(eventApplicationLayer);
+    public void setEventBean(JFX1EventBean eventBean) {
+        this.eventBean = eventBean;
+    }
+
+    public JFX1EventBean getEventBean() {
+        return eventBean;
+    }
+
+    public JFX1ClubBean getCreator() {
+        return creator;
+    }
+
+    public void setCreator(JFX1ClubBean creator) {
+        this.creator = creator;
+    }
+
+    public void setAll(JFX1EventBean jfx1EventBean, JFX1ClubBean creatorBean){
+
+        setCreator(creatorBean);
+        setWhoIam();
+        setEventBean(jfx1EventBean);
         greenPassImg.setVisible(false);
-        if(this.eventApplicationLayer.getEventModel().isGreenPass()){
+        if(eventBean.isGreenPass()){
             greenPassImg.setVisible(true);
         }
 
-        setLabelEventDate(jfx1EventBeanOut.getEventDate());
-        setLabelEventName(jfx1EventBeanOut.getEventName());
-        setLabelDurationEvent(jfx1EventBeanOut.getEventDuration());
-        setLabelEventPrice(jfx1EventBeanOut.getEventPrice());
-        setLabelEventTime(jfx1EventBeanOut.getEventTime());
-        setBtnUsername(jfx1EventBeanOut.getEventCreator());
-        setImg(jfx1EventBeanOut.getEventImg());
+        setLabelEventDate(jfx1EventBean.getEventDateOut());
+        setLabelEventName(jfx1EventBean.getEventNameOut());
+        setLabelDurationEvent(jfx1EventBean.getEventDurationOut());
+        setLabelEventPrice(jfx1EventBean.getEventPriceOut());
+        setLabelEventTime(jfx1EventBean.getEventTimeOut());
+        setBtnUsername(jfx1EventBean.getEventCreatorOut());
+        setImg(jfx1EventBean.getEventImgOut());
         myStart();
+
     }
 
     public void display() {
@@ -107,11 +134,11 @@ public class JFX1EventPageGUIController implements Observer {
         this.addedVBox = new VBox();
         this.jfx1UserPanel =new JFX1UserPanel(addedVBox);
         this.setContents(this.jfx1UserPanel);
-        this.eventApplicationLayer.setWhoIam();
+        this.setWhoIam();
 
         display();
 
-        int i = this.eventApplicationLayer.chooseDecoration();
+        int i = chooseDecoration();
 
         if(i==0){
             actionDecorateEventOne();
@@ -121,22 +148,49 @@ public class JFX1EventPageGUIController implements Observer {
         }
     }
 
+    private  void setWhoIam() {
+        int type= ThreadLocalSession.getUserSession().get().getType();
+        this.type=type;
+        if(type==1){
+            this.whoIamClub= new JFX1ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
+        }
+        else if(type==0){this.whoIamUser= new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean());}
+    }
+
+
+
+
+
+    private  int chooseDecoration(){
+        if(type ==1) {
+            if (this.whoIamClub.getUsernameOut().equals(getCreator().getUsername())) {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
     private void actionDecorateEventTwo(){
-        JFX1DecorationEventTwo jfx1DecorationEventTwo = new JFX1DecorationEventTwo(this.jfx1UserPanel, this.eventApplicationLayer);
+        JFX1DecorationEventTwo jfx1DecorationEventTwo = new JFX1DecorationEventTwo(this.jfx1UserPanel, this.eventBean, this.creator);
         this.setContents(jfx1DecorationEventTwo);
         this.display();
     }
 
     private void actionDecorateEventOne() {
-        JFX1DecorationEventOne jfx1DecorationEventOne = new JFX1DecorationEventOne(this.jfx1UserPanel, this.eventApplicationLayer);
+        JFX1DecorationEventOne jfx1DecorationEventOne = new JFX1DecorationEventOne(this.jfx1UserPanel, this.eventBean);
         this.setContents(jfx1DecorationEventOne);
         this.display();
+    }
+
+    private  void goToClubProfile(ActionEvent ae, String fxml) {
+        ReplaceSceneAndInitializePage risp=new ReplaceSceneAndInitializePage();
+        risp.replaceSceneAndInitializePage(ae,fxml,getCreator());
     }
 
 
     @FXML
     public void goToCreatorProfile(ActionEvent ae){
-        this.eventApplicationLayer.goToClubProfile(ae, "/JFX1/JFX1ClubProfile.fxml");
+        goToClubProfile(ae, "/JFX1/JFX1ClubProfile.fxml");
     }
 
 
@@ -145,7 +199,8 @@ public class JFX1EventPageGUIController implements Observer {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
 
-        if(ob instanceof UserModel userModel) {
+        if(ob instanceof UserBean userBean) {
+            JFX1UserBean jfx1UserBean = new JFX1UserBean(userBean);
 
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserItem.fxml").openStream());
@@ -154,10 +209,7 @@ public class JFX1EventPageGUIController implements Observer {
             }
             JFX1UserItemGUIController uigc = fxmlLoader.getController();
 
-            JFX1UserBeanOut jfx1UserBeanOut = new JFX1UserBeanOut(userModel);
-            UserProfileApplicationLayer userProfileApplicationLayer = new UserProfileApplicationLayer(uigc, userModel);
-
-            uigc.setAll(jfx1UserBeanOut, userProfileApplicationLayer);
+            uigc.setAll(jfx1UserBean);
             this.listView.getItems().add(pane);
         }
 

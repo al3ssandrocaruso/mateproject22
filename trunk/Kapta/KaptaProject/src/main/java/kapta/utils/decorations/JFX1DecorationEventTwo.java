@@ -14,16 +14,21 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import kapta.application.EventApplicationLayer;
+import kapta.control.appcontroller.JoinEventController;
 import kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController;
+import kapta.utils.bean.RequestBean;
+import kapta.utils.bean.J1.JFX1ClubBean;
+import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.bean.J1.JFX1RequestBean;
+import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.ExpiredGreenPassException;
 import kapta.utils.exception.myexception.GenericException;
 import kapta.utils.exception.myexception.InavalidGreenPassException;
 import kapta.utils.greenpass.AdapterGreenPass;
 import kapta.utils.greenpass.TargetGreenPass;
-import kapta.utils.bean.beanin.jfx1.JFX1RequestBean;
 import kapta.utils.VisualComponent;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.GetDialogStage;
 
 import java.io.File;
@@ -34,11 +39,13 @@ public class JFX1DecorationEventTwo extends Decorator{
     private Button button = new Button();
     private String[] ret;
 
-    public void setEventApplication(EventApplicationLayer eventApplication) {
-        this.eventApplication = eventApplication;
-    }
+    private JFX1EventBean eventBean;
+    private JFX1UserBean whoIamUser;
+    private JFX1ClubBean whoIamClub;
+    private int type;
+    private JFX1ClubBean creator;
 
-    private EventApplicationLayer eventApplication;
+
 
     private String radius = "-fx-background-radius: 28;";
     private String white = "-fx-text-fill: white;";
@@ -46,12 +53,31 @@ public class JFX1DecorationEventTwo extends Decorator{
     private String arial = "Arial";
 
 
-    public JFX1DecorationEventTwo(VisualComponent component, EventApplicationLayer eventApplication) {
+    public void setEventBean(JFX1EventBean eventBean) {
+        this.eventBean = eventBean;
+    }
+
+    public JFX1EventBean getEventBean() {
+        return eventBean;
+    }
+
+    public void setCreator(JFX1ClubBean creator) {
+        this.creator = creator;
+    }
+
+    public JFX1ClubBean getCreator() {
+        return creator;
+    }
+
+    public JFX1DecorationEventTwo(VisualComponent component, JFX1EventBean eventBean, JFX1ClubBean creator ) {
         super(component);
         //In generale setto il tasto su Join ma se partecipo già all'evento allora mostro Leave
-        this.setEventApplication(eventApplication);
+        setWhoIam();
+        setEventBean(eventBean);
+        setCreator(creator);
+
         int support = 0;
-        support = eventApplication.getStatusRequest();
+        support = getStatusRequest();
         // "dal punto di vista dell'utente"
         switch(support){
             case -1:{ //No Request yet
@@ -99,13 +125,13 @@ public class JFX1DecorationEventTwo extends Decorator{
 
         button.setOnAction((ActionEvent ae) -> {
             int support = 0;
-            support = eventApplication.getStatusRequest();
+            support = getStatusRequest();
             if(support == -1) {  //No Request yet
                 /*
                 Prima questa riga di codice qua sotto era dentro un else ma ora (per evitare code smells)
                 setto prima a null e poi in caso, se serve il greenPass, sviluppo tutto quanto
                 */
-                if (!eventApplication.getEventModel().isGreenPass()){ this.approvedSendingRequest(null, 0);}
+                if (!getEventBean().isGreenPass()){ this.approvedSendingRequest(null, 0);}
                 else{
                     final Stage dialog = new Stage();
                     dialog.initModality(Modality.APPLICATION_MODAL);
@@ -174,7 +200,7 @@ public class JFX1DecorationEventTwo extends Decorator{
     private void approvedSendingRequest(String vacDate, int numDoses){
         JFX1RequestBean jfx1RequestBean = new JFX1RequestBean(numDoses, vacDate);
         try {
-            this.eventApplication.sendRequest(jfx1RequestBean);
+            sendRequest(jfx1RequestBean);
             this.setToWrite("Pending");
             button.setStyle("-fx-background-color: #ff9105; "+ radius + white);
         } catch (ExpiredGreenPassException e) {
@@ -193,4 +219,26 @@ public class JFX1DecorationEventTwo extends Decorator{
         button.setStyle(c+radius + textFill);
         this.setToWrite(toWrite);
     }
+
+    private void sendRequest(RequestBean requestBean) throws ExpiredGreenPassException {
+        JoinEventController.sendRequest(requestBean, getEventBean());
+
+    }
+
+    //eeee to delete
+    private  int getStatusRequest() {
+        return JoinEventController.manageRequestInfo(this.eventBean,  ThreadLocalSession.getUserSession().get().getUserBean(), getCreator());
+    }
+
+    private   void setWhoIam() {
+        int type= ThreadLocalSession.getUserSession().get().getType();
+        this.type = type;
+        if(type==1){
+            this.whoIamClub= new JFX1ClubBean   (ThreadLocalSession.getUserSession().get().getClubBean());
+        }
+        else if(type==0){this.whoIamUser= new  JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean());}
+    }
+
+
+
 }

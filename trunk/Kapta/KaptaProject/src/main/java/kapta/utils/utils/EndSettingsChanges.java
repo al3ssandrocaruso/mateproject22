@@ -12,8 +12,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import kapta.application.SettingsApplicationLayer;
-import kapta.application.UserProfileApplicationLayer;
+import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class EndSettingsChanges {
 
@@ -22,7 +22,7 @@ public class EndSettingsChanges {
     }
 
     //Prima interfaccia
-    public static void endChanges1(ActionEvent ae, SettingsApplicationLayer settingsApplicationLayer){
+    public static void endChanges1(ActionEvent ae){
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         VBox dialogVbox = new VBox(20);
@@ -32,7 +32,8 @@ public class EndSettingsChanges {
         Button btn=new Button("Sign Out");
 
         btn.setOnAction(e-> {
-            settingsApplicationLayer.goToLogin(ae);
+            ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
+            rsip.replaceSceneAndInitializePage(ae, "/JFX1/JFX1Login.fxml");
             dialog.close();
 
         });
@@ -51,7 +52,7 @@ public class EndSettingsChanges {
     }
 
     //Seconda interfaccia
-    public static void endChanges2(ActionEvent ae, UserProfileApplicationLayer userProfileApplicationLayer) {
+    public static void endChanges2(ActionEvent ae) {
 
         Stage s = new Stage();
         Button b = new Button("SignOut");
@@ -65,7 +66,9 @@ public class EndSettingsChanges {
         text.setStyle("-fx-background-color: black");
 
         b.setOnAction(e -> {
-                    userProfileApplicationLayer.goToLogin(ae);
+
+                JFX2ReplaceSceneAndInitializePage jfx2ReplaceSceneAndInitializePage = new JFX2ReplaceSceneAndInitializePage();
+                jfx2ReplaceSceneAndInitializePage.replaceSceneAndInitializePage(ae, "/JFX2/JFX2Welcome.fxml");
                     s.close();
                 }
         );

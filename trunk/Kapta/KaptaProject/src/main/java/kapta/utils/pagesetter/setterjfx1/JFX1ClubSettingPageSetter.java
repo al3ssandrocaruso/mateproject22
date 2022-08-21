@@ -1,9 +1,8 @@
 package kapta.utils.pagesetter.setterjfx1;
 
-import kapta.application.SettingsApplicationLayer;
 import kapta.control.guicontroller.interfaceone.JFX1ClubSettingGUIController;
 import kapta.model.profiles.ClubModel;
-import kapta.utils.bean.beanout.jfx1.JFX1ClubBeanOutSettings;
+import kapta.utils.bean.J1.JFX1ClubBean;
 
 public class JFX1ClubSettingPageSetter {
 
@@ -12,8 +11,7 @@ public class JFX1ClubSettingPageSetter {
     }
 
     public static  void setter(ClubModel cm, JFX1ClubSettingGUIController csgc){
-        JFX1ClubBeanOutSettings jfx1ClubBeanOut = new JFX1ClubBeanOutSettings(cm.getUsername(), cm.getAddress(), cm.getCity(), cm.getPassword(), cm.getEmail(), cm.getWebsite(), cm.getProfileImg());
-        SettingsApplicationLayer settingsApplicationLayer = new SettingsApplicationLayer(cm.getId());
-        csgc.setAll(jfx1ClubBeanOut, settingsApplicationLayer);
+        JFX1ClubBean jfx1ClubBean = new JFX1ClubBean(cm);
+        csgc.setAll(jfx1ClubBean);
     }
 }

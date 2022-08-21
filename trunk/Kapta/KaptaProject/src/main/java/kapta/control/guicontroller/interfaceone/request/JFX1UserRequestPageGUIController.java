@@ -5,13 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import kapta.application.RequestApplicationLayer;
 import kapta.control.guicontroller.interfaceone.request.requestitem.user.JFX1AcceptedRequestItemGUIController;
 import kapta.control.guicontroller.interfaceone.request.requestitem.user.JFX1PendingRequestItemGUIController;
 import kapta.control.guicontroller.interfaceone.request.requestitem.user.JFX1RejectedRequestItemGUIController;
-import kapta.model.RequestModel;
-import kapta.utils.bean.beanout.jfx1.JFX1RequestBeanOut;
 import kapta.utils.Observer;
+import kapta.utils.bean.RequestBean;
+import kapta.utils.bean.J1.JFX1RequestBean;
+
 import java.io.IOException;
 
 public class JFX1UserRequestPageGUIController implements Observer {
@@ -30,42 +30,41 @@ public class JFX1UserRequestPageGUIController implements Observer {
     public void update(Object ob)  {
         FXMLLoader fxmlLoader = new FXMLLoader();
         AnchorPane anchorPane = null;
-        RequestModel requestModel = (RequestModel) ob;
-        JFX1RequestBeanOut jfx1RequestBeanOut = new JFX1RequestBeanOut(requestModel);
-        if(requestModel.getStatus()==0){
+        JFX1RequestBean requestBean = new JFX1RequestBean((RequestBean) ob);
+
+        if(requestBean.getStatus()==0){
+            System.out.println("here status 000000 para evento ==> "+ requestBean.getEventNameOut() );
             try {
                 anchorPane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserPendingRequestItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX1PendingRequestItemGUIController pR =fxmlLoader.getController();
-            RequestApplicationLayer requestApplicationLayer=new RequestApplicationLayer(requestModel);
-            pR.setAll(jfx1RequestBeanOut,requestApplicationLayer);
+            pR.setAll(requestBean);
             this.listViewPendingRequest.getItems().add(anchorPane );
 
         }
-        else if(requestModel.getStatus()==1){
+        else if(requestBean.getStatus()==1){
+            System.out.println("here status 1111111 para evento ==> "+ requestBean.getEventNameOut() );
             try {
                 anchorPane  = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserAcceptedRequestItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX1AcceptedRequestItemGUIController aR =fxmlLoader.getController();
-            RequestApplicationLayer requestApplicationLayer=new RequestApplicationLayer(requestModel);
-            aR.setAll(jfx1RequestBeanOut,requestApplicationLayer);
-
+            aR.setAll(requestBean);
             this.listViewAcceptedRequest.getItems().add(anchorPane);
 
         }
-        else if (requestModel.getStatus()==2){
+        else if (requestBean.getStatus()==2){
+            System.out.println("here status 2222222 para evento ==> "+ requestBean.getEventNameOut() );
             try {
                 anchorPane  = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserRejectedRequestItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX1RejectedRequestItemGUIController rr =fxmlLoader.getController();
-            RequestApplicationLayer requestApplicationLayer=new RequestApplicationLayer(requestModel);
-            rr.setAll(jfx1RequestBeanOut,requestApplicationLayer);
+            rr.setAll(requestBean);
             this.listViewRejectedRequest.getItems().add(anchorPane );
 
         }

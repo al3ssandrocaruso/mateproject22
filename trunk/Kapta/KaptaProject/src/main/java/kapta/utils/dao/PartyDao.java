@@ -36,7 +36,7 @@ public class PartyDao {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
-            String creatorName =  ThreadLocalSession.getUserSession().get().getUserModel().getUsername();
+            String creatorName =  ThreadLocalSession.getUserSession().get().getUserBean().getUsername();
 
             CRUD.saveNewParty(stm, nameParty, party.getPartyEventSchedule(), address, creatorName, 0, party.getImg());
 
@@ -53,8 +53,10 @@ public class PartyDao {
             stm = MysqlConnection.mysqlConnection();
             ResultSet rst = Query.askPartybyPartyName(stm, partyName );
             assert rst != null;
-            rst.first();
+            boolean ok = rst.first();
             new SimpleDateFormat("MM/dd/yyyy");
+            if(ok){
+                System.out.println("hereeeeeee");
             PartyModel pm = new PartyModel(rst.getInt(1));
             PartyEventSchedule partyEventSchedule = new PartyEventSchedule(rst.getDate(4),rst.getTime(6),rst.getObject(10, LocalTime.class) );
             pm.setPartyEventSchedule(partyEventSchedule);
@@ -67,6 +69,8 @@ public class PartyDao {
             File file = new File(filePath);
             ImageConverter.copyInputStreamToFile(in, file);
             pm.setImg(file);
+            list.add(pm);
+            }
         }catch (MysqlConnectionFailed | WrongQueryException e){
             ErrorHandler.getInstance().reportFinalException(e);
         }

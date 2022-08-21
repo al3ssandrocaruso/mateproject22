@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.application.EventApplicationLayer;
-import kapta.utils.bean.beanout.jfx1.JFX1EventBeanOut;
+import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1EventItemGUIController {
 
@@ -22,11 +22,15 @@ public class JFX1EventItemGUIController {
     @FXML
     private Label labelEventPrice;
 
-    private EventApplicationLayer eventApplicationLayer;
+
+
+    private JFX1EventBean eventBean;
+
 
     public void goToEventPage(ActionEvent ae) {
-        this.eventApplicationLayer.goToEventPage(ae, "/JFX1/JFX1EventPage.fxml");
-    }
+        ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
+        rsip.replaceSceneAndInitializePage(ae, "/JFX1/JFX1EventPage.fxml", this.eventBean);}
+
 
     private  void setLabelEventName(String eventName) {
         this.labelEventName.setText(eventName);
@@ -40,16 +44,16 @@ public class JFX1EventItemGUIController {
     private void setImageViewEventImage (Image img){
         this.imageViewEventImage.setImage(img);
     }
-    public void setEventApplication(EventApplicationLayer eventApplicationLayer) {
-        this.eventApplicationLayer = eventApplicationLayer;
+
+
+    public void setAll(JFX1EventBean jfx1EventBean){
+
+        this.eventBean=jfx1EventBean;
+        setLabelEventName(jfx1EventBean.getEventNameOut());
+        setLabelEventDate(jfx1EventBean.getEventDateOut());
+        setLabelEventPrice(jfx1EventBean.getEventPriceOut());
+        setImageViewEventImage(jfx1EventBean.getEventImgOut());
     }
 
-    public void setAll(JFX1EventBeanOut jfx1EventBeanOut, EventApplicationLayer eventApplicationLayer){
-        setLabelEventName(jfx1EventBeanOut.getEventName());
-        setLabelEventDate(jfx1EventBeanOut.getEventDate());
-        setLabelEventPrice(jfx1EventBeanOut.getEventPrice());
-        setImageViewEventImage(jfx1EventBeanOut.getEventImg());
-        setEventApplication(eventApplicationLayer);
 
-    }
 }

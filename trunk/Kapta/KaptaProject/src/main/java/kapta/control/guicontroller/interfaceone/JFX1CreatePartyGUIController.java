@@ -6,9 +6,13 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import kapta.application.UserProfileApplicationLayer;
+
 import kapta.control.appcontroller.CreatePartyController;
-import kapta.utils.bean.beanin.jfx1.JFX1PartyBean;
+import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
+
+import java.io.File;
 
 public class JFX1CreatePartyGUIController {
     @FXML
@@ -30,22 +34,30 @@ public class JFX1CreatePartyGUIController {
     private DatePicker datePickerPartyDate;
 
 
-    private UserProfileApplicationLayer userProfileApplicationLayer;
+    private JFX1UserBean userBean;
+    private File image;
 
-    public void setUserProfileApplication(UserProfileApplicationLayer userProfileApplicationLayer) {
-        this.userProfileApplicationLayer = userProfileApplicationLayer;
+
+
+    public void setUserBean(JFX1UserBean userBean ) {
+        this.userBean = userBean;
     }
 
     @FXML
     public void backToProfileAction(ActionEvent ae) {
-        this.userProfileApplicationLayer.navigationUserProfile(ae,"/JFX1/JFX1UserProfile.fxml");}
+        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+        replaceSceneAndInitializePage.replaceSceneAndInitializePage(ae, "/JFX1/JFX1UserProfile.fxml", getUserBean());
+
+    }
 
     @FXML
     public void confirmCreatePartyAction(ActionEvent ae){
         CreatePartyController createPartyController = new CreatePartyController();
-        JFX1PartyBean partyBean = new JFX1PartyBean(textFieldPartyName.getText(),textFieldPartyDuration.getText(),textFieldPartyAddress.getText(),textFieldPartyTimeH.getText() , textFieldPartyTimeM.getText(),datePickerPartyDate.getValue(),this.userProfileApplicationLayer.getLoadedImg());
+        JFX1PartyBean partyBean = new JFX1PartyBean(textFieldPartyName.getText(),textFieldPartyDuration.getText(),textFieldPartyAddress.getText(),textFieldPartyTimeH.getText() , textFieldPartyTimeM.getText(),datePickerPartyDate.getValue(),this.image);
         createPartyController.createAndJoinParty(partyBean);
-        this.userProfileApplicationLayer.navigationUserProfile(ae,"/JFX1/JFX1UserProfile.fxml");
+        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+        replaceSceneAndInitializePage.replaceSceneAndInitializePage(ae, "/JFX1/JFX1UserProfile.fxml", getUserBean());
+
        }
 
 
@@ -53,7 +65,13 @@ public class JFX1CreatePartyGUIController {
         Stage stage = (Stage) textFieldPartyName.getScene().getWindow();
         FileChooser fileChooser=new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imagine Files","*.png","*.jpg"));
-        this.userProfileApplicationLayer.setLoadedImg(fileChooser.showOpenDialog(stage).getAbsoluteFile());
+        this.image = fileChooser.showOpenDialog(stage).getAbsoluteFile();
+    }
+
+
+
+    private JFX1UserBean getUserBean() {
+        return userBean;
     }
 
 }

@@ -16,8 +16,8 @@ public class SendEmail {
 
     public static void send(String receiver,String emailSubject,String toWrite) {
 
-        String from = "mateproject22@gmail.com"; //mail dalla quale inviamo
-        String host = "smtp.gmail.com";
+        String from = "mateproject22@virgilio.it"; //mail dalla quale inviamo
+        String host = "smtp.virgilio.it";
         Properties properties = System.getProperties();
 
         // Setup
@@ -28,7 +28,7 @@ public class SendEmail {
 
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             @Override
-            protected PasswordAuthentication getPasswordAuthentication() {return new PasswordAuthentication(from, "mateprojectpassword");}
+            protected PasswordAuthentication getPasswordAuthentication() {return new PasswordAuthentication(from, "Lollo.2001");}
         });
 
         // Used to debug SMTP issues

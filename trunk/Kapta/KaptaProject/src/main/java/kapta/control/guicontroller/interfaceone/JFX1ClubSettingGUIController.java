@@ -4,10 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import kapta.application.SettingsApplicationLayer;
 import kapta.control.appcontroller.SettingsPageController;
-import kapta.utils.bean.beanin.ClubSettingsBean;
-import kapta.utils.bean.beanout.jfx1.JFX1ClubBeanOutSettings;
+import kapta.utils.bean.J1.JFX1ClubBean;
 import kapta.utils.utils.EndSettingsChanges;
 
 public class JFX1ClubSettingGUIController {
@@ -23,9 +21,17 @@ public class JFX1ClubSettingGUIController {
     @FXML
     private ImageView img;
 
-    private SettingsApplicationLayer settingsApplicationLayer;
 
-    public void setSettingsApplicationLayer(SettingsApplicationLayer settingsApplicationLayer) {this.settingsApplicationLayer = settingsApplicationLayer;}
+    private JFX1ClubBean clubBean;
+
+    public int getClubId(){
+        return clubBean.getId();
+    }
+
+    public void setClubBean(JFX1ClubBean clubBean) {
+        this.clubBean = clubBean;
+    }
+
     public void setTextFieldUsername(String username) {
         this.textFieldUsername.setText(username);
     }
@@ -39,13 +45,14 @@ public class JFX1ClubSettingGUIController {
         this.textFieldEmail.setText(email);
     }
 
-    public void setAll(JFX1ClubBeanOutSettings clubBeanOut, SettingsApplicationLayer settingsApplicationLayer){
-        setSettingsApplicationLayer(settingsApplicationLayer);
-        setTextFieldUsername(clubBeanOut.getUsername());
-        setTextFieldCity(clubBeanOut.getCity());
-        setTextFieldAddress(clubBeanOut.getClubAddress());
-        setTextFieldEmail(clubBeanOut.getEmail());
-        this.img.setImage(clubBeanOut.getProfileImg());
+    public void setAll(JFX1ClubBean clubBean){
+
+        setClubBean(clubBean);
+        setTextFieldUsername(clubBean.getUsernameOut());
+        setTextFieldCity(clubBean.getCityOut());
+        setTextFieldAddress(clubBean.getClubAddressOut());
+        setTextFieldEmail(clubBean.getEmailOut());
+        this.img.setImage(clubBean.getImageOut());
     }
 
     public void saveAction(ActionEvent ae) {
@@ -54,11 +61,12 @@ public class JFX1ClubSettingGUIController {
         String email = textFieldEmail.getText();
         String city = textFieldCity.getText();
         String address = textFieldAddress.getText();
+        int id = getClubId();
 
-        ClubSettingsBean clubSettingsBean = new ClubSettingsBean(username, email, city, address, settingsApplicationLayer.getId());
-        SettingsPageController.saveSettings(clubSettingsBean);
+        JFX1ClubBean bean = new JFX1ClubBean(username, email, city, address, id);
+        SettingsPageController.saveSettings(bean);
 
-        EndSettingsChanges.endChanges1(ae, settingsApplicationLayer);
+        EndSettingsChanges.endChanges1(ae);
 
     }
 

@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.application.PartyApplicationLayer;
-import kapta.utils.bean.beanout.jfx1.JFX1PartyBeanOut;
+import kapta.utils.bean.J2.JFX2PartyBean;
+import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 
 
 public class JFX2PartyItemGUIController {
@@ -19,10 +19,10 @@ public class JFX2PartyItemGUIController {
     @FXML
     private Label labelPartyDate;
 
-    private PartyApplicationLayer partyApplicationLayer;
+    JFX2PartyBean partyBean;
 
-    public void setPartyApplication(PartyApplicationLayer partyApplicationLayer) {
-        this.partyApplicationLayer = partyApplicationLayer;
+    public void setPartyBean(JFX2PartyBean partyBean) {
+        this.partyBean = partyBean;
     }
 
     public void setImageViewPartyImage(Image imageViewPartyImage) {
@@ -38,12 +38,16 @@ public class JFX2PartyItemGUIController {
     }
 
     public void gotoPartyInfo(ActionEvent ae)  {
-        this.partyApplicationLayer.goToPartyPage(ae,"/JFX2/JFX2PartyEventPage.fxml");
+        JFX2ReplaceSceneAndInitializePage rsip = new JFX2ReplaceSceneAndInitializePage();
+        rsip.replaceSceneAndInitializePage(ae, "/JFX2/JFX2PartyEventPage.fxml", this.partyBean);
     }
-    public void setAll(JFX1PartyBeanOut jfx1PartyBeanOut, PartyApplicationLayer partyApplicationLayer){
-        setPartyApplication(partyApplicationLayer);
-        setImageViewPartyImage(jfx1PartyBeanOut.getPartyImg());
-        setLabelPartyName(jfx1PartyBeanOut.getPartyName());
-        setLabelPartyDate(jfx1PartyBeanOut.getPartyDate());
+    public void setAll(JFX2PartyBean jfx2PartyBean){
+  ;
+        setPartyBean(jfx2PartyBean);
+
+        setImageViewPartyImage(jfx2PartyBean.getPartyImgOut());
+        setLabelPartyName(jfx2PartyBean.getPartyNameOut());
+        setLabelPartyDate(jfx2PartyBean.getPartyDateOut());
     }
+
 }

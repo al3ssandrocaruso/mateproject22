@@ -10,19 +10,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import kapta.application.EventApplicationLayer;
-import kapta.application.UserProfileApplicationLayer;
 import kapta.control.guicontroller.interfaceone.item.JFX1EventItemGUIController;
-import kapta.model.EventModel;
-import kapta.model.lists.FollowerList;
-import kapta.model.lists.FollowingList;
-import kapta.model.PartyModel;
-import kapta.utils.bean.beanout.jfx1.JFX1EventBeanOut;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
+import kapta.engineering.ManageFollowerFollowingList;
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.GenericListInfoBean;
+import kapta.utils.bean.PartyBean;
+import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.decorations.JFX1DecorationUserOne;
 import kapta.utils.decorations.JFX1DecorationUserTwo;
 import kapta.utils.Observer;
 import kapta.utils.VisualComponent;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.UpdateHandlerUno;
 
 import java.io.IOException;
@@ -50,9 +51,16 @@ public class JFX1UserProfileGuiController implements Observer {
     private JFX1UserPanel jfx1UserPanel;
     private VBox addedVBox;
     private VisualComponent contents;
-    private UserProfileApplicationLayer userProfileApplicationLayer;
+    private JFX1UserBean userBean;
+    private int numFollowing;
+    private int numFollower;
 
-    public void setUserProfileApplication(UserProfileApplicationLayer userProfileApplicationLayer) {this.userProfileApplicationLayer = userProfileApplicationLayer;}
+
+    ManageFollowerFollowingList man ;
+
+
+
+
     public void setLabelUserName(String username) {
         this.labelUserName.setText(username);
     }
@@ -77,12 +85,14 @@ public class JFX1UserProfileGuiController implements Observer {
     }
     public Label getLabelUserName() {return this.labelUserName;}
 
-    public void setAll(JFX1UserBeanOut jfx1UserBeanOut, UserProfileApplicationLayer userProfileApplicationLayer) {
-        setUserProfileApplication(userProfileApplicationLayer);
-        setLabelUserName("@" + jfx1UserBeanOut.getUsername());
-        setLabelName(jfx1UserBeanOut.getName());
-        setLabelSecondName(jfx1UserBeanOut.getSecondName());
-        setImageview(jfx1UserBeanOut.getProfileImg());
+    public void setAll(JFX1UserBean jfx1UserBean, ManageFollowerFollowingList man ) {
+
+        this.man = man;
+        this.userBean = jfx1UserBean;
+        setLabelUserName("@" + jfx1UserBean.getUsernameOut());
+        setLabelName(jfx1UserBean.getNameOut());
+        setLabelSecondName(jfx1UserBean.getSecondNameOut());
+        setImageview(jfx1UserBean.getProfileImgOut());
         myStart();
     }
 
@@ -93,7 +103,7 @@ public class JFX1UserProfileGuiController implements Observer {
 
         display();
 
-        int i = userProfileApplicationLayer.chooseDecoration();
+        int i = chooseDecoration();
         if(i==0){
             this.actionDecorateOne();
         }
@@ -109,32 +119,44 @@ public class JFX1UserProfileGuiController implements Observer {
     }
 
     public void actionDecorateTwo() {
-        new JFX1DecorationUserTwo(this.jfx1UserPanel, this, userProfileApplicationLayer);
+        new JFX1DecorationUserTwo(this.jfx1UserPanel, this, userBean, this.man);
+    }
+    private int chooseDecoration(){
+        if(( ThreadLocalSession.getUserSession().get().getUserBean() != null)){
+            if((userBean.getUsername()).equals( ThreadLocalSession.getUserSession().get().getUserBean().getUsername())){
+                return 0;
+            }
+            else if(userBean.getType()==0){
+                return 1;
+            }
+        }
+        return 2;
     }
 
     @Override
     public void update(Object ob)  {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
-        if(ob instanceof PartyModel partyModel){
+        if(ob instanceof PartyBean partyBean){
+            JFX1PartyBean jfx1PartyBean = new JFX1PartyBean(partyBean);
+
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1PartyItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            UpdateHandlerUno.handler(fxmlLoader,partyModel);
+            UpdateHandlerUno.handler(fxmlLoader, jfx1PartyBean);
             this.listView.getItems().add(pane);
         }
-        else if(ob instanceof EventModel eventModel) {
+        else if(ob instanceof EventBean eventBean) {
+            JFX1EventBean jfx1EventBean = new JFX1EventBean(eventBean);
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1EventItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX1EventItemGUIController eigc = fxmlLoader.getController();
-            EventApplicationLayer ea = new EventApplicationLayer(eventModel);
-            JFX1EventBeanOut jfx1EventBeanOut = new JFX1EventBeanOut(eventModel);
-            eigc.setAll(jfx1EventBeanOut, ea);
+            eigc.setAll(jfx1EventBean);
             this.listView.getItems().add(pane);
         }
     }
@@ -142,11 +164,19 @@ public class JFX1UserProfileGuiController implements Observer {
     //Serve chiamarle così le liste così che non diano code smells (già c'è followerList e followingList)
     @Override
     public void updateFrom(Object ob,Object objectFrom) {
-        if(objectFrom instanceof FollowerList followerList1){
-            setBtnFollowers((followerList1).getSize().toString());
-        }else if(objectFrom instanceof FollowingList followingList1){
-            setBtnFollowing((followingList1).getSize().toString());
-        }
+        if(objectFrom instanceof GenericListInfoBean genericListInfoBean){
+            {
+                if (genericListInfoBean.getType() == 1) {
+
+                    this.numFollower=genericListInfoBean.getSize();
+                    setBtnFollowers(String.valueOf(numFollower));
+                } else if (genericListInfoBean.getType() == 0) {
+                    this.numFollowing=genericListInfoBean.getSize();
+                    setBtnFollowing(String.valueOf(numFollowing));
+
+                }
+            }}
+
     }
 
     public void display(){
@@ -157,9 +187,13 @@ public class JFX1UserProfileGuiController implements Observer {
     }
 
     public void gotoFollowerPage(ActionEvent ae) {
-       this.userProfileApplicationLayer.navigationFollowerPage(ae);
+        ReplaceSceneAndInitializePage risp=new ReplaceSceneAndInitializePage();
+        risp.replaceSceneAndInitializePage(ae,"/JFX1/JFX1FollowerFollowingListPage.fxml",0,this.userBean);
     }
+
     public void gotoFollowingPage(ActionEvent ae) {
-        this.userProfileApplicationLayer.navigationFollowingPage(ae);
+        ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
+        rsip.replaceSceneAndInitializePage(ae,"/JFX1/JFX1FollowerFollowingListPage.fxml", 1, this.userBean);
+
        }
 }

@@ -19,23 +19,29 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.*;
-import kapta.application.EventApplicationLayer;
-import kapta.application.PartyApplicationLayer;
-import kapta.application.UserProfileApplicationLayer;
+
 import kapta.control.appcontroller.CreatePartyController;
+import kapta.control.appcontroller.FollowUserController;
 import kapta.control.appcontroller.SettingsPageController;
-import kapta.model.EventModel;
-import kapta.model.lists.FollowerList;
-import kapta.model.lists.FollowingList;
-import kapta.model.PartyModel;
-import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanin.UserSettingsBean;
-import kapta.utils.bean.beanin.jfx2.JFX2PartyBean;
-import kapta.utils.bean.beanout.jfx1.JFX1PartyBeanOut;
-import kapta.utils.bean.beanout.jfx2.JFX2EventBeanOut;
-import kapta.utils.bean.beanout.jfx2.JFX2UserBeanOut;
+
+import kapta.engineering.ManageFollowerFollowingList;
+import kapta.engineering.MangeJoined;
+
+import kapta.utils.bean.EventBean;
+import kapta.utils.bean.GenericListInfoBean;
+import kapta.utils.bean.PartyBean;
+import kapta.utils.bean.UserBean;
+import kapta.utils.bean.J2.JFX2ClubBean;
+import kapta.utils.bean.J2.JFX2EventBean;
+import kapta.utils.bean.J2.JFX2PartyBean;
+import kapta.utils.bean.J2.JFX2UserBean;
 import kapta.utils.Observer;
+
+import kapta.utils.exception.myexception.EmailValidatorException;
+import kapta.utils.exception.myexception.InputNullException;
+import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.EndSettingsChanges;
+import kapta.utils.utils.FollowUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,9 +107,25 @@ public class JFX2UserProfileGUIController implements Observer {
 
     private Double duration;
     private File createdPartyImg;
-    private UserProfileApplicationLayer userProfileApplicationLayer;
 
-    public void setUserProfileApplication(UserProfileApplicationLayer userProfileApplicationLayer) {this.userProfileApplicationLayer = userProfileApplicationLayer;}
+
+    // tox
+    private JFX2UserBean whoIamUser;
+    private JFX2ClubBean whoIamClub;
+    private int type;
+
+    private JFX2UserBean userBean;
+    private File loadedImg;
+    ManageFollowerFollowingList m;
+
+
+    public JFX2UserBean getUserBean() {
+        return userBean;
+    }
+
+    public void setUserBean(JFX2UserBean userBean) {
+        this.userBean = userBean;
+    }
 
     public void setProfileImg(Image img){
         this.profileImg.setImage(img);
@@ -153,16 +175,16 @@ public class JFX2UserProfileGUIController implements Observer {
         this.duration=sliderDuration.getValue();
     }
 
-    public void saveAction(ActionEvent ae){
+    public void saveAction(ActionEvent ae) throws InputNullException, EmailValidatorException {
         String username = textFieldSettingUsername.getText();
         String email = textFieldSettingEmail.getText();
         String name = textFieldSettingName.getText();
         String secondName = textFieldSettingSecondName.getText();
 
-        UserSettingsBean userSettingsBean = new UserSettingsBean(username, email, name, secondName, userProfileApplicationLayer.getUserModel().getId());
-        SettingsPageController.saveSettings(userSettingsBean);
+        JFX2UserBean bean = new JFX2UserBean(username, email, name, secondName, userBean.getId());
+        SettingsPageController.saveSettings(bean);
 
-        EndSettingsChanges.endChanges2(ae, userProfileApplicationLayer);
+        EndSettingsChanges.endChanges2(ae);
 
     }
 
@@ -177,7 +199,9 @@ public class JFX2UserProfileGUIController implements Observer {
                     vboxForm.toBack();
                     vboxJoinedList.toFront();
                     hboxSettings.toBack();
-                    if (userProfileApplicationLayer.doVisitingFollowVisited()) {
+                    // eee solo per ora
+                    JFX2UserBean userBeanMe = whoIamUser;
+                    if (FollowUtils.doAFollowB(userBeanMe, getUserBean())) {
                         btnJoinedOrFollow.setText("Unfollow");
                     } else {
                         btnJoinedOrFollow.setText(STR_FOLLOW);
@@ -207,25 +231,32 @@ public class JFX2UserProfileGUIController implements Observer {
     public void performAction(){
         if (itsMyPageOrNot) { //change pane
             if (state) { //sto in mio profilo
+
                 state = false;
                 vboxForm.toBack();
                 btnJoinedOrFollow.setMinSize(163, 42);
                 btnJoinedOrFollow.setFont(Font.font(arial, FontWeight.BOLD, 20));
                 btnJoinedOrFollow.setText("Create Party");
                 listViewJoined.getItems().clear();
-                userProfileApplicationLayer.getJoinedVisitedUserList(); //aggancio observer
+
+                MangeJoined.adjJoinedList(getUserBean(),this);
+
             } else {
                 state = true;
                 vboxForm.toFront();
                 btnJoinedOrFollow.setText("Joined List");
             }
         } else {
+            // eee solo per ora
+            JFX2UserBean userBean2 = whoIamUser;
             if(btnJoinedOrFollow.getText().equals(STR_FOLLOW)){
                 btnJoinedOrFollow.setText("Unfollow");
-                userProfileApplicationLayer.followVisitedUser();
+                FollowUserController.follow(getUserBean(), userBean2);
+                m.addUserFollowerList(this.userBean);
             }else{
                 btnJoinedOrFollow.setText(STR_FOLLOW);
-                userProfileApplicationLayer.unfollowVisitedUser();
+                FollowUserController.unfollow(getUserBean(), userBean2);
+                m.removeUserFollowerList(this.userBean);
             }
         }
     }
@@ -280,28 +311,26 @@ public class JFX2UserProfileGUIController implements Observer {
     public void update(Object ob) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
-        if(ob instanceof PartyModel partyModel){
+        if(ob instanceof PartyBean partyBean){
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX2/JFX2PartyItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX2PartyItemGUIController pigc = fxmlLoader.getController();
-            JFX1PartyBeanOut jfx1PartyBeanOut =new JFX1PartyBeanOut(partyModel);
-            PartyApplicationLayer partyApplicationLayer =new PartyApplicationLayer(partyModel);
-            pigc.setAll(jfx1PartyBeanOut, partyApplicationLayer);
+            JFX2PartyBean jfx2PartyBean =new JFX2PartyBean(partyBean);
+            pigc.setAll(jfx2PartyBean);
             this.listViewJoined.getItems().add(pane);
         }
-        else if(ob instanceof EventModel eventModel) {
+        else if(ob instanceof EventBean EventBean) {
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX2/JFX2EventItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX2EventItemGUIController eigc = fxmlLoader.getController();
-            JFX2EventBeanOut jfx2EventBeanOut = new JFX2EventBeanOut(eventModel);
-            EventApplicationLayer eventApplicationLayer = new EventApplicationLayer(eventModel);
-            eigc.setAll(jfx2EventBeanOut, eventApplicationLayer);
+            JFX2EventBean jfx2EventBean = new JFX2EventBean(EventBean);
+            eigc.setAll(jfx2EventBean);
             this.listViewJoined.getItems().add(pane);
         }
     }
@@ -310,27 +339,26 @@ public class JFX2UserProfileGUIController implements Observer {
     public void updateFrom(Object ob, Object objectFrom) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
-        if(ob instanceof UserModel userModel) {
+        if(ob instanceof UserBean userBean) {
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX2/JFX2UserItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX2UserItemGUIController uigc = fxmlLoader.getController();
-            JFX2UserBeanOut jfx2UserBeanOut=new JFX2UserBeanOut(userModel);
-            UserProfileApplicationLayer userProfileApplicationLayer2 =new UserProfileApplicationLayer(userModel);
-            uigc.setAll(jfx2UserBeanOut,ap, userProfileApplicationLayer2,this);
+            JFX2UserBean jfx2UserBean=new JFX2UserBean(userBean);
+            uigc.setAll(jfx2UserBean,ap,this);
+            System.out.println("here0000");
+            if(objectFrom instanceof GenericListInfoBean gen) {
+                if (gen.getType() == 1) {
+                    followerListView.getItems().add(pane);
+                    setNumberFollower(String.valueOf(gen.getSize()));
+                } else if (gen.getType() == 0) {
+                    followingListView.getItems().add(pane);
+                    setNumberFollowing(String.valueOf(gen.getSize()));
+                }
+            }
 
-            if (objectFrom instanceof FollowerList followerList1) {
-                followerListView.getItems().add(pane);
-                setNumberFollowing(userModel.getNumFollower().toString());
-                setNumberFollower((followerList1).getSize().toString());
-            }
-            if (objectFrom instanceof FollowingList followingList1) {
-                followingListView.getItems().add(pane);
-                setNumberFollowing(userModel.getNumFollowing().toString());
-                setNumberFollowing(followingList1.getSize().toString());
-            }
         }
     }
 
@@ -366,34 +394,36 @@ public class JFX2UserProfileGUIController implements Observer {
         sliderDuration.setValue(0);
         this.duration= Double.valueOf(0);
     }
-    public void setAll(JFX2UserBeanOut jfx2UserBeanOut, UserProfileApplicationLayer userProfileApplicationLayer){
-        setUserProfileApplication(userProfileApplicationLayer);
-        setLabelUsername(jfx2UserBeanOut.getUsername());
-        setProfileImg(jfx2UserBeanOut.getImage());
+
+    public void setAll(JFX2UserBean jfx2UserBean, ManageFollowerFollowingList m){
+        setWhoIam();
+
+        this.m=m;
+        this.userBean = jfx2UserBean;
+        setLabelUsername(jfx2UserBean.getUsernameOut());
+        setProfileImg(jfx2UserBean.getImageOut());
 
         if(itsMyPageOrNot){
-            setTextFieldSettingEmail(jfx2UserBeanOut.getEmail());
-            setTextFieldSettingName(jfx2UserBeanOut.getName());
-            setTextFieldSettingUsername(jfx2UserBeanOut.getUsername());
-            setTextFieldSettingSecondName(jfx2UserBeanOut.getSurname());
+            setTextFieldSettingEmail(jfx2UserBean.getEmailOut());
+            setTextFieldSettingName(jfx2UserBean.getNameOut());
+            setTextFieldSettingUsername(jfx2UserBean.getUsernameOut());
+            setTextFieldSettingSecondName(jfx2UserBean.getSurnameOut());
         } else {
-            setLabelInfoName(jfx2UserBeanOut.getName());
-            setLabelInfoSurname(jfx2UserBeanOut.getSurname());
-            setLabelInfoEmail(jfx2UserBeanOut.getEmail());
+            setLabelInfoName(jfx2UserBean.getNameOut());
+            setLabelInfoSurname(jfx2UserBean.getSurnameOut());
+            setLabelInfoEmail(jfx2UserBean.getEmailOut());
         }
-        setNumberFollower(userProfileApplicationLayer.getFollowerList().getSize()+"");
-        setNumberFollowing(userProfileApplicationLayer.getFollowingList().getSize()+"");
         setItsMyPageOrNot(true);
 
-        int type = userProfileApplicationLayer.getWhoIam().getType();
+        int type = this.type;
 
         switch (type){
             case 0:{
                 //se sono un altro UserModel che visita il profilo di un altro userModel
-                if(!jfx2UserBeanOut.getUsername().equals(userProfileApplicationLayer.getWhoIam().getUsername())){
+                if(!jfx2UserBean.getUsernameOut().equals(whoIamUser.getUsername())){
                     setItsMyPageOrNot(false);
                 }
-                userProfileApplicationLayer.getJoinedVisitedUserList();
+
                 break;
             }
             case 1:{
@@ -432,5 +462,32 @@ public class JFX2UserProfileGUIController implements Observer {
             else {popupFollowerOn=false;}
         });
     }
+
+    // tox
+
+
+    private File getLoadedImg() {
+        return loadedImg;
+    }
+    private void setLoadedImg(File loadedImg) {
+        this.loadedImg = loadedImg;
+    }
+
+
+
+    private void setWhoIam() {
+        int type= ThreadLocalSession.getUserSession().get().getType();
+        this.type = type;
+        if(type==1){
+            this.whoIamClub=(JFX2ClubBean) ThreadLocalSession.getUserSession().get().getClubBean();
+
+        }
+        else if(type==0){
+            this.whoIamUser= new  JFX2UserBean (  ThreadLocalSession.getUserSession().get().getUserBean());
+        }
+    }
+
 }
+
+
 

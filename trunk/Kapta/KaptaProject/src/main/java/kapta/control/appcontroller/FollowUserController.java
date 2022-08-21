@@ -1,7 +1,10 @@
 package kapta.control.appcontroller;
 
 import kapta.model.lists.FollowerList;
+import kapta.model.lists.FollowingList;
 import kapta.model.profiles.UserModel;
+import kapta.utils.bean.GenericUserBean;
+import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.FollowerListDao;
 import kapta.utils.dao.listdao.FollowingListDao;
 import kapta.utils.session.ThreadLocalSession;
@@ -13,17 +16,31 @@ public class FollowUserController {
         //ignored
     }
 
-    public static void follow(UserModel visitedUser, UserModel user, FollowerList followerList) {
-            FollowerListDao.addToFollowerList(visitedUser, user);
-            FollowingListDao.addToFollowingList(user, visitedUser);
-            followerList.addUser( ThreadLocalSession.getUserSession().get().getUserModel());
+   public static void follow(GenericUserBean visitedUserBean, GenericUserBean userBean) {
+
+
+        UserModel user = UserDao.getUserById(userBean.getId());
+
+        UserModel visitedUser = UserDao.getUserById(visitedUserBean.getId());
+
+        FollowerListDao.addToFollowerList(visitedUser, user);
+        FollowingListDao.addToFollowingList(user, visitedUser);
+        // eee lo voglio come parametro
+        UserModel me = UserDao.getUserById(ThreadLocalSession.getUserSession().get().getUserBean().getId());
 
     }
 
-    public static void unfollow(UserModel visitedEventModel, UserModel user, FollowerList followerList)  {
 
-        FollowerListDao.removeFromFollowerList(visitedEventModel,user);
-        FollowingListDao.removeFromFollowingList(user, visitedEventModel);
-        followerList.removeUser( ThreadLocalSession.getUserSession().get().getUserModel());
-        }
+    public static void unfollow(GenericUserBean visitedUserBean, GenericUserBean userBean)  {
+
+        UserModel user = UserDao.getUserById(userBean.getId());
+
+        UserModel visitedUserModel = UserDao.getUserById(visitedUserBean.getId());
+
+        FollowerListDao.removeFromFollowerList(visitedUserModel,user);
+        FollowingListDao.removeFromFollowingList(user, visitedUserModel);
+        // eee lo voglio come parametro
+        UserModel me = UserDao.getUserById(ThreadLocalSession.getUserSession().get().getUserBean().getId());
+
+    }
 }

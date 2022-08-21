@@ -1,11 +1,12 @@
 package kapta.utils.pagesetter.setterjfx1;
 
-import kapta.application.UserProfileApplicationLayer;
 import kapta.control.guicontroller.interfaceone.JFX1UserProfileGuiController;
+import kapta.engineering.ManageFollowerFollowingList;
 import kapta.model.lists.FollowerList;
 import kapta.model.lists.FollowingList;
 import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
+import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.FollowerListDao;
 import kapta.utils.dao.listdao.FollowingListDao;
 import kapta.utils.dao.listdao.JoinedListDAO;
@@ -16,19 +17,21 @@ public class JFX1UserProfileSetter {
         //ignored
     }
 
-    public static void setter(UserModel userModel, JFX1UserProfileGuiController jfx1UserProfileGuiController) {
+    public static void setter(JFX1UserBean userBean, JFX1UserProfileGuiController jfx1UserProfileGuiController) {
 
+
+        UserModel userModel = UserDao.getUserById(userBean.getId());
+
+        //eee
         FollowerList followerList=new FollowerList(userModel, FollowerListDao.getFollower(userModel),jfx1UserProfileGuiController);
+        //eee
         FollowingList followingList=new FollowingList(userModel, FollowingListDao.getFollowing(userModel),jfx1UserProfileGuiController);
 
-        UserProfileApplicationLayer userProfileApplication = new UserProfileApplicationLayer(jfx1UserProfileGuiController, userModel);
-        JFX1UserBeanOut userBeanOut= new JFX1UserBeanOut(userModel);
+        ManageFollowerFollowingList man = new  ManageFollowerFollowingList(followingList, followerList);
 
-        jfx1UserProfileGuiController.setAll(userBeanOut, userProfileApplication); // layer application
+        jfx1UserProfileGuiController.setAll(userBean, man); // layer application
 
-        //set di application
-        userProfileApplication.setFollowingList(followingList);
-        userProfileApplication.setFollowerList(followerList);
+        //eeee
         JoinedListDAO.getJoined(userModel, jfx1UserProfileGuiController);
 
     }

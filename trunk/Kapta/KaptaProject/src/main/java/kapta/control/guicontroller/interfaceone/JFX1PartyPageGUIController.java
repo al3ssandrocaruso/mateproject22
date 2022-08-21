@@ -13,17 +13,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import kapta.application.PartyApplicationLayer;
-import kapta.application.UserProfileApplicationLayer;
+import kapta.control.guicontroller.interfaceone.item.JFX1PartyItemGUIController;
 import kapta.control.guicontroller.interfaceone.item.JFX1UserItemGUIController;
-import kapta.model.profiles.UserModel;
-import kapta.utils.bean.beanout.jfx1.JFX1PartyBeanOut;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
+import kapta.utils.bean.UserBean;
+import kapta.utils.bean.J1.JFX1ClubBean;
+import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.decorations.JFX1DecorationPartyOne;
 import kapta.utils.decorations.JFX1DecorationPartyTwo;
 import kapta.utils.Observer;
 import kapta.utils.pagesetter.setterjfx1.JFX1UserProfileSetter;
 import kapta.utils.VisualComponent;
+import kapta.utils.session.ThreadLocalSession;
+
 import java.io.IOException;
 
 public class JFX1PartyPageGUIController implements Observer {
@@ -58,12 +60,35 @@ public class JFX1PartyPageGUIController implements Observer {
     private VBox addedVBox;
     private JFX1UserPanel jfx1UserPanel;
     private VisualComponent contents;
-    private PartyApplicationLayer partyApplicationLayer;
 
-    public void setPartyApplication(PartyApplicationLayer partyApplicationLayer) {
-        this.partyApplicationLayer = partyApplicationLayer;
+
+    private JFX1ClubBean whoIamClub;
+    private JFX1UserBean whoIamUser;
+    private int type ;
+
+    private JFX1UserBean partyCreator;
+    private JFX1PartyBean partyBean;
+
+    private JFX1PartyItemGUIController jfx1PartyItemGUIController;
+
+
+
+
+    public JFX1PartyBean getPartyBean() {
+        return partyBean;
     }
 
+    public void setPartyBean(JFX1PartyBean partyBean) {
+        this.partyBean = partyBean;
+    }
+
+    public void setPartyCreator(JFX1UserBean partyCreator) {
+        this.partyCreator = partyCreator;
+    }
+
+    public JFX1UserBean getPartyCreator() {
+        return partyCreator;
+    }
 
     public void setLabelPartyName(String name) {
         this.labelPartyName.setText(name);
@@ -96,22 +121,25 @@ public class JFX1PartyPageGUIController implements Observer {
 
         JFX1UserProfileGuiController ctrl=loader.getController();
 
-        // da cambiare !!!
-        JFX1UserProfileSetter.setter(this.partyApplicationLayer.getPartyModel().getPartyCreator(), ctrl);
+        //eee da cambiare !!!
+        JFX1UserProfileSetter.setter(getPartyCreator(), ctrl);
         Stage stage = (Stage) ap.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void setAll(JFX1PartyBeanOut jfx1PartyBeanOut, PartyApplicationLayer partyApplicationLayer) {
-        setLabelPartyDate(jfx1PartyBeanOut.getPartyDate());
-        setLabelPartyName(jfx1PartyBeanOut.getPartyName());
-        setLabelPartyDuration(jfx1PartyBeanOut.getPartyDuration());
-        setLabelPartyTime(jfx1PartyBeanOut.getPartyTime());
-        setImg((jfx1PartyBeanOut.getPartyImg()));
-        setBtnUsernameCreator(jfx1PartyBeanOut.getPartyCreator());
-        setPartyApplication(partyApplicationLayer);
+    public void setAll(JFX1PartyBean jfx1PartyBean,JFX1UserBean creator ) {
+        setPartyBean(jfx1PartyBean);
+        setPartyCreator(creator);
+        setLabelPartyDate(jfx1PartyBean.getPartyDateOut());
+        setLabelPartyName(jfx1PartyBean.getPartyNameOut());
+        setLabelPartyDuration(jfx1PartyBean.getPartyDurationOut());
+        setLabelPartyTime(jfx1PartyBean.getPartyTimeOut());
+        setImg((jfx1PartyBean.getPartyImgOut()));
+        setBtnUsernameCreator(jfx1PartyBean.getPartyCreator());
+        setWhoIam();
+
     }
 
 
@@ -125,14 +153,14 @@ public class JFX1PartyPageGUIController implements Observer {
     public void setContents(VisualComponent contents){this.contents= contents;}
 
     public void actionDecoratePartyOne() {
-        JFX1DecorationPartyOne jfx1DecorationPartyOne =new JFX1DecorationPartyOne(this.jfx1UserPanel, this.partyApplicationLayer);
+        JFX1DecorationPartyOne jfx1DecorationPartyOne =new JFX1DecorationPartyOne(this.jfx1UserPanel, getPartyBean());
         this.setContents(jfx1DecorationPartyOne);
 
         this.display();
     }
 
     public void actionDecoratePartyTwo() {
-        JFX1DecorationPartyTwo jfx1DecorationPartyTwo = new JFX1DecorationPartyTwo(this.jfx1UserPanel, this.partyApplicationLayer);
+        JFX1DecorationPartyTwo jfx1DecorationPartyTwo = new JFX1DecorationPartyTwo(this.jfx1UserPanel, getPartyBean());
         this.setContents(jfx1DecorationPartyTwo);
         this.display();
     }
@@ -141,9 +169,9 @@ public class JFX1PartyPageGUIController implements Observer {
         this.addedVBox = new VBox();
         this.jfx1UserPanel =new JFX1UserPanel(addedVBox);
         this.setContents(this.jfx1UserPanel);
-        this.partyApplicationLayer.setWhoIam();
+        setWhoIam();
         display();
-        int decoration=partyApplicationLayer.chooseDecoration();
+        int decoration= chooseDecoration();
         switch (decoration){
             case 1: actionDecoratePartyOne(); break;
             case 2: actionDecoratePartyTwo(); break;
@@ -151,23 +179,43 @@ public class JFX1PartyPageGUIController implements Observer {
         }
     }
 
+    private  int chooseDecoration(){
+        if(this.type ==1) {
+            if (this.whoIamClub.getUsername().equals(getPartyCreator().getUsername())) {
+                return 1;
+            }
+        }
+        else if( this.type==0){return 2;}
+        return -1;
+    }
+
+    private void setWhoIam() {
+        int type= ThreadLocalSession.getUserSession().get().getType();
+        this.type=type;
+        if(type==0){
+            this.whoIamUser = new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean());
+        }else if(type==1){
+            this.whoIamClub = new JFX1ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
+        }
+    }
+
     @Override
     public void update(Object ob) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
-        UserModel partecipant = (UserModel) ob;
+        JFX1UserBean partecipant = new JFX1UserBean ((UserBean) ob);
         try{
             pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserItem.fxml").openStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JFX1UserBeanOut jfx1UserBeanOut = new JFX1UserBeanOut(partecipant);
         JFX1UserItemGUIController uigc = fxmlLoader.getController();
-        UserProfileApplicationLayer userProfileApplicationLayer = new UserProfileApplicationLayer(uigc,partecipant);
-        uigc.setAll(jfx1UserBeanOut, userProfileApplicationLayer);
+        uigc.setAll(partecipant);
 
         this.listView.getItems().add(pane);
     }
+
+
 
     @Override
     public void updateFrom(Object ob, Object from) {

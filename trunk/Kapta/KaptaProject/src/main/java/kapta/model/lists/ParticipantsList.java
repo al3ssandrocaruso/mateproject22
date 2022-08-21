@@ -4,6 +4,7 @@ import kapta.model.PartyEventModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.Observer;
 import kapta.utils.Subject;
+import kapta.utils.bean.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,8 @@ public class ParticipantsList extends Subject {
 
     public void addParticipant(UserModel p){
         this.participants.add(p);
-        this.notifyObservers(p);
+        UserBean userBean = new UserBean(p);
+        this.notifyObservers(userBean);
     }
 
 }

@@ -45,6 +45,7 @@ public class RequestListDao {
                     int idSender=rs.getInt(2);
                     boolean gp=rs.getBoolean(4);
                     int status=rs.getInt(3);
+                    System.out.println("here dao status ==>"+ status);
                     int idEvent=rs.getInt(6);
                     EventModel eventModel = EventDao.getEventbyEventId(idEvent);
                     if(gp){
@@ -56,6 +57,7 @@ public class RequestListDao {
                         output.add(requestModel);
                     } else {
                         requestModel=new RequestModel(eventModel,UserDao.getUserById(idSender),eventModel.getEventCreator(),requestId,gp,null, 0);
+                        requestModel.setStatus(status);
                         output.add(requestModel);
                     }
                 }while(rs.next());

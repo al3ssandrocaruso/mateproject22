@@ -6,8 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import kapta.application.UserProfileApplicationLayer;
-import kapta.utils.bean.beanout.jfx1.JFX1UserBeanOut;
+import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 
 public class JFX1UserItemGUIController {
@@ -19,8 +19,8 @@ public class JFX1UserItemGUIController {
 
     @FXML
     private AnchorPane ap;
+    private JFX1UserBean userBean;
 
-    private UserProfileApplicationLayer userProfileApplicationLayer;
 
 
 
@@ -30,20 +30,19 @@ public class JFX1UserItemGUIController {
         labelUsername.setText(username);
     }
 
-    public void setUserProfileApplication(UserProfileApplicationLayer userProfileApplicationLayer) {
-        this.userProfileApplicationLayer = userProfileApplicationLayer;
-    }
 
 
-    public void setAll(JFX1UserBeanOut jfx1UserBeanOut, UserProfileApplicationLayer userProfileApplicationLayer){
-        this.setLabelUsername(jfx1UserBeanOut.getUsername());
-        this.setImageViewProfilePic(jfx1UserBeanOut.getProfileImg());
-        this.setUserProfileApplication(userProfileApplicationLayer);
 
+    public void setAll(JFX1UserBean jfx1UserBean){
+        this.userBean = jfx1UserBean;
+        this.setLabelUsername(jfx1UserBean.getUsernameOut());
+        this.setImageViewProfilePic(jfx1UserBean.getProfileImgOut());
     }
 
     public void goToProfile(ActionEvent ae) {
-        this.userProfileApplicationLayer.navigationUserProfile(ae,"/JFX1/JFX1UserProfile.fxml");
+        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+        replaceSceneAndInitializePage.replaceSceneAndInitializePage(ae, "/JFX1/JFX1UserProfile.fxml", userBean);
+
     }
 
 }

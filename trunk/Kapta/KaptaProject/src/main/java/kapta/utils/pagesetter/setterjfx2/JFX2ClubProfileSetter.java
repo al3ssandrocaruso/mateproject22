@@ -1,11 +1,11 @@
 package kapta.utils.pagesetter.setterjfx2;
 
-import kapta.application.ClubProfileApplicationLayer;
+
 import kapta.control.guicontroller.interfacetwo.JFX2ClubProfileGUIController;
 import kapta.model.lists.CreatedEventList;
 import kapta.model.lists.RequestList;
 import kapta.model.profiles.ClubModel;
-import kapta.utils.bean.beanout.jfx2.JFX2ClubBeanOut;
+import kapta.utils.bean.J2.JFX2ClubBean;
 import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.listdao.RequestListDao;
 
@@ -17,13 +17,14 @@ public class JFX2ClubProfileSetter {
         //ignore
     }
 
-    public static void setter(ClubModel clubModel, JFX2ClubProfileGUIController clubProfileGUIController) {
-        JFX2ClubBeanOut clubBeanOut= new JFX2ClubBeanOut(clubModel);
+    public static void setter(JFX2ClubBean jfx2ClubBean, JFX2ClubProfileGUIController clubProfileGUIController) {
         try {
+
+            //eee can't be done here
+            ClubModel clubModel = ClubDao.getClubByUserName(jfx2ClubBean.getUsername());
             new RequestList(clubModel, RequestListDao.getPendingRequestsByClubId(clubModel.getId()), clubProfileGUIController);
             CreatedEventList createdEventList =ClubDao.getCreatedEventsList(clubModel, clubProfileGUIController);
-            ClubProfileApplicationLayer clubProfileApplication = new ClubProfileApplicationLayer(createdEventList);
-            clubProfileGUIController.setAll(clubBeanOut, clubProfileApplication);
+            clubProfileGUIController.setAll(jfx2ClubBean);
         } catch (SQLException e) {
             e.printStackTrace();
         }

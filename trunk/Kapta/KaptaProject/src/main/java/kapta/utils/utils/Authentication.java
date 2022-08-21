@@ -1,6 +1,6 @@
 package kapta.utils.utils;
 
-import kapta.utils.bean.beanin.jfx1.JFX1ProfileBean;
+import kapta.utils.bean.J1.JFX1ProfileBean;
 import kapta.utils.db.Query;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;

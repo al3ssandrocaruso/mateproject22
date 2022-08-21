@@ -2,10 +2,10 @@ package kapta.control.appcontroller;
 
 import kapta.model.EventModel;
 import kapta.model.TokenModel;
-import kapta.utils.bean.beanin.EventBean;
+import kapta.utils.bean.EventBean;
 import kapta.utils.bean.PartyEventSchedule;
+import kapta.utils.bean.TokenBean;
 import kapta.utils.dao.EventDao;
-import kapta.model.profiles.ClubModel;
 import kapta.utils.email.SendEmail;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.TokenException;
@@ -23,25 +23,25 @@ public class CreateEventController {
     }
 
     public static EventModel createEvent(EventBean eventBean)  {
-
-        ClubModel clubModel= ThreadLocalSession.getUserSession().get().getClubModel();
-
         PartyEventSchedule partyEventSchedule = new PartyEventSchedule(eventBean.getEventDate(), eventBean.getEventDuration(), eventBean.getEventOrario());
         EventModel eventModel=new EventModel(eventBean.getEventName(), eventBean.getEventPrice(), 0, eventBean.getEventAddress(), partyEventSchedule,  eventBean.isGreenPass(), eventBean.getEventImg());
             EventDao.saveNewEvent(eventModel);
             String toWrite="Nome: "+eventModel.getName()+"\nData: "+eventModel.getDate()+"\nDuration: "+eventModel.getDuration()+"\nHour: "+eventModel.getOrario()+"\nPrice: "+eventModel.getEventPrice()+"$";
-            SendEmail.send(clubModel.getEmail(),"Evento creato con successo!",toWrite);
+            SendEmail.send(ThreadLocalSession.getUserSession().get().getClubBean().getEmail(),"Evento creato con successo!",toWrite);
             return eventModel;
         }
 
 
-    public static TokenModel generateToken(){
+    public static TokenBean generateToken(){
         String randomToken= GenerateNewToken.generateToken();
-        SendEmail.send( ThreadLocalSession.getUserSession().get().getClubModel().getEmail(),"Mate: we need to verify you! ","Here the token to confirm your event creation: "+randomToken);
-        return new TokenModel(randomToken);
+        SendEmail.send( ThreadLocalSession.getUserSession().get().getClubBean().getEmail(),"Mate: we need to verify you! ","Here the token to confirm your event creation: "+randomToken);
+        TokenModel tm = new TokenModel(randomToken);
+        return new TokenBean(tm);
     }
 
-    public static void checkToken(TokenModel token1, TokenModel token2) throws TokenException {
+    public static void checkToken(TokenBean tokenBean, TokenBean tokenb2) throws TokenException {
+        TokenModel token1 = new TokenModel(tokenBean);
+        TokenModel token2 = new TokenModel(tokenb2);
         if(!timeGenerationValidation(token1.getGenerationTime(),token2.getGenerationTime()) || !token1.getToken().equals(token2.getToken())){
             ErrorHandler.getInstance().tokenException(token2.getToken());
         }
