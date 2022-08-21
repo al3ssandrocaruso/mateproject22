@@ -14,7 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public  class ManageSearch {
+    private  ManageSearch(){
+
+    }
+
     public  static void search(Observer ob, String input){
         GenericObservableList list = new GenericObservableList(ob);
         list.addAllUsersToList(Search.searchUserByUsername(input));
