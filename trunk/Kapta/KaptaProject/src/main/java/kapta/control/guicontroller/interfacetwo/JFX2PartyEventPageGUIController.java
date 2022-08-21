@@ -507,7 +507,6 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
     private  void setWhoIam() {
         int type= ThreadLocalSession.getUserSession().get().getType();
         this.typeMe = type;
-        System.out.println("STO QUI"+ type);
         if(type==1){
             this.whoIamClub= new JFX2ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
         }

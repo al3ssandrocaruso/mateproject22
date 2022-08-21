@@ -348,7 +348,6 @@ public class JFX2UserProfileGUIController implements Observer {
             JFX2UserItemGUIController uigc = fxmlLoader.getController();
             JFX2UserBean jfx2UserBean=new JFX2UserBean(userBean);
             uigc.setAll(jfx2UserBean,ap,this);
-            System.out.println("here0000");
             if(objectFrom instanceof GenericListInfoBean gen) {
                 if (gen.getType() == 1) {
                     followerListView.getItems().add(pane);

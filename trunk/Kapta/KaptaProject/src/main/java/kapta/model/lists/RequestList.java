@@ -18,7 +18,6 @@ public class RequestList extends GenericObservableList {
 
             super(obs);
             for ( RequestModel rm : list ){
-                System.out.println("here status ==>"+ rm.getStatus());
                 this.addRequest(rm);
             }
             this.owner = userClub;

@@ -17,7 +17,6 @@ public class CreatePartyController {
         pm.setStatus(0);
         PartyDao.saveNewParty(pm);
         pm.setId(PartyDao.getIdByPartyName(pm.getName()));
-        System.out.println("party id ==>"+pm.getId());
         partyBean.setId(pm.getId());
         JoinPartyController.joinParty( ThreadLocalSession.getUserSession().get().getUserBean(), partyBean);
         }

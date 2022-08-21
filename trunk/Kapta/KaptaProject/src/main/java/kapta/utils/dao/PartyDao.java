@@ -56,7 +56,6 @@ public class PartyDao {
             boolean ok = rst.first();
             new SimpleDateFormat("MM/dd/yyyy");
             if(ok){
-                System.out.println("hereeeeeee");
             PartyModel pm = new PartyModel(rst.getInt(1));
             PartyEventSchedule partyEventSchedule = new PartyEventSchedule(rst.getDate(4),rst.getTime(6),rst.getObject(10, LocalTime.class) );
             pm.setPartyEventSchedule(partyEventSchedule);

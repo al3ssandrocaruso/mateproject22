@@ -45,7 +45,6 @@ public class RequestListDao {
                     int idSender=rs.getInt(2);
                     boolean gp=rs.getBoolean(4);
                     int status=rs.getInt(3);
-                    System.out.println("here dao status ==>"+ status);
                     int idEvent=rs.getInt(6);
                     EventModel eventModel = EventDao.getEventbyEventId(idEvent);
                     if(gp){

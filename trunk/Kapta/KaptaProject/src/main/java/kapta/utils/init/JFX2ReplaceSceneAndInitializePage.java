@@ -90,10 +90,6 @@ public class JFX2ReplaceSceneAndInitializePage {
         }
 
         if (fxml.equals("/JFX2/JFX2PartyEventPage.fxml" )) {
-            System.out.println("90q9iue2390");
-            if(ob instanceof JFX2ClubBean || ob instanceof JFX2PartyBean){
-                System.out.println("bingooooo");
-            }
             JFX2PartyEventPageSetter.setter(ob, loader.getController());
         }
 

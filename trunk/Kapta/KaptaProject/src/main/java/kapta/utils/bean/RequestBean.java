@@ -35,7 +35,6 @@ public  class RequestBean {
         setEventImage(requestModel.getEvent().getImg());
         setSenderImage(requestModel.getSender().getProfileImg());
         setEventDate(requestModel.getEvent().getDate());
-        System.out.println("qui creazioene con status"+status );
     }
 
 

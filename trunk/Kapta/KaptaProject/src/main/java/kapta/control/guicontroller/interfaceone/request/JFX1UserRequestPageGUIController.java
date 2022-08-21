@@ -33,7 +33,6 @@ public class JFX1UserRequestPageGUIController implements Observer {
         JFX1RequestBean requestBean = new JFX1RequestBean((RequestBean) ob);
 
         if(requestBean.getStatus()==0){
-            System.out.println("here status 000000 para evento ==> "+ requestBean.getEventNameOut() );
             try {
                 anchorPane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserPendingRequestItem.fxml").openStream());
             } catch (IOException e) {
@@ -45,7 +44,6 @@ public class JFX1UserRequestPageGUIController implements Observer {
 
         }
         else if(requestBean.getStatus()==1){
-            System.out.println("here status 1111111 para evento ==> "+ requestBean.getEventNameOut() );
             try {
                 anchorPane  = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserAcceptedRequestItem.fxml").openStream());
             } catch (IOException e) {
@@ -57,7 +55,6 @@ public class JFX1UserRequestPageGUIController implements Observer {
 
         }
         else if (requestBean.getStatus()==2){
-            System.out.println("here status 2222222 para evento ==> "+ requestBean.getEventNameOut() );
             try {
                 anchorPane  = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserRejectedRequestItem.fxml").openStream());
             } catch (IOException e) {
