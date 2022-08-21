@@ -43,16 +43,6 @@ public class FollowerList extends GenericObservableList {
         UserBean ub = new UserBean(pm);
         this.notifyObservers(ub,gl);
 
-
-        /*for(UserModel um: this.follList){
-            if(um.getId()==pm.getId()){
-                GenericListInfoBean gl = new GenericListInfoBean();
-                gl.setSize(follList.size());
-                UserBean ub = new UserBean(pm);
-                this.notifyObservers(ub,gl);
-            }
-        }*/
-
     }
 
     public void setFollowerList(List<UserModel> followerList) {
