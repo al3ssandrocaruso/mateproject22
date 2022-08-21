@@ -31,7 +31,6 @@ import kapta.utils.bean.EventBean;
 import kapta.utils.bean.GenericListInfoBean;
 import kapta.utils.bean.PartyBean;
 import kapta.utils.bean.UserBean;
-import kapta.utils.bean.J2.JFX2ClubBean;
 import kapta.utils.bean.J2.JFX2EventBean;
 import kapta.utils.bean.J2.JFX2PartyBean;
 import kapta.utils.bean.J2.JFX2UserBean;
@@ -111,8 +110,7 @@ public class JFX2UserProfileGUIController implements Observer {
 
     // tox
     private JFX2UserBean whoIamUser;
-    private JFX2ClubBean whoIamClub;
-    private int type;
+    private int typeMe;
 
     private JFX2UserBean userBean;
     private File loadedImg;
@@ -322,14 +320,14 @@ public class JFX2UserProfileGUIController implements Observer {
             pigc.setAll(jfx2PartyBean);
             this.listViewJoined.getItems().add(pane);
         }
-        else if(ob instanceof EventBean EventBean) {
+        else if(ob instanceof EventBean eventBean) {
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX2/JFX2EventItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX2EventItemGUIController eigc = fxmlLoader.getController();
-            JFX2EventBean jfx2EventBean = new JFX2EventBean(EventBean);
+            JFX2EventBean jfx2EventBean = new JFX2EventBean(eventBean);
             eigc.setAll(jfx2EventBean);
             this.listViewJoined.getItems().add(pane);
         }
@@ -339,14 +337,14 @@ public class JFX2UserProfileGUIController implements Observer {
     public void updateFrom(Object ob, Object objectFrom) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Pane pane = null;
-        if(ob instanceof UserBean userBean) {
+        if(ob instanceof UserBean userBean2) {
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX2/JFX2UserItem.fxml").openStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
             JFX2UserItemGUIController uigc = fxmlLoader.getController();
-            JFX2UserBean jfx2UserBean=new JFX2UserBean(userBean);
+            JFX2UserBean jfx2UserBean=new JFX2UserBean(userBean2);
             uigc.setAll(jfx2UserBean,ap,this);
             if(objectFrom instanceof GenericListInfoBean gen) {
                 if (gen.getType() == 1) {
@@ -414,7 +412,7 @@ public class JFX2UserProfileGUIController implements Observer {
         }
         setItsMyPageOrNot(true);
 
-        int type = this.type;
+        int type = this.typeMe;
 
         switch (type){
             case 0:{
@@ -462,26 +460,11 @@ public class JFX2UserProfileGUIController implements Observer {
         });
     }
 
-    // tox
-
-
-    private File getLoadedImg() {
-        return loadedImg;
-    }
-    private void setLoadedImg(File loadedImg) {
-        this.loadedImg = loadedImg;
-    }
-
-
 
     private void setWhoIam() {
         int type= ThreadLocalSession.getUserSession().get().getType();
-        this.type = type;
-        if(type==1){
-            this.whoIamClub=(JFX2ClubBean) ThreadLocalSession.getUserSession().get().getClubBean();
-
-        }
-        else if(type==0){
+        this.typeMe = type;
+        if(type==0){
             this.whoIamUser= new  JFX2UserBean (  ThreadLocalSession.getUserSession().get().getUserBean());
         }
     }
