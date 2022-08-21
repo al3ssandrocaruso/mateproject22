@@ -32,6 +32,18 @@ public  class PartyBean implements PartyEventBean {
 
     public  PartyBean(){}
 
+    protected PartyBean(PartyBean partyBean){
+        this.setPartyCreator(partyBean.getPartyCreator());
+        this.setName(partyBean.getName());
+        this.setAddress(partyBean.getAddress());
+        this.setOrario(partyBean.getOrario());
+        this.setDate(partyBean.getDate());
+        this.setDuration(partyBean.getDuration());
+        this.setId(partyBean.getId());
+        this.setImage(partyBean.getImage());
+
+    }
+
     public void setPartyCreator(String partyCreator) {
         this.partyCreator = partyCreator;
     }
