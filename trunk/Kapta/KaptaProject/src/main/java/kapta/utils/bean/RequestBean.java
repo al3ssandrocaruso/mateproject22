@@ -37,6 +37,22 @@ public  class RequestBean {
         setEventDate(requestModel.getEvent().getDate());
     }
 
+    protected RequestBean (RequestBean requestBean){
+        setHasGreenPass(requestBean.isHasGreenPass());
+        setSender(requestBean.getSender());
+        setVaccinationDate(requestBean.getVaccinationDate());
+        setDoses(requestBean.getDoses());
+        setEventName(requestBean.getEventName());
+        setRequestId(requestBean.getRequestId());
+        setEventId(requestBean.getEventId());
+        setStatus(requestBean.getStatus());
+        setClubReceiver(requestBean.getClubReceiver());
+        setEventImage(requestBean.getEventImage());
+        setSenderImage(requestBean.getSenderImage());
+        setEventDate(requestBean.getEventDate());
+
+    }
+
 
     public boolean isHasGreenPass() {
         return eventBean.isGreenPass();
