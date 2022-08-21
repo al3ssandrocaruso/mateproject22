@@ -15,9 +15,9 @@ import kapta.engineering.ManageSearch;
 import kapta.utils.bean.EventBean;
 import kapta.utils.bean.PartyBean;
 import kapta.utils.bean.UserBean;
-import kapta.utils.bean.J2.JFX2EventBean;
-import kapta.utils.bean.J2.JFX2PartyBean;
-import kapta.utils.bean.J2.JFX2UserBean;
+import kapta.utils.bean.jfx2.JFX2EventBean;
+import kapta.utils.bean.jfx2.JFX2PartyBean;
+import kapta.utils.bean.jfx2.JFX2UserBean;
 import kapta.utils.pagesetter.setterjfx2.JFX2PartyEventPageSetter;
 import kapta.utils.pagesetter.setterjfx2.JFX2UserProfileSetter;
 

@@ -4,7 +4,7 @@ import kapta.model.PartyModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.Observer;
 import kapta.utils.bean.UserBean;
-import kapta.utils.bean.J2.JFX2PartyBean;
+import kapta.utils.bean.jfx2.JFX2PartyBean;
 import kapta.utils.dao.PartyDao;
 import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.JoinedListDAO;

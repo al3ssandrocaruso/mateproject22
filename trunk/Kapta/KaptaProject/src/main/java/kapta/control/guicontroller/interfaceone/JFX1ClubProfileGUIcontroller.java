@@ -13,8 +13,8 @@ import kapta.control.guicontroller.interfaceone.item.JFX1EventItemGUIController;
 import kapta.utils.Observer;
 import kapta.utils.bean.EventBean;
 import kapta.utils.bean.GenericListInfoBean;
-import kapta.utils.bean.J1.JFX1ClubBean;
-import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.bean.jfx1.JFX1ClubBean;
+import kapta.utils.bean.jfx1.JFX1EventBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import kapta.utils.session.ThreadLocalSession;
 

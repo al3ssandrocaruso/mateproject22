@@ -2,7 +2,7 @@ package kapta.utils.pagesetter.setterjfx1;
 
 import kapta.control.guicontroller.interfaceone.JFX1UserSettingsGUIController;
 import kapta.model.profiles.UserModel;
-import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.bean.jfx1.JFX1UserBean;
 
 public class JFX1UserSettingPageSetter {
 

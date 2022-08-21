@@ -7,7 +7,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Date;
 
-public  class EventBean extends PartyEventBean {
+public  class EventBean implements PartyEventBean {
     protected String eventName;
     protected Double eventPrice;
     protected String eventAddress;

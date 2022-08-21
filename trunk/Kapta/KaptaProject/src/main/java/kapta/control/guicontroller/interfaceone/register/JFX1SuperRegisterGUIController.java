@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import kapta.control.appcontroller.RegisterController;
-import kapta.utils.bean.J1.JFX1ProfileBean;
+import kapta.utils.bean.jfx1.JFX1ProfileBean;
 import kapta.utils.exception.*;
 import kapta.utils.exception.myexception.ConfirmPasswordException;
 import kapta.utils.exception.myexception.EmailValidatorException;

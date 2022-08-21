@@ -6,8 +6,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import kapta.control.appcontroller.RegisterController;
 import kapta.utils.bean.GenericUserBean;
-import kapta.utils.bean.J2.JFX2ClubBean;
-import kapta.utils.bean.J2.JFX2UserBean;
+import kapta.utils.bean.jfx2.JFX2ClubBean;
+import kapta.utils.bean.jfx2.JFX2UserBean;
 import kapta.utils.init.ReplaceScene;
 import javafx.scene.control.TextField;
 

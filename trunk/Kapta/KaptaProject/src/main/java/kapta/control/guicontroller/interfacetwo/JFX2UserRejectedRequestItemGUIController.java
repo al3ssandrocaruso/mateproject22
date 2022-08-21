@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.utils.bean.J2.JFX2RequestBean;
+import kapta.utils.bean.jfx2.JFX2RequestBean;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 
 public class JFX2UserRejectedRequestItemGUIController  {
@@ -21,7 +21,6 @@ public class JFX2UserRejectedRequestItemGUIController  {
 
     @FXML
     private ImageView eventPic;
-    private JFX2RequestBean  jfx2RequestBean;
     public void setEventPic(Image eventPic) {this.eventPic.setImage(eventPic);}
 
     public void cancelRequest(ActionEvent event) {
@@ -30,10 +29,9 @@ public class JFX2UserRejectedRequestItemGUIController  {
     }
     public void setAll(JFX2RequestBean jfx2RequestBean){
 
-        this.jfx2RequestBean=jfx2RequestBean;
         setEventPic(jfx2RequestBean.getRelatedEventImgOut());
         labelEventName.setText(jfx2RequestBean.getRelatedEventOut());
         labelEventDate.setText(jfx2RequestBean.getDateOut());
-        labelEventPrice.setText(this.jfx2RequestBean.getEventBean().getEventPrice().toString());
+        labelEventPrice.setText(jfx2RequestBean.getEventBean().getEventPrice().toString());
     }
 }

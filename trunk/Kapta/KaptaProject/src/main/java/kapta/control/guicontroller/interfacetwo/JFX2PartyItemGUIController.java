@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.utils.bean.J2.JFX2PartyBean;
+import kapta.utils.bean.jfx2.JFX2PartyBean;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 
 

@@ -8,8 +8,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import kapta.control.appcontroller.CreatePartyController;
-import kapta.utils.bean.J1.JFX1PartyBean;
-import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.bean.jfx1.JFX1PartyBean;
+import kapta.utils.bean.jfx1.JFX1UserBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 import java.io.File;

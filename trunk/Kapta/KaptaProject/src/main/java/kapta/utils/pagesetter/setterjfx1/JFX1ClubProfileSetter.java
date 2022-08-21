@@ -2,7 +2,7 @@ package kapta.utils.pagesetter.setterjfx1;
 
 import kapta.control.guicontroller.interfaceone.JFX1ClubProfileGUIcontroller;
 import kapta.model.profiles.ClubModel;
-import kapta.utils.bean.J1.JFX1ClubBean;
+import kapta.utils.bean.jfx1.JFX1ClubBean;
 import kapta.utils.dao.ClubDao;
 import kapta.utils.GenericObservableList;
 

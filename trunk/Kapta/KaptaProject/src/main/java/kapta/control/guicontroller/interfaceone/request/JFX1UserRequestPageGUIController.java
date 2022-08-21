@@ -10,7 +10,7 @@ import kapta.control.guicontroller.interfaceone.request.requestitem.user.JFX1Pen
 import kapta.control.guicontroller.interfaceone.request.requestitem.user.JFX1RejectedRequestItemGUIController;
 import kapta.utils.Observer;
 import kapta.utils.bean.RequestBean;
-import kapta.utils.bean.J1.JFX1RequestBean;
+import kapta.utils.bean.jfx1.JFX1RequestBean;
 
 import java.io.IOException;
 

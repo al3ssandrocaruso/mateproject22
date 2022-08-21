@@ -1,4 +1,4 @@
-package kapta.utils.bean.J2;
+package kapta.utils.bean.jfx2;
 
 import javafx.scene.image.Image;
 import kapta.model.RequestModel;

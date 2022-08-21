@@ -4,8 +4,8 @@ package kapta.utils.pagesetter.setterjfx1;
 import kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController;
 import kapta.model.PartyModel;
 import kapta.model.profiles.UserModel;
-import kapta.utils.bean.J1.JFX1PartyBean;
-import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.bean.jfx1.JFX1PartyBean;
+import kapta.utils.bean.jfx1.JFX1UserBean;
 import kapta.utils.dao.PartyDao;
 import kapta.utils.dao.listdao.ParticipantListDao;
 

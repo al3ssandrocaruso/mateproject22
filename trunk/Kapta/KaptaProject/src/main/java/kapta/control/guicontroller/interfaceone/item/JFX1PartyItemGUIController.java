@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.bean.jfx1.JFX1PartyBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1PartyItemGUIController {

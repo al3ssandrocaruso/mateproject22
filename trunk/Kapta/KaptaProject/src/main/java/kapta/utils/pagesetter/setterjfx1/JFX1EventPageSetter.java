@@ -4,8 +4,8 @@ package kapta.utils.pagesetter.setterjfx1;
 import kapta.control.guicontroller.interfaceone.JFX1EventPageGUIController;
 import kapta.model.EventModel;
 import kapta.model.profiles.ClubModel;
-import kapta.utils.bean.J1.JFX1ClubBean;
-import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.bean.jfx1.JFX1ClubBean;
+import kapta.utils.bean.jfx1.JFX1EventBean;
 import kapta.utils.dao.EventDao;
 import kapta.utils.dao.listdao.ParticipantListDao;
 

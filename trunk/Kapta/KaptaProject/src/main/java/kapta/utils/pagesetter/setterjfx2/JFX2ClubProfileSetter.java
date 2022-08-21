@@ -4,7 +4,7 @@ package kapta.utils.pagesetter.setterjfx2;
 import kapta.control.guicontroller.interfacetwo.JFX2ClubProfileGUIController;
 import kapta.model.lists.RequestList;
 import kapta.model.profiles.ClubModel;
-import kapta.utils.bean.J2.JFX2ClubBean;
+import kapta.utils.bean.jfx2.JFX2ClubBean;
 import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.listdao.RequestListDao;
 

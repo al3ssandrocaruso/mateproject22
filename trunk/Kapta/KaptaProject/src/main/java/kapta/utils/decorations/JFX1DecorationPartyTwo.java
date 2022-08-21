@@ -14,8 +14,8 @@ import kapta.control.appcontroller.JoinPartyController;
 import kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController;
 import kapta.model.lists.ParticipantsList;
 import kapta.utils.VisualComponent;
-import kapta.utils.bean.J1.JFX1PartyBean;
-import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.bean.jfx1.JFX1PartyBean;
+import kapta.utils.bean.jfx1.JFX1UserBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import kapta.utils.session.ThreadLocalSession;
 

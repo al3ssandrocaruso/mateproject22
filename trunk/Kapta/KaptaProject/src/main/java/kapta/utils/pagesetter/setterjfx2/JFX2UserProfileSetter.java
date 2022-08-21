@@ -6,7 +6,7 @@ import kapta.model.lists.FollowerList;
 import kapta.model.lists.FollowingList;
 import kapta.model.profiles.UserModel;
 
-import kapta.utils.bean.J2.JFX2UserBean;
+import kapta.utils.bean.jfx2.JFX2UserBean;
 import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.FollowerListDao;
 import kapta.utils.dao.listdao.FollowingListDao;

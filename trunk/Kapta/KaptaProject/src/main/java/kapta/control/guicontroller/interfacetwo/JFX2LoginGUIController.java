@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import kapta.control.appcontroller.LoginController;
-import kapta.utils.bean.J2.JFX2LoginBean;
+import kapta.utils.bean.jfx2.JFX2LoginBean;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;

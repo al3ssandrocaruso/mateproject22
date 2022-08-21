@@ -31,9 +31,9 @@ import kapta.utils.bean.EventBean;
 import kapta.utils.bean.GenericListInfoBean;
 import kapta.utils.bean.PartyBean;
 import kapta.utils.bean.UserBean;
-import kapta.utils.bean.J2.JFX2EventBean;
-import kapta.utils.bean.J2.JFX2PartyBean;
-import kapta.utils.bean.J2.JFX2UserBean;
+import kapta.utils.bean.jfx2.JFX2EventBean;
+import kapta.utils.bean.jfx2.JFX2PartyBean;
+import kapta.utils.bean.jfx2.JFX2UserBean;
 import kapta.utils.Observer;
 
 import kapta.utils.exception.myexception.EmailValidatorException;

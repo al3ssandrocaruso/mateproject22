@@ -2,7 +2,7 @@ package kapta.utils.pagesetter.setterjfx1;
 
 import kapta.control.guicontroller.interfaceone.JFX1ClubSettingGUIController;
 import kapta.model.profiles.ClubModel;
-import kapta.utils.bean.J1.JFX1ClubBean;
+import kapta.utils.bean.jfx1.JFX1ClubBean;
 
 public class JFX1ClubSettingPageSetter {
 

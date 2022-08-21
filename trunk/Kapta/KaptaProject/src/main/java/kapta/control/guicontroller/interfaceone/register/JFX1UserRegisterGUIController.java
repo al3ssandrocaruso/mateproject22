@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import kapta.control.appcontroller.RegisterController;
-import kapta.utils.bean.J1.JFX1ProfileBean;
-import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.bean.jfx1.JFX1ProfileBean;
+import kapta.utils.bean.jfx1.JFX1UserBean;
 import kapta.utils.init.ReplaceScene;
 
 import java.io.File;

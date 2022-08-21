@@ -4,7 +4,7 @@ import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.bean.InfoLogged;
 import kapta.utils.bean.GenericUserBean;
-import kapta.utils.bean.J1.JFX1ProfileBean;
+import kapta.utils.bean.jfx1.JFX1ProfileBean;
 import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.UserDao;
 import kapta.utils.exception.Trigger;

@@ -34,10 +34,10 @@ import kapta.control.appcontroller.JoinPartyController;
 import kapta.engineering.MangeJoined;
 import kapta.engineering.MangeParticipant;
 
-import kapta.utils.bean.J2.*;
 import kapta.utils.bean.RequestBean;
 import kapta.utils.bean.UserBean;
 
+import kapta.utils.bean.jfx2.*;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.ExpiredGreenPassException;
 import kapta.utils.exception.myexception.GenericException;

@@ -8,7 +8,7 @@ import kapta.control.guicontroller.interfaceone.request.requestitem.club.JFX1Clu
 import kapta.control.guicontroller.interfaceone.request.requestitem.club.JFX1ClubRequestItemGUIController;
 import kapta.utils.Observer;
 import kapta.utils.bean.RequestBean;
-import kapta.utils.bean.J1.JFX1RequestBean;
+import kapta.utils.bean.jfx1.JFX1RequestBean;
 
 import java.io.IOException;
 

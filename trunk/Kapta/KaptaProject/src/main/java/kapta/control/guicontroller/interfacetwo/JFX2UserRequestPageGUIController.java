@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import kapta.utils.Observer;
 import kapta.utils.bean.RequestBean;
-import kapta.utils.bean.J2.JFX2RequestBean;
+import kapta.utils.bean.jfx2.JFX2RequestBean;
 
 import java.io.IOException;
 

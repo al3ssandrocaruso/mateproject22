@@ -8,7 +8,7 @@ import javafx.scene.text.FontWeight;
 
 import kapta.control.appcontroller.DeletePartyEventController;
 import kapta.utils.VisualComponent;
-import kapta.utils.bean.J1.JFX1EventBean;
+import kapta.utils.bean.jfx1.JFX1EventBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 

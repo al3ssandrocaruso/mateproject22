@@ -9,8 +9,8 @@ public class TokenBean {
     private LocalTime localTime;
 
 
-    public TokenBean(String TokenString, LocalTime localTime){
-        setTokenString(TokenString);
+    public TokenBean(String tokenString, LocalTime localTime){
+        setTokenString(tokenString);
         setLocalTime(localTime);
     }
 

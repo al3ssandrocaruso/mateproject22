@@ -1,8 +1,8 @@
 package kapta.utils.pagesetter.setterjfx2;
 
 import kapta.control.guicontroller.interfacetwo.JFX2ConcludeSubmitGUIController;
-import kapta.utils.bean.J2.JFX2ClubBean;
-import kapta.utils.bean.J2.JFX2UserBean;
+import kapta.utils.bean.jfx2.JFX2ClubBean;
+import kapta.utils.bean.jfx2.JFX2UserBean;
 import kapta.utils.exception.myexception.EmailValidatorException;
 import kapta.utils.exception.myexception.InputNullException;
 

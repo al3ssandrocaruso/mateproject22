@@ -8,7 +8,7 @@ import kapta.control.guicontroller.interfaceone.register.JFX1UserRegisterGUICont
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.bean.EventBean;
-import kapta.utils.bean.J1.*;
+import kapta.utils.bean.jfx1.*;
 import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.UserDao;
 import kapta.utils.pagesetter.setterjfx1.*;

@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import kapta.control.appcontroller.SettingsPageController;
-import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.bean.jfx1.JFX1UserBean;
 import kapta.utils.utils.EndSettingsChanges;
 
 public class JFX1UserSettingsGUIController {

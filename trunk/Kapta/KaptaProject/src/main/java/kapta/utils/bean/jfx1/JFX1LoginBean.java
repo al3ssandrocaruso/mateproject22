@@ -1,4 +1,4 @@
-package kapta.utils.bean.J1;
+package kapta.utils.bean.jfx1;
 
 import kapta.utils.bean.LoginBean;
 

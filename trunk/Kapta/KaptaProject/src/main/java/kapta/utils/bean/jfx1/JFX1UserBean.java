@@ -1,4 +1,4 @@
-package kapta.utils.bean.J1;
+package kapta.utils.bean.jfx1;
 
 import javafx.scene.image.Image;
 import kapta.model.profiles.UserModel;

@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.control.appcontroller.JoinEventController;
-import kapta.utils.bean.J1.JFX1RequestBean;
+import kapta.utils.bean.jfx1.JFX1RequestBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1ClubRequestGreenPassItemGUIController {

@@ -8,7 +8,7 @@ import javafx.scene.text.FontWeight;
 import kapta.control.appcontroller.FollowUserController;
 import kapta.control.guicontroller.interfaceone.JFX1UserProfileGuiController;
 import kapta.engineering.ManageFollowerFollowingList;
-import kapta.utils.bean.J1.JFX1UserBean;
+import kapta.utils.bean.jfx1.JFX1UserBean;
 import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.FollowUtils;
 import kapta.utils.VisualComponent;

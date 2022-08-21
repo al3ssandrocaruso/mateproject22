@@ -2,7 +2,7 @@ package kapta.utils.utils;
 
 import javafx.fxml.FXMLLoader;
 import kapta.control.guicontroller.interfaceone.item.JFX1PartyItemGUIController;
-import kapta.utils.bean.J1.JFX1PartyBean;
+import kapta.utils.bean.jfx1.JFX1PartyBean;
 
 
 public class UpdateHandlerUno {
