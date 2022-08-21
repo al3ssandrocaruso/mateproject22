@@ -1,10 +1,5 @@
 package kapta.utils.bean;
-
-
-import javafx.scene.image.Image;
 import kapta.model.PartyModel;
-import kapta.utils.utils.ImageConverter;
-
 import java.io.File;
 import java.sql.Time;
 import java.time.LocalTime;
