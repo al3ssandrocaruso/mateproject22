@@ -59,17 +59,12 @@ public class JFX1CreateEventGUIController implements Initializable {
     @FXML
     private Button btnSubmitRequest;
     private TokenBean token1; //the right token
-    private JFX1ClubBean clubBean;
     private File imgEvent;
 
 
     private int numSbagliate=1;
     private String arial="Arial";
 
-
-    public void setClubBean(JFX1ClubBean clubBean) {
-        this.clubBean = clubBean;
-    }
 
 
 
