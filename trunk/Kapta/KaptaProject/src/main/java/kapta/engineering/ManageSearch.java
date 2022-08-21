@@ -6,7 +6,6 @@ import kapta.model.PartyModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.GenericObservableList;
 import kapta.utils.Observer;
-import kapta.utils.bean.ClubBean;
 import kapta.utils.bean.EventBean;
 import kapta.utils.bean.PartyBean;
 import kapta.utils.bean.UserBean;
@@ -14,7 +13,7 @@ import kapta.utils.bean.UserBean;
 import java.util.ArrayList;
 import java.util.List;
 
-//ee ???
+
 public  class ManageSearch {
     public  static void search(Observer ob, String input){
         GenericObservableList list = new GenericObservableList(ob);

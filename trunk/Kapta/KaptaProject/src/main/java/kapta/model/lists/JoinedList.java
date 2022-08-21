@@ -1,7 +1,6 @@
 package kapta.model.lists;
 
 import kapta.model.PartyEventModel;
-import kapta.model.PartyModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.Observer;
 import kapta.utils.Subject;

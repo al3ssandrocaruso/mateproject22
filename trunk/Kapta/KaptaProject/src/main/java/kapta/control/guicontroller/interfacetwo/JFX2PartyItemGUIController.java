@@ -42,9 +42,7 @@ public class JFX2PartyItemGUIController {
         rsip.replaceSceneAndInitializePage(ae, "/JFX2/JFX2PartyEventPage.fxml", this.partyBean);
     }
     public void setAll(JFX2PartyBean jfx2PartyBean){
-  ;
         setPartyBean(jfx2PartyBean);
-
         setImageViewPartyImage(jfx2PartyBean.getPartyImgOut());
         setLabelPartyName(jfx2PartyBean.getPartyNameOut());
         setLabelPartyDate(jfx2PartyBean.getPartyDateOut());
