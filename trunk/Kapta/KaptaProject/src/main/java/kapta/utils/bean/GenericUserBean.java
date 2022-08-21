@@ -97,9 +97,6 @@ public abstract class GenericUserBean {
         return id;
     }
 
-    public void setUsernameOut(String username) {
-        this.username = username;
-    }
 
     public void setName(String name) {
         this.name = name;

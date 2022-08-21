@@ -18,11 +18,6 @@ public class RequestModel {
 
 
 
-    public RequestModel(RequestBean requestBean, EventModel eventModel) {
-        this.event=eventModel;
-
-    }
-
 
     // Set e Get
     public ClubModel getReceiver() {
