@@ -96,9 +96,7 @@ public class ReplaceSceneAndInitializePage {
             JFX1ClubFollowersPageSetter.setter(clubModel, loader.getController());
         }
         if(fxml.equals("/JFX1/JFX1ClubCreateEvent.fxml")){
-            JFX1ClubBean clubBean = (JFX1ClubBean) ob;
-            JFX1CreateEventGUIController cegc = loader.getController();
-            JFX1CreateEventSetter.setter(clubBean, cegc);
+            loader.getController();
         }
         if(fxml.equals("/JFX1/JFX1ClubProfile.fxml")){
             JFX1ClubBean jfx1ClubBean = (JFX1ClubBean) ob;

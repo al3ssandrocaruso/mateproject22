@@ -2,7 +2,9 @@ package kapta.model;
 
 import kapta.utils.bean.TokenBean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class TokenModel {
@@ -24,8 +26,8 @@ public class TokenModel {
         dtf.format(this.generationTime);
     }
 
-    public void setGenerationTime(LocalDateTime generationTime) {
-        this.generationTime = generationTime;
+    public void setGenerationTime(LocalTime gen) {
+        this.generationTime = gen.atDate(LocalDate.now());
     }
 
     public TokenModel(String token) {
@@ -33,7 +35,7 @@ public class TokenModel {
         this.setToken(token);
     }
     public TokenModel(TokenBean token) {
-        this.setGenerationTime(LocalDateTime.from(token.getLocalTime()));
+        this.setGenerationTime(token.getLocalTime());
         this.setToken(token.getTokenString());
     }
 
