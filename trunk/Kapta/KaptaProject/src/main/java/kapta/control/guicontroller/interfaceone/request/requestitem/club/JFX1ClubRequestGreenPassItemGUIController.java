@@ -69,14 +69,14 @@ public class JFX1ClubRequestGreenPassItemGUIController {
 
     public void rejectRequest(ActionEvent actionEvent) {
         JoinEventController.rejectRequest(getRequestBean());
-        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
-        replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
+        goToRequestPage(actionEvent);
+
     }
 
     public void acceptRequest(ActionEvent actionEvent) {
         JoinEventController.acceptRequest(getRequestBean());
-        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
-        replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
+        goToRequestPage(actionEvent);
+
     }
     public void setAll(JFX1RequestBean jfx1RequestBean){
         setRequestBean(jfx1RequestBean);
@@ -86,5 +86,10 @@ public class JFX1ClubRequestGreenPassItemGUIController {
         setLabelDate(jfx1RequestBean.getVaccinationDateOut());
         setLabelDoses(jfx1RequestBean.getDosesOut());
         setImageViewProfilePic(jfx1RequestBean.getSenderImageOut());
+    }
+    public void goToRequestPage(ActionEvent actionEvent){
+        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+        replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
+
     }
 }
