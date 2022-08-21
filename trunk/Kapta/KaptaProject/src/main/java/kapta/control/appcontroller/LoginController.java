@@ -28,7 +28,6 @@ public class LoginController {
                 clubModel = ClubDao.getClubByUserName(loginBean.getUsername());
                 ClubBean clubBean = new ClubBean(clubModel);
                 ThreadLocalSession.getUserSession().set(new Session(clubBean));
-                //ThreadLocalSession.getUserSession().get().setClubModel(clubModel);
                 ThreadLocalSession.getUserSession().get().getClubBean().setId(ClubDao.clubIdbyClub(clubModel));
             }
             else{
@@ -44,11 +43,6 @@ public class LoginController {
                 userModel = UserDao.getUserByUsername(loginBean.getUsername());
                 UserBean userBean = new UserBean(userModel);
                 ThreadLocalSession.getUserSession().set(new Session(userBean));
-             /*   ThreadLocalSession.getUserSession().get().setUserModel(userModel);
-                ThreadLocalSession.getUserSession().get().getUserModel().setNumFollowing(UserDao.getNumSeguiti(userModel));
-                ThreadLocalSession.getUserSession().get().getUserModel().setNumFollower(UserDao.getNumFollower(userModel));
-                ThreadLocalSession.getUserSession().get().getUserModel().setId(UserDao.getUserByUsername(userModel.getUsername()).getId());
-            */
             }
 
             else{

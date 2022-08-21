@@ -102,11 +102,11 @@ public class JFX1FollowerFollowingListGuiController implements Observer {
     }
 
     private void navigationBack(ActionEvent actionEvent) {
-        int type= ThreadLocalSession.getUserSession().get().getType();
+        int typeMe= ThreadLocalSession.getUserSession().get().getType();
         ReplaceSceneAndInitializePage rp = new ReplaceSceneAndInitializePage();
 
         //Tutti i casi possibili: sono un utente e sto nel profilo di un altro utente, sto nel mio profilo, sto nel profilo di un club ...
-        switch(type){
+        switch(typeMe){
             case 0:
                 if(owner.getUsername().equals( ThreadLocalSession.getUserSession().get().getUserBean().getUsername())){
                     JFX1UserBean jfx1UserBean =new  JFX1UserBean(ThreadLocalSession.getUserSession().get().getUserBean());
