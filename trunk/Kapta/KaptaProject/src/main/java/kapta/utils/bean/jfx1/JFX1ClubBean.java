@@ -15,23 +15,27 @@ import java.net.URL;
 public class JFX1ClubBean extends ClubBean {
 
     public JFX1ClubBean(String username, String email, String password, String clubName, String address, String city, String website) throws MalformedURLException, URISyntaxException {
-        setUsernameOut(username);
-        setEmailOut(email);
+        setBasic(username,email,city,address);
         setPasswordOut(password);
         setClubNameOut(clubName);
-        setAddressOut(address);
-        setCityOut(city);
         setWebsiteOut(website);
-        setTypeOut();
     }
+
     public JFX1ClubBean(String username, String email, String city, String address, int id)  {
+        setBasic(username,email,city,address);
+        setId(id);
+    }
+
+
+    private void setBasic(String username, String email, String city , String address){
         setUsernameOut(username);
         setEmailOut(email);
         setAddressOut(address);
         setCityOut(city);
-        setId(id);
         setTypeOut();
     }
+
+
 
     public  JFX1ClubBean(ClubBean clubBean){
         setEmail(clubBean.getEmail());
