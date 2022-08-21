@@ -52,8 +52,7 @@ public class JFX1UserProfileGuiController implements Observer {
     private VBox addedVBox;
     private VisualComponent contents;
     private JFX1UserBean userBean;
-    private int numFollowing;
-    private int numFollower;
+
 
 
     ManageFollowerFollowingList man ;
@@ -167,12 +166,9 @@ public class JFX1UserProfileGuiController implements Observer {
         if(objectFrom instanceof GenericListInfoBean genericListInfoBean){
             {
                 if (genericListInfoBean.getType() == 1) {
-
-                    this.numFollower=genericListInfoBean.getSize();
-                    setBtnFollowers(String.valueOf(numFollower));
+                    setBtnFollowers(String.valueOf(genericListInfoBean.getSize()));
                 } else if (genericListInfoBean.getType() == 0) {
-                    this.numFollowing=genericListInfoBean.getSize();
-                    setBtnFollowing(String.valueOf(numFollowing));
+                    setBtnFollowing(String.valueOf(genericListInfoBean.getSize()));
 
                 }
             }}
