@@ -162,17 +162,13 @@ public class JFX1UserProfileGuiController implements Observer {
 
     //Serve chiamarle così le liste così che non diano code smells (già c'è followerList e followingList)
     @Override
-    public void updateFrom(Object ob,Object objectFrom) {
-        if(objectFrom instanceof GenericListInfoBean genericListInfoBean){
-            {
-                if (genericListInfoBean.getType() == 1) {
-                    setBtnFollowers(String.valueOf(genericListInfoBean.getSize()));
-                } else if (genericListInfoBean.getType() == 0) {
-                    setBtnFollowing(String.valueOf(genericListInfoBean.getSize()));
-
+    public void updateFrom(Object ob,Object objectFrom ) {
+        if(objectFrom instanceof GenericListInfoBean genericListInfoBean && genericListInfoBean.getType() == 1){
+            setBtnFollowers(String.valueOf(genericListInfoBean.getSize()));
                 }
-            }}
-
+        else if (objectFrom instanceof GenericListInfoBean genericListInfoBean && genericListInfoBean.getType() == 0) {
+            setBtnFollowing(String.valueOf(genericListInfoBean.getSize()));
+        }
     }
 
     public void display(){
