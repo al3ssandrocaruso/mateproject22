@@ -1,13 +1,10 @@
 package kapta.model.lists;
-
-
 import kapta.model.profiles.UserClubModel;
 import kapta.model.profiles.UserModel;
 import kapta.utils.GenericObservableList;
 import kapta.utils.Observer;
 import kapta.utils.bean.GenericListInfoBean;
 import kapta.utils.bean.UserBean;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

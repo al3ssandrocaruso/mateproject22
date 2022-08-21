@@ -1,7 +1,4 @@
 package kapta.control.appcontroller;
-
-import kapta.model.lists.FollowerList;
-import kapta.model.lists.FollowingList;
 import kapta.model.profiles.UserModel;
 import kapta.utils.bean.GenericUserBean;
 import kapta.utils.dao.UserDao;
@@ -40,7 +37,7 @@ public class FollowUserController {
         FollowerListDao.removeFromFollowerList(visitedUserModel,user);
         FollowingListDao.removeFromFollowingList(user, visitedUserModel);
         // eee lo voglio come parametro
-        UserModel me = UserDao.getUserById(ThreadLocalSession.getUserSession().get().getUserBean().getId());
+        UserDao.getUserById(ThreadLocalSession.getUserSession().get().getUserBean().getId());
 
     }
 }
