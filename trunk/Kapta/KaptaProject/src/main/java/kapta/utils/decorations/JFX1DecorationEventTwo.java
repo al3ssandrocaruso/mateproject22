@@ -20,7 +20,6 @@ import kapta.utils.bean.RequestBean;
 import kapta.utils.bean.J1.JFX1ClubBean;
 import kapta.utils.bean.J1.JFX1EventBean;
 import kapta.utils.bean.J1.JFX1RequestBean;
-import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.ExpiredGreenPassException;
 import kapta.utils.exception.myexception.GenericException;
@@ -40,9 +39,6 @@ public class JFX1DecorationEventTwo extends Decorator{
     private String[] ret;
 
     private JFX1EventBean eventBean;
-    private JFX1UserBean whoIamUser;
-    private JFX1ClubBean whoIamClub;
-    private int type;
     private JFX1ClubBean creator;
 
 
@@ -71,8 +67,6 @@ public class JFX1DecorationEventTwo extends Decorator{
 
     public JFX1DecorationEventTwo(VisualComponent component, JFX1EventBean eventBean, JFX1ClubBean creator ) {
         super(component);
-        //In generale setto il tasto su Join ma se partecipo già all'evento allora mostro Leave
-        setWhoIam();
         setEventBean(eventBean);
         setCreator(creator);
 
@@ -228,15 +222,6 @@ public class JFX1DecorationEventTwo extends Decorator{
     //eeee to delete
     private  int getStatusRequest() {
         return JoinEventController.manageRequestInfo(this.eventBean,  ThreadLocalSession.getUserSession().get().getUserBean(), getCreator());
-    }
-
-    private   void setWhoIam() {
-        int type= ThreadLocalSession.getUserSession().get().getType();
-        this.type = type;
-        if(type==1){
-            this.whoIamClub= new JFX1ClubBean   (ThreadLocalSession.getUserSession().get().getClubBean());
-        }
-        else if(type==0){this.whoIamUser= new  JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean());}
     }
 
 
