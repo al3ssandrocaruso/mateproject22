@@ -13,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import kapta.control.guicontroller.interfaceone.item.JFX1PartyItemGUIController;
 import kapta.control.guicontroller.interfaceone.item.JFX1UserItemGUIController;
 import kapta.utils.bean.UserBean;
 import kapta.utils.bean.J1.JFX1ClubBean;
@@ -111,11 +110,11 @@ public class JFX1PartyPageGUIController implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert parentRoot != null;
         parentRoot.setVisible(true);
 
         JFX1UserProfileGuiController ctrl=loader.getController();
 
-        //eee da cambiare !!!
         JFX1UserProfileSetter.setter(getPartyCreator(), ctrl);
         Stage stage = (Stage) ap.getScene().getWindow();
         Scene scene = new Scene(root);
@@ -184,8 +183,8 @@ public class JFX1PartyPageGUIController implements Observer {
     }
 
     private void setWhoIam() {
-        int type= ThreadLocalSession.getUserSession().get().getType();
-        this.type=type;
+        int typeMe= ThreadLocalSession.getUserSession().get().getType();
+        this.type=typeMe;
         if(type==1){
             this.whoIamClub = new JFX1ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
         }
