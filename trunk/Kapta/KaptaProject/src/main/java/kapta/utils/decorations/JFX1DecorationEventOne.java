@@ -8,20 +8,15 @@ import javafx.scene.text.FontWeight;
 
 import kapta.control.appcontroller.DeletePartyEventController;
 import kapta.utils.VisualComponent;
-import kapta.utils.bean.J1.JFX1ClubBean;
 import kapta.utils.bean.J1.JFX1EventBean;
-import kapta.utils.bean.J1.JFX1UserBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
-import kapta.utils.session.ThreadLocalSession;
 
 
 public class JFX1DecorationEventOne extends Decorator {
 
     private String toWrite;
     private JFX1EventBean eventBean;
-    private JFX1ClubBean whoIamClub;
-    private JFX1UserBean whoIamUser;
-    private int type;
+
 
     public void setToWrite(String toWrite) {
         this.toWrite = toWrite;
@@ -29,7 +24,6 @@ public class JFX1DecorationEventOne extends Decorator {
 
     public JFX1DecorationEventOne(VisualComponent component, JFX1EventBean jfx1EventBean) {
         super(component);
-        setWhoIam();
         this.eventBean=jfx1EventBean;
 
     }
@@ -65,12 +59,4 @@ public class JFX1DecorationEventOne extends Decorator {
         return preliminaryResult;
     }
 
-    private  void setWhoIam() {
-        int type= ThreadLocalSession.getUserSession().get().getType();
-        this.type=type;
-        if(type==1){
-            this.whoIamClub= new  JFX1ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
-        }
-        else if(type==0){this.whoIamUser= new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean()); }
-    }
 }

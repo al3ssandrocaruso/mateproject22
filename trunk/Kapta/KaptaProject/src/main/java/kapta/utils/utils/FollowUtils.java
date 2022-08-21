@@ -1,7 +1,6 @@
 package kapta.utils.utils;
 
 import kapta.model.profiles.UserModel;
-import kapta.utils.bean.GenericUserBean;
 import kapta.utils.bean.UserBean;
 import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.FollowingListDao;
