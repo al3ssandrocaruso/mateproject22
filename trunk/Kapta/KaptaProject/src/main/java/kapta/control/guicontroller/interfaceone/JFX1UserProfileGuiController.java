@@ -188,12 +188,12 @@ public class JFX1UserProfileGuiController implements Observer {
 
     public void gotoFollowerPage(ActionEvent ae) {
         ReplaceSceneAndInitializePage risp=new ReplaceSceneAndInitializePage();
-        risp.replaceSceneAndInitializePage(ae,"/JFX1/JFX1FollowerFollowingListPage.fxml",0,this.userBean);
+        risp.replaceSceneAndInitializePage(ae,"/JFX1/JFX1FollowerFollowingListPage.fxml",this.userBean);
     }
 
     public void gotoFollowingPage(ActionEvent ae) {
         ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
-        rsip.replaceSceneAndInitializePage(ae,"/JFX1/JFX1FollowerFollowingListPage.fxml", 1, this.userBean);
+        rsip.replaceSceneAndInitializePage(ae,"/JFX1/JFX1FollowerFollowingListPage.fxml", this.userBean);
 
        }
 }

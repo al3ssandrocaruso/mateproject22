@@ -29,23 +29,8 @@ public class JFX1FollowerFollowingListGuiController implements Observer {
 
     // eee
     private GenericUserBean owner;
-    private int support;
 
-    public void setSupport(int i ){
-        this.support=i;
-        switch (support) {
-            case 0:{
-                swapToFollower();
-                break;
-            }
-            case 1: {
-                swapToFollowing();
-                break;
-            }
-            default: break;
-        }
 
-    }
 
     public void setOwner(GenericUserBean owner) {
         this.owner = owner;

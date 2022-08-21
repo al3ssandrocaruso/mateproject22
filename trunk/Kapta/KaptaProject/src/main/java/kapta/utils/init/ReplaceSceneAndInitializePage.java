@@ -127,7 +127,7 @@ public class ReplaceSceneAndInitializePage {
 
     }
 
-    public void replaceSceneAndInitializePage(ActionEvent ae, String fxml, int support, JFX1UserBean owner){
+    public void replaceSceneAndInitializePage(ActionEvent ae, String fxml, JFX1UserBean owner){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root = null;
         try {
@@ -135,7 +135,7 @@ public class ReplaceSceneAndInitializePage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JFX1FollowerFollowingPageSetter.setter(owner,loader.getController(),support);
+        JFX1FollowerFollowingPageSetter.setter(owner,loader.getController());
         StageShow.showStage(ae,root);
     }
 

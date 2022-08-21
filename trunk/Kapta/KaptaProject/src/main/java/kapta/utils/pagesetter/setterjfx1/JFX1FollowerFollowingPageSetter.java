@@ -16,13 +16,12 @@ public class JFX1FollowerFollowingPageSetter {
         //ignore
     }
 
-    public static void setter(GenericUserBean ownerBean, JFX1FollowerFollowingListGuiController fflgc, int support){
+    public static void setter(GenericUserBean ownerBean, JFX1FollowerFollowingListGuiController fflgc){
 
 
         UserModel owner = UserDao.getUserByUsername(ownerBean.getUsername());
         new FollowingList(owner, FollowingListDao.getFollowing(owner), fflgc);
         new FollowerList(owner, FollowerListDao.getFollower(owner), fflgc);
-        fflgc.setSupport(support);
         fflgc.setOwner(ownerBean);
 
         //new FollowerFollowingListApplicationLayer(fflgc, support, userModel);
