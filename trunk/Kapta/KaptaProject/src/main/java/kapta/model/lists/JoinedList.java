@@ -52,8 +52,7 @@ public class JoinedList extends Subject {
             // eee can be better
 
             PartyBean partyBean = new PartyBean(PartyDao.getPartyById(partyEventModel.getId()));
-            ///eee to tryy
-            //PartyBean partyBean2 = new PartyBean((PartyModel)partyEventModel);
+
             this.notifyObservers(partyBean);
         }
         else if(partyEventModel.getType()==1){
