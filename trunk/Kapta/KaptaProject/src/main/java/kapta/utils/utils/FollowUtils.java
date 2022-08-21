@@ -2,6 +2,7 @@ package kapta.utils.utils;
 
 import kapta.model.profiles.UserModel;
 import kapta.utils.bean.GenericUserBean;
+import kapta.utils.bean.UserBean;
 import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.FollowingListDao;
 import java.util.List;
@@ -12,7 +13,7 @@ public class FollowUtils {
         //ignore
     }
 
-    public static boolean doAFollowB(GenericUserBean userBA, GenericUserBean userBB)  {
+    public static boolean doAFollowB(UserBean userBA, UserBean userBB)  {
 
         UserModel userA = UserDao.getUserByUsername(userBA.getUsername());
         UserModel userB= UserDao.getUserByUsername(userBB.getUsername());

@@ -1,5 +1,16 @@
 package test.junit;
 
+import kapta.control.appcontroller.LoginController;
+import kapta.model.profiles.UserClubModel;
+import kapta.model.profiles.UserModel;
+import kapta.utils.bean.J1.JFX1LoginBean;
+import kapta.utils.bean.J2.JFX2LoginBean;
+import kapta.utils.bean.LoginBean;
+import kapta.utils.bean.UserBean;
+import kapta.utils.exception.myexception.WrongPasswordException;
+import kapta.utils.utils.FollowUtils;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 /*
@@ -16,30 +27,33 @@ public class TestFollow {
      */
     //FAILED
 
-    /*
+
     @Test
-    public void testFollow() throws  WrongPasswordException {
+    public void testFollow() throws WrongPasswordException {
         LoginBean loginBean1 = new JFX2LoginBean("a", "a", 0);
         UserClubModel a = LoginController.login(loginBean1);
+        UserBean beanA = new UserBean((UserModel) a);
+
 
         LoginBean loginBean2 = new JFX1LoginBean("c", "c", 0);
         UserClubModel c = LoginController.login(loginBean2);
+        UserBean beanC = new UserBean((UserModel) c);
 
         int ret=0;
-        if(FollowUtils.doAFollowB((UserModel) a, (UserModel) c)){
+        if(FollowUtils.doAFollowB(beanA, beanC)){
             ret = 1;
         }
 
         assertEquals(1, ret, 0);    //SUCCESS (a meno che a non smetti di seguire a)
 
         ret = 0;
-        if(FollowUtils.doAFollowB((UserModel) c, (UserModel) a)){
+        if(FollowUtils.doAFollowB(beanA, beanC)){
             ret = 1;
         }
 
         assertEquals(1, ret, 0);    //FAILED (a meno che c non inizi a seguire a)
     }
 
-     */
+
 }
 
