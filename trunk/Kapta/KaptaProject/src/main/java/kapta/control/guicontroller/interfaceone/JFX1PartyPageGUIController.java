@@ -63,16 +63,10 @@ public class JFX1PartyPageGUIController implements Observer {
 
 
     private JFX1ClubBean whoIamClub;
-    private JFX1UserBean whoIamUser;
     private int type ;
 
     private JFX1UserBean partyCreator;
     private JFX1PartyBean partyBean;
-
-    private JFX1PartyItemGUIController jfx1PartyItemGUIController;
-
-
-
 
     public JFX1PartyBean getPartyBean() {
         return partyBean;
@@ -192,9 +186,7 @@ public class JFX1PartyPageGUIController implements Observer {
     private void setWhoIam() {
         int type= ThreadLocalSession.getUserSession().get().getType();
         this.type=type;
-        if(type==0){
-            this.whoIamUser = new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean());
-        }else if(type==1){
+        if(type==1){
             this.whoIamClub = new JFX1ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
         }
     }
