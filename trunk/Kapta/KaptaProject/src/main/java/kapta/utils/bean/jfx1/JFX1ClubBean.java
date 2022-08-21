@@ -38,16 +38,7 @@ public class JFX1ClubBean extends ClubBean {
 
 
     public  JFX1ClubBean(ClubBean clubBean){
-        setEmail(clubBean.getEmail());
-        setUsername(clubBean.getUsername());
-        setName(clubBean.getName());
-        setPassword(clubBean.getPassword());
-        setType(1);
-        setImg(clubBean.getImg());
-        setId(clubBean.getId());
-        setAddress(clubBean.getAddress());
-        setWebsite(clubBean.getWebsite());
-        setCity(clubBean.getCity());
+        super(clubBean);
     }
 
 
