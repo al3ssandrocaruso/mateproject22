@@ -31,7 +31,7 @@ public abstract class GenericUserBean {
     protected  int numCreatedEvents;
 
 
-    public GenericUserBean(){
+    protected GenericUserBean(){
 
     }
 
