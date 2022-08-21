@@ -12,7 +12,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kapta.control.appcontroller.JoinPartyController;
 import kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController;
-import kapta.model.lists.ParticipantsList;
 import kapta.utils.VisualComponent;
 import kapta.utils.bean.jfx1.JFX1PartyBean;
 import kapta.utils.bean.jfx1.JFX1UserBean;
@@ -27,7 +26,6 @@ public class JFX1DecorationPartyTwo extends Decorator {
     private String white = "-fx-text-fill: white;";
     private String toWrite;
     private JFX1PartyBean partyBean;
-    private ParticipantsList participantsList;
 
 
 

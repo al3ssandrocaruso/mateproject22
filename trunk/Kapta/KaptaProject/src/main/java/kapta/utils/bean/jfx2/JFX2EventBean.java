@@ -18,17 +18,6 @@ public class JFX2EventBean extends EventBean {
         super(eventModel);
     }
 
-    public JFX2EventBean(String eventName, String eventAddress, String eventOrario, String eventDate, Double eventDuration, Double eventPrice, boolean greenpass, File eventImg) {
-        setEventNameOut(eventName);
-        setEventImgOut(eventImg);
-        setEventAddressOut(eventAddress);
-        setEventPriceOut(eventPrice);
-        setEventOrarioOut(eventOrario);
-        setEventDurationOut(eventDuration);
-        setEventDateOut(eventDate);
-        setGreenPassOut(greenpass);
-    }
-
     public JFX2EventBean(String eventName, String eventAddress, String eventOrario, String eventDate, Double eventDuration, Double eventPrice, boolean greenpass) {
         setEventNameOut(eventName);
         setEventAddressOut(eventAddress);

@@ -24,6 +24,5 @@ public class JFX1FollowerFollowingPageSetter {
         new FollowerList(owner, FollowerListDao.getFollower(owner), fflgc);
         fflgc.setOwner(ownerBean);
 
-        //new FollowerFollowingListApplicationLayer(fflgc, support, userModel);
     }
 }

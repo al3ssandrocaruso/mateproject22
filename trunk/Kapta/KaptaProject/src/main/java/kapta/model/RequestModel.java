@@ -2,7 +2,6 @@ package kapta.model;
 
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
-import kapta.utils.bean.RequestBean;
 
 public class RequestModel {
 

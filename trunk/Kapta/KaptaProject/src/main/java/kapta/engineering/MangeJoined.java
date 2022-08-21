@@ -15,6 +15,10 @@ import java.util.List;
 
 public class MangeJoined {
 
+    private MangeJoined(){
+
+    }
+
     public  static void adjJoinedList(UserBean us , Observer ob){
         UserModel um = UserDao.getUserById(us.getId());
         JoinedListDAO.getJoined(um, ob);
