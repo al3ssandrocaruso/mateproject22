@@ -3,7 +3,6 @@ package kapta.utils.bean;
 import kapta.model.lists.CreatedEventList;
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
-
 import java.io.File;
 import java.net.URL;
 
@@ -36,7 +35,7 @@ public abstract class GenericUserBean {
 
     }
 
-    public GenericUserBean (UserModel userModel){
+    protected GenericUserBean (UserModel userModel){
         this.setSecondName(userModel.getSecondName());
         this.setUsername(userModel.getUsername());
         this.setGender(userModel.getGender());
@@ -49,7 +48,7 @@ public abstract class GenericUserBean {
         this.setImg((userModel.getProfileImg()));
     }
 
-    public GenericUserBean(ClubModel clubModel){
+    protected GenericUserBean(ClubModel clubModel){
         setEmail(clubModel.getEmail());
         setUsername(clubModel.getUsername());
         setName(clubModel.getClubName());
@@ -63,7 +62,7 @@ public abstract class GenericUserBean {
 
 
     }
-    public GenericUserBean(ClubModel clubModel, CreatedEventList cr){
+    protected GenericUserBean(ClubModel clubModel, CreatedEventList cr){
 
         setEmail(clubModel.getEmail());
         setUsername(clubModel.getUsername());

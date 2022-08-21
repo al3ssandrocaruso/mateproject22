@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import kapta.control.appcontroller.CreateEventController;
 import kapta.control.guicontroller.interfacetwo.FillDialogBox;
 import kapta.utils.bean.TokenBean;
-import kapta.utils.bean.J1.JFX1ClubBean;
 import kapta.utils.bean.J1.JFX1EventBean;
 import kapta.utils.bean.J1.JFX1TokenBean;
 import kapta.utils.exception.ErrorHandler;

@@ -54,7 +54,7 @@ public class JFX1EventPageGUIController implements Observer {
 
     private JFX1EventBean eventBean;
     private JFX1ClubBean whoIamClub;
-    private int type;
+    private int typeMe;
 
     private JFX1ClubBean creator;
 
@@ -149,7 +149,7 @@ public class JFX1EventPageGUIController implements Observer {
 
     private  void setWhoIam() {
         int type= ThreadLocalSession.getUserSession().get().getType();
-        this.type=type;
+        this.typeMe =type;
         if(type==1){
             this.whoIamClub= new JFX1ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
         }
@@ -160,11 +160,9 @@ public class JFX1EventPageGUIController implements Observer {
 
 
     private  int chooseDecoration(){
-        if(type ==1) {
-            if (this.whoIamClub.getUsernameOut().equals(getCreator().getUsername())) {
+        if(typeMe ==1 && this.whoIamClub.getUsernameOut().equals(getCreator().getUsername())) {
                 return 0;
             }
-        }
         return 1;
     }
 
