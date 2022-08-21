@@ -211,8 +211,6 @@ public class JFX2ClubProfileGUIController implements Observer {
         Pane selected = pendingList.getSelectionModel().getSelectedItem();
         JFX2RequestBean selectedRequest=map.get(selected);
         pendingList.getItems().removeAll(selected);
-       // ee to insert
-        // JoinEventController.rejectRequest(selectedRequest);
         JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(selectedRequest);
         textFieldRequest.setText(supportRequestFrom + jfx2RequestBean.getSenderNameOut()+ supportFor +jfx2RequestBean.getRelatedEventOut()+ " REJECTED");
         textFieldRequest.setStyle("-fx-background-color: #d00000;" + radius + white);

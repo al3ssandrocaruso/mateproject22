@@ -113,7 +113,6 @@ public class JFX2UserProfileGUIController implements Observer {
     private int typeMe;
 
     private JFX2UserBean userBean;
-    private File loadedImg;
     ManageFollowerFollowingList m;
 
 
