@@ -43,9 +43,9 @@ public class JFX2PartyItemGUIController {
     }
     public void setAll(JFX2PartyBean jfx2PartyBean){
         setPartyBean(jfx2PartyBean);
-        setImageViewPartyImage(jfx2PartyBean.getPartyImgOut());
-        setLabelPartyName(jfx2PartyBean.getPartyNameOut());
-        setLabelPartyDate(jfx2PartyBean.getPartyDateOut());
+        setImageViewPartyImage(jfx2PartyBean.getPartyImgOut2());
+        setLabelPartyName(jfx2PartyBean.getPartyNameOut2());
+        setLabelPartyDate(jfx2PartyBean.getPartyDateOut2());
     }
 
 }

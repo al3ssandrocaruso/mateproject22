@@ -61,17 +61,17 @@ public class JFX2PartyBean extends PartyBean {
 
 
 
-    public String getPartyCreatorOut() {return partyCreator;}
-    public String getPartyNameOut() {
+    public String getPartyCreatorOut2() {return partyCreator;}
+    public String getPartyNameOut2() {
         return name;
     }
-    public String getPartyAddressOut() {return address;}
-    public String getPartyTimeOut() {
+    public String getPartyAddressOut2() {return address;}
+    public String getPartyTimeOut2() {
         return String.valueOf(orario);
     }
-    public String getPartyDateOut() {return  String.valueOf(date);}
-    public String getPartyDurationOut() {return String.valueOf(duration);}
-    public Image getPartyImgOut() {return ImageConverter.convertFileToFxImage(image);}
+    public String getPartyDateOut2() {return  String.valueOf(date);}
+    public String getPartyDurationOut2() {return String.valueOf(duration);}
+    public Image getPartyImgOut2() {return ImageConverter.convertFileToFxImage(image);}
 
 
 

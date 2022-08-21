@@ -375,15 +375,15 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
         this.jfx2PartyBean=jfx2PartyBean;
 
 
-        setImgPic(jfx2PartyBean.getPartyImgOut());
-        setLabelDate(jfx2PartyBean.getPartyDateOut());
-        setLabelName(jfx2PartyBean.getPartyNameOut());
+        setImgPic(jfx2PartyBean.getPartyImgOut2());
+        setLabelDate(jfx2PartyBean.getPartyDateOut2());
+        setLabelName(jfx2PartyBean.getPartyNameOut2());
 
-        setBtnCreator("@" + jfx2PartyBean.getPartyCreatorOut());
+        setBtnCreator("@" + jfx2PartyBean.getPartyCreatorOut2());
         btnAction.setText(joinStr);
 
         //if(whoIamUser) ??
-        if(jfx2PartyBean.getPartyCreatorOut().equals(whoIamUser.getUsername())){
+        if(jfx2PartyBean.getPartyCreatorOut2().equals(whoIamUser.getUsername())){
             setBtnCreator("You");
             btnAction.setText("Delete Party");
             btnAction.setStyle("-fx-background-color: red;"+radius);
