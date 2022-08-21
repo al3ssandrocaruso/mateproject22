@@ -38,6 +38,19 @@ public  class EventBean implements PartyEventBean {
         this.setEventImg(eventModel.getImg());
     }
 
+    protected  EventBean(EventBean eventBean) {
+
+        this.setEventCreator(eventBean.getEventCreator());
+        this.setEventName(eventBean.getEventName());
+        this.setEventAddress(eventBean.getEventAddress());
+        this.setEventOrario(eventBean.getEventOrario());
+        this.setEventDate(eventBean.getEventDate());
+        this.setEventDuration(eventBean.getEventDuration());
+        this.setEventPrice(eventBean.getEventPrice());
+        this.setEventId(eventBean.getEventId());
+        this.setGreenPass(eventBean.isGreenPass());
+        this.setEventImg(eventBean.getEventImg());
+    }
     public String getEventName() {
         return eventName;
     }

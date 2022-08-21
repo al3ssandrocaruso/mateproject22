@@ -28,16 +28,7 @@ public class JFX2EventBean extends EventBean {
         setGreenPassOut(greenpass);
     }
     public JFX2EventBean(EventBean eventBean) {
-        this.setEventCreator(eventBean.getEventCreator());
-        this.setEventName(eventBean.getEventName());
-        this.setEventAddress(eventBean.getEventAddress());
-        this.setEventOrario(eventBean.getEventOrario());
-        this.setEventDate(eventBean.getEventDate());
-        this.setEventDuration(eventBean.getEventDuration());
-        this.setEventPrice(eventBean.getEventPrice());
-        this.setEventId(eventBean.getEventId());
-        this.setGreenPass(eventBean.isGreenPass());
-        this.setEventImg(eventBean.getEventImg());
+       super(eventBean);
     }
 
 
