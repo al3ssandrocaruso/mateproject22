@@ -1,15 +1,17 @@
 package kapta.utils.exception;
 
 
+import COSE.CoseException;
+import com.google.iot.cbor.CborParseException;
 import kapta.utils.exception.myexception.*;
-import kapta.utils.session.ThreadLocalSession;
-
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.zip.DataFormatException;
 
 
 public class ErrorHandler {
 
-//
+
     private static ErrorHandler instance= null;
 
     public static ErrorHandler getInstance() {
@@ -24,64 +26,33 @@ public class ErrorHandler {
     //Se è da DB -> Alert
     //Se è da altro -> PopUp
 
-    public void reportFinalException(FinalException e)  {
-        String message = e.getMessage();
-        ErrorDialog errorDialog = createErrorDialog();
 
-        if(e instanceof ConfirmPasswordException  ||e instanceof WrongPasswordException || e instanceof InputNullException || e instanceof EmailValidatorException || e instanceof GenericException || e instanceof TokenException ){
-            errorDialog.createNotice(message);
-        }
-        if(e instanceof WrongDBOperationException || e instanceof WrongQueryException || e instanceof MysqlConnectionFailed || e instanceof WrongCrudException || e instanceof  UsernameConflictException || e instanceof InavalidGreenPassException || e instanceof ExpiredGreenPassException){
-            errorDialog.createWarning(message);
-        }
-    }
-    public void reportInvelidGreenPass(Exception e ) throws InavalidGreenPassException {
-        Trigger.invalidGreenPass(e);
+    public void handleException(Exception e) throws SystemException {
 
-    }
+        if (e instanceof SQLException sql){
 
-    public  void reportGeneric(Exception e ) throws GenericException {
-        Trigger.triggerGenericException(e);
-    }
-
-
-
-    public void sqlexceptionqueryhandler(SQLException sql ) throws MysqlConnectionFailed,  WrongQueryException {
-        int errorCode = sql.getErrorCode();
-        sql.printStackTrace();
-        if(errorCode ==0){
-            throw new MysqlConnectionFailed();
-        }
-        else{
-            throw new WrongQueryException();
+            int errorCode = sql.getErrorCode();
+            sql.printStackTrace();
+            if(errorCode ==0){
+                throw new MysqlConnectionFailed();
             }
+            else{
+                e.printStackTrace();
+                throw new SystemException();
+            }
+        }
+        if(e instanceof IOException||  e instanceof  DataFormatException){
+            throw new SystemException();
+        }
+        if(e instanceof CoseException || e instanceof CborParseException ){
+            throw new SystemException();
+        }
+
     }
 
-    public void sqlexceptioncrudhandler(SQLException sql ) throws MysqlConnectionFailed, WrongCrudException {
-        int errorCode = sql.getErrorCode();
-        sql.printStackTrace();
-        if(errorCode ==0){
-            throw new MysqlConnectionFailed();
-        }
-        else{
-            throw new WrongCrudException();
-        }
-    }
 
-    public void tokenException(String tokenString) throws TokenException {
-        Trigger.wrongToken(tokenString);
-    }
-
-    private ErrorDialog createErrorDialog() {
-        ErrorDialog errorDialog;
-        if(ThreadLocalSession.getIntrfc()==1){
-            errorDialog = new ErrorDialogInt1();
-        }
-        else{
-            errorDialog = new ErrorDialogInt2();
-        }
-        return errorDialog;
-    }
 }
+
+
 
 

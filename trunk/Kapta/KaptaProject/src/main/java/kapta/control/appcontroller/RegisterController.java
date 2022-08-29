@@ -8,6 +8,7 @@ import kapta.utils.bean.jfx1.JFX1ProfileBean;
 import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.UserDao;
 import kapta.utils.exception.Trigger;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.exception.myexception.UsernameConflictException;
 import kapta.utils.utils.Authentication;
 
@@ -19,14 +20,14 @@ public class RegisterController {
         //ignored
     }
 
-    public static void startRegister(JFX1ProfileBean jfx1ProfileBean) throws UsernameConflictException {
+    public static void startRegister(JFX1ProfileBean jfx1ProfileBean) throws UsernameConflictException, SystemException {
 
         if (!Authentication.checkRegistered(jfx1ProfileBean)) {
             Trigger.usernameAlreadyExist(jfx1ProfileBean.getUsername());
         }
     }
 
-    public static void register(GenericUserBean genericUserBean) {
+    public static void register(GenericUserBean genericUserBean) throws SystemException {
         if (genericUserBean.getType()==0) {
             InfoLogged infoLogged = new InfoLogged(genericUserBean.getUsername(), genericUserBean.getEmail(),genericUserBean.getPassword(), 0);
             UserModel userModel = new UserModel( infoLogged, genericUserBean.getName(), 0, genericUserBean.getImg());

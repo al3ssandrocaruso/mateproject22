@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.control.appcontroller.JoinEventController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.utils.bean.jfx1.JFX1RequestBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1ClubRequestItemGUIController {
@@ -49,16 +51,26 @@ public class JFX1ClubRequestItemGUIController {
     }
 
     public void rejectRequest(ActionEvent actionEvent) {
-        JoinEventController.rejectRequest(getRequestBean());
-        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
-        replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
+        try {
+            JoinEventController.rejectRequest(getRequestBean());
+            ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+            replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
+
     }
 
     public void acceptRequest(ActionEvent actionEvent) {
 
-        JoinEventController.acceptRequest(getRequestBean());
-        ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
-        replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
+        try {
+            JoinEventController.acceptRequest(getRequestBean());
+            ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
+            replaceSceneAndInitializePage.replaceSceneAndInitializePage(actionEvent,"/JFX1/JFX1ClubRequestPage.fxml" );
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
+
 
     }
     public void setAll(JFX1RequestBean jfx1RequestBean ){
@@ -66,6 +78,10 @@ public class JFX1ClubRequestItemGUIController {
         setLabelEventName(jfx1RequestBean.getEventNameOut());
         setLabelEventDate(jfx1RequestBean.getEventDateOut());
         setLabelUsername(jfx1RequestBean.getSenderOut());
-        setImageViewProfilePic(jfx1RequestBean.getSenderImageOut());
+        try {
+            setImageViewProfilePic(jfx1RequestBean.getSenderImageOut());
+        } catch (SystemException e) {
+            //
+        }
     }
 }

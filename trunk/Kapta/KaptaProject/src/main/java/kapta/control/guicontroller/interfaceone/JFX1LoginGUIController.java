@@ -8,13 +8,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import kapta.control.appcontroller.LoginController;
-// external
 import kapta.utils.bean.jfx1.JFX1LoginBean;
-import kapta.utils.exception.ErrorHandler;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.init.ReplaceScene;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.ThreadLocalSession;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,8 +47,8 @@ public class JFX1LoginGUIController implements Initializable {
             rsip.replaceSceneAndInitializePage(ae, "/JFX1/JFX1UserProfile.fxml");
             }
         }
-        catch (WrongPasswordException e ){
-            ErrorHandler.getInstance().reportFinalException(e);
+        catch (WrongPasswordException| SystemException e ){
+            JFX1AlertCreator.createAlert(e);
         }
     }
 

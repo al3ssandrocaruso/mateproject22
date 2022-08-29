@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.utils.bean.jfx1.JFX1EventBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1EventItemGUIController {
@@ -46,7 +47,7 @@ public class JFX1EventItemGUIController {
     }
 
 
-    public void setAll(JFX1EventBean jfx1EventBean){
+    public void setAll(JFX1EventBean jfx1EventBean) throws SystemException {
 
         this.eventBean=jfx1EventBean;
         setLabelEventName(jfx1EventBean.getEventNameOut());

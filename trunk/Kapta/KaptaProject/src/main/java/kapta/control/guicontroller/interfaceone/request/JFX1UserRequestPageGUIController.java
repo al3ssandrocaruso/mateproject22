@@ -32,6 +32,7 @@ public class JFX1UserRequestPageGUIController implements Observer {
         AnchorPane anchorPane = null;
         JFX1RequestBean requestBean = new JFX1RequestBean((RequestBean) ob);
 
+
         if(requestBean.getStatus()==0){
             try {
                 anchorPane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1UserPendingRequestItem.fxml").openStream());

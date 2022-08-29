@@ -8,6 +8,7 @@ import kapta.control.appcontroller.RegisterController;
 import kapta.utils.bean.GenericUserBean;
 import kapta.utils.bean.jfx2.JFX2ClubBean;
 import kapta.utils.bean.jfx2.JFX2UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceScene;
 import javafx.scene.control.TextField;
 
@@ -39,13 +40,21 @@ public class JFX2ConcludeSubmitGUIController {
             jfx2UserBean.setUsernameOut(username);
             jfx2UserBean.setPasswordOut(password);
             jfx2UserBean.setImageOut(img);
-            RegisterController.register(jfx2UserBean);
+            try {
+                RegisterController.register(jfx2UserBean);
+            } catch (SystemException e) {
+                JFX2AlertCreator.createAlert(e);
+            }
         }
         else {
             jfx2ClubBean.setUsernameOut(username);
             jfx2ClubBean.setPasswordOut(password);
             jfx2ClubBean.setImageOut(img);
-            RegisterController.register(jfx2ClubBean);
+            try {
+                RegisterController.register(jfx2ClubBean);
+            } catch (SystemException e) {
+                JFX2AlertCreator.createAlert(e);
+            }
         }
 
         ReplaceScene.replaceScene(actionEvent,"/JFX2/JFX2Welcome.fxml");

@@ -1,6 +1,7 @@
 package kapta.utils.exception.myexception;
 
-public class ImageToFileException extends MyExceptions {
+//eee
+public class ImageToFileException extends SystemException {
 
     public ImageToFileException() {
         super("");

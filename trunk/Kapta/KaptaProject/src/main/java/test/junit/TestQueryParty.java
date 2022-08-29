@@ -2,7 +2,7 @@ package test.junit;
 
 import kapta.utils.db.Query;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongQueryException;
+
 import kapta.utils.utils.MysqlConnection;
 import org.junit.Test;
 
@@ -28,9 +28,9 @@ public class TestQueryParty {
 
     //SUCCESS
     @Test
-    public void testAskParty() throws SQLException, MysqlConnectionFailed, WrongQueryException {
+    public void testAskParty() throws SQLException, MysqlConnectionFailed {
         Statement stm = MysqlConnection.mysqlConnection();
-        ResultSet rst = Query.askPartybyPartyName(stm, "party22");
+        ResultSet rst = Query.askPartybyPartyName(stm, "party1");
 
         if(rst.next()){
             rst.first();
@@ -38,7 +38,7 @@ public class TestQueryParty {
 
         int id = rst.getInt(1);
 
-        assertEquals(43, id, 0);
+        assertEquals(32, id, 0);
     }
 
 }

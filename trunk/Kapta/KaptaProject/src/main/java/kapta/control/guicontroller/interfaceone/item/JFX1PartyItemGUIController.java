@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.utils.bean.jfx1.JFX1PartyBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1PartyItemGUIController {
@@ -45,7 +46,11 @@ public class JFX1PartyItemGUIController {
         this.partyBean =jfx1PartyBean;
         this.setLabelPartyName(jfx1PartyBean.getPartyNameOut());
         this.setLabelPartyDate(jfx1PartyBean.getPartyDateOut());
-        this.setImageViewPartyImage(jfx1PartyBean.getPartyImgOut());
+        try {
+            this.setImageViewPartyImage(jfx1PartyBean.getPartyImgOut());
+        } catch (SystemException e) {
+            //
+        }
 
     }
 

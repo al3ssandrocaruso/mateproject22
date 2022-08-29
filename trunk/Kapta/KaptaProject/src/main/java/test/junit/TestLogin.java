@@ -5,6 +5,7 @@ import kapta.model.profiles.UserClubModel;
 import kapta.utils.bean.LoginBean;
 import kapta.utils.bean.jfx1.JFX1LoginBean;
 import kapta.utils.bean.jfx2.JFX2LoginBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import org.junit.Test;
 
@@ -26,10 +27,10 @@ public class TestLogin {
      */
     //SUCCESS
     @Test
-    public void testLogin() throws  WrongPasswordException {
+    public void testLogin() throws WrongPasswordException, SystemException {
 
-        LoginBean loginBean1 = new JFX1LoginBean("a", "a", 0);
-        LoginBean loginBean2 = new JFX2LoginBean("b", "b", 1);
+        LoginBean loginBean1 = new JFX1LoginBean("nathan", "nat", 0);
+        LoginBean loginBean2 = new JFX2LoginBean("andrea", "andrea", 1);
 
         UserClubModel userModel = LoginController.login(loginBean1);
         UserClubModel clubModel = LoginController.login(loginBean2);

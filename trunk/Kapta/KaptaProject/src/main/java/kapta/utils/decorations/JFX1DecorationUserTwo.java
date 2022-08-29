@@ -6,10 +6,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import kapta.control.appcontroller.FollowUserController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.control.guicontroller.interfaceone.JFX1UserProfileGuiController;
 import kapta.engineering.ManageFollowerFollowingList;
 import kapta.utils.bean.jfx1.JFX1UserBean;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.exception.myexception.SystemException;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.utils.FollowUtils;
 import kapta.utils.VisualComponent;
 
@@ -19,7 +21,6 @@ public class JFX1DecorationUserTwo extends Decorator {
     private JFX1UserProfileGuiController upgc;
     Button button = new Button();
     private  JFX1UserBean userBean;
-    private ManageFollowerFollowingList man;
 
 
     private JFX1UserBean whoIamUser;
@@ -30,12 +31,10 @@ public class JFX1DecorationUserTwo extends Decorator {
     private String white = "-fx-text-fill: white;";
 
 
-    public JFX1DecorationUserTwo(VisualComponent component, JFX1UserProfileGuiController jfx1UserProfileGuiController, JFX1UserBean userBean, ManageFollowerFollowingList  man){
+    public JFX1DecorationUserTwo(VisualComponent component, JFX1UserProfileGuiController jfx1UserProfileGuiController, JFX1UserBean userBean){
         super(component);
-        // eee solo per ora ..
         this.whoIamUser = new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean());
         this.userBean = userBean;
-        this.man = man;
         if(FollowUtils.doAFollowB( this.whoIamUser,this.userBean)) {
             button.setStyle("-fx-background-color: #d00000;" + radius + white);
             this.setToWrite("Unfollow");
@@ -64,23 +63,31 @@ public class JFX1DecorationUserTwo extends Decorator {
 
         //PULSANTE PREMUTO
         button.setOnAction((ActionEvent ae) -> {
-            // eee solo per ora ...
-
             if (!FollowUtils.doAFollowB( whoIamUser,this.userBean)) {
-                button.setStyle("-fx-background-color: #54e589;" + radius + white);
-                this.setToWrite("Unfollow");
-                this.addUserPanel();
-                FollowUserController.follow(this.userBean, whoIamUser);
-                man.addUserFollowerList(this.userBean);
-
+                try {
+                    FollowUserController.follow(this.userBean, whoIamUser);
+                    refreshFollowerList();
+                    button.setStyle("-fx-background-color: #54e589;" + radius + white);
+                    this.setToWrite("Unfollow");
+                    this.addUserPanel();
+                }
+                catch (SystemException systemException) {
+                    JFX1AlertCreator.createAlert(systemException);
+                }
 
 
             } else {
-                button.setStyle("-fx-background-color: #d00000;" + radius + white);
-                this.setToWrite("Follow");
-                this.addUserPanel();
-                FollowUserController.unfollow(this.userBean,  whoIamUser);
-                man.removeUserFollowerList(this.userBean);
+                try {
+
+                    FollowUserController.unfollow(this.userBean, whoIamUser);
+                    refreshFollowerList();
+                    button.setStyle("-fx-background-color: #d00000;" + radius + white);
+                    this.setToWrite("Follow");
+                    this.addUserPanel();
+                } catch (SystemException systemException) {
+                    JFX1AlertCreator.createAlert(systemException);
+                }
+
 
             }
         });
@@ -93,6 +100,16 @@ public class JFX1DecorationUserTwo extends Decorator {
         this.upgc = upgc;
     }
 
+
+    public void refreshFollowerList(){
+        try {
+            ManageFollowerFollowingList.refreshList(userBean,upgc);
+        } catch (SystemException e) {
+            //ee
+            e.printStackTrace();
+        }
+    }
+
     //Serve per non avere code smells questa funzione
     public JFX1UserProfileGuiController getUserProfileGUIController(){return upgc;}
 
@@ -102,5 +119,7 @@ public class JFX1DecorationUserTwo extends Decorator {
         preliminaryResult=this.applyDecorationTwo(preliminaryResult);
         return preliminaryResult;
     }
+
+
 
 }

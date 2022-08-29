@@ -1,14 +1,14 @@
-package kapta.utils.session;
+package kapta.utils.mysession;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import kapta.MainApp;
+
 import java.io.IOException;
 
-public class ThreadLocalSession implements Runnable
-{
+public class ThreadLocalSession implements Runnable {
     private static ThreadLocal<Session> userSession= new ThreadLocal<>();
     private static String usernameSession;
     private static int intrfc;
@@ -23,7 +23,7 @@ public class ThreadLocalSession implements Runnable
     }
 
     public static void setUserSession(ThreadLocal<Session> userSession) {
-        ThreadLocalSession.userSession = userSession;
+       ThreadLocalSession.userSession = userSession;
     }
 
     public static String getUsername() {
@@ -60,7 +60,7 @@ public class ThreadLocalSession implements Runnable
         return intrfc;
     }
 
-    public static void setIntrfc(int intrfc) {
-        ThreadLocalSession.intrfc = intrfc;
+    public static void setIntrfc(int inter) {
+        intrfc = inter;
     }
 }

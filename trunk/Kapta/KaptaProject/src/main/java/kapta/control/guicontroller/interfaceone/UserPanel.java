@@ -5,9 +5,9 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import kapta.utils.VisualComponent;
 
-public class JFX1UserPanel implements VisualComponent {
+public class UserPanel implements VisualComponent {
     private VBox panel;
-    public JFX1UserPanel(VBox userPanel){this.setPanel((userPanel));}
+    public UserPanel(VBox userPanel){this.setPanel((userPanel));}
 
     public void setPanel(VBox panel){
         this.panel = panel;

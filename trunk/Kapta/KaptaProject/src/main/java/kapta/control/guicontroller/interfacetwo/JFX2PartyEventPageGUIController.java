@@ -38,25 +38,21 @@ import kapta.utils.bean.RequestBean;
 import kapta.utils.bean.UserBean;
 
 import kapta.utils.bean.jfx2.*;
-import kapta.utils.exception.ErrorHandler;
-import kapta.utils.exception.myexception.ExpiredGreenPassException;
-import kapta.utils.exception.myexception.GenericException;
-import kapta.utils.exception.myexception.InavalidGreenPassException;
+import kapta.utils.exception.myexception.*;
 
 import kapta.utils.greenpass.AdapterGreenPass;
-import kapta.utils.greenpass.TargetGreenPass;
 
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.pagesetter.setterjfx2.JFX2ClubProfileSetter;
 import kapta.utils.pagesetter.setterjfx2.JFX2UserProfileSetter;
 import kapta.utils.Observer;
-import kapta.utils.session.ThreadLocalSession;
 import kapta.utils.utils.GetDialogStage;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;;
+import java.net.URL;
 import java.util.ResourceBundle;
 
 
@@ -180,29 +176,32 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
             Parent root = null;
             try {
                 root = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+                JFX2UserProfileGUIController ctrl=loader.getController();
+                JFX2UserProfileSetter.setter(getCreatorParty(), ctrl);
+                Stage stage = (Stage) ap.getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException | SystemException e) {
+                JFX2AlertCreator.createAlert(e);
             }
-            JFX2UserProfileGUIController ctrl=loader.getController();
-            JFX2UserProfileSetter.setter(getCreatorParty(), ctrl);
-            Stage stage = (Stage) ap.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/JFX2/JFX2ClubProfile.fxml"));
             Parent root = null;
             try {
                 root = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+                JFX2ClubProfileGUIController ctrl=loader.getController();
+
+                JFX2ClubProfileSetter.setter(getCreatorClub(), ctrl);
+                Stage stage = (Stage) ap.getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException | SystemException e) {
+                JFX2AlertCreator.createAlert(e);
             }
-            JFX2ClubProfileGUIController ctrl=loader.getController();
-            JFX2ClubProfileSetter.setter(getCreatorClub(), ctrl);
-            Stage stage = (Stage) ap.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+
         }
     }
 
@@ -211,9 +210,14 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
     }
 
     private void goToDeleteParty(ActionEvent ae,String fxml){
-        DeletePartyEventController.delete(this.jfx2PartyBean);
-        ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
-        rsip.replaceSceneAndInitializePage(ae, fxml);
+        try {
+            DeletePartyEventController.delete(this.jfx2PartyBean);
+            ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
+            rsip.replaceSceneAndInitializePage(ae, fxml);
+        } catch (SystemException e) {
+            JFX2AlertCreator.createAlert(e);
+        }
+
     }
 
     private void actionParty(ActionEvent actionEvent){
@@ -228,10 +232,15 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                 btnAction.setStyle("-fx-background-color: #200f54; "+radius);
 
                 JFX2UserBean jfx2UserBean = (JFX2UserBean)ThreadLocalSession.getUserSession().get().getUserBean();
-                JoinPartyController.leaveParty( jfx2UserBean,jfx2PartyBean );
+                try {
+                    JoinPartyController.leaveParty( jfx2UserBean,jfx2PartyBean );
+                    JFX2ReplaceSceneAndInitializePage rsip = new JFX2ReplaceSceneAndInitializePage();
+                    rsip.replaceSceneAndInitializePage(actionEvent, "/JFX2/JFX2PartyEventPage.fxml", this.jfx2PartyBean);
+                } catch (SystemException e) {
+                    JFX2AlertCreator.createAlert(e);
+                }
 
-                JFX2ReplaceSceneAndInitializePage rsip = new JFX2ReplaceSceneAndInitializePage();
-                rsip.replaceSceneAndInitializePage(actionEvent, "/JFX2/JFX2PartyEventPage.fxml", this.jfx2PartyBean);
+
                 break;
             }
             case "Join Party": {
@@ -246,36 +255,28 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                 text.setFont(font);
 
 
-                // eee questo deve essere fatto nello strato applicatino
-                this.man.addParticipant(ThreadLocalSession.getUserSession().get().getUserBean());
-                int ret1 = JoinPartyController.joinParty( ThreadLocalSession.getUserSession().get().getUserBean(), jfx2PartyBean);
 
-                switch (ret1){
-                    case 0:{
-                        btnAction.setStyle("-fx-background-color: #ff9105; " + radius);
-                        btnAction.setText(leave);
-                        break;
-                    }
-                    case -1:{
-                        text.setText("You've have already joined a party in this date yet!");
-                        dialogVbox.getChildren().add(text);
-                        dialogVbox.setStyle("-fx-background-color: #ff4040");
-                        Scene dialogScene = new Scene(dialogVbox, 600, 250);
-                        dialog.setScene(dialogScene);
-                        dialog.show();
-                        break;
-                    }
-                    case -2:{
-                        text.setText("You can't Join the party 'cause it is expired.");
-                        dialogVbox.getChildren().add(text);
-                        dialogVbox.setStyle("-fx-background-color: #ff4040");
-                        Scene dialogScene = new Scene(dialogVbox, 600, 250);
-                        dialog.setScene(dialogScene);
-                        dialog.show();
-                        break;
-                    }
-                    default: break;
-
+                try {
+                    this.man.addParticipant(ThreadLocalSession.getUserSession().get().getUserBean());
+                    JoinPartyController.joinParty( ThreadLocalSession.getUserSession().get().getUserBean(), jfx2PartyBean);
+                    btnAction.setStyle("-fx-background-color: #ff9105; " + radius);
+                    btnAction.setText(leave);
+                } catch (SystemException e) {
+                    JFX2AlertCreator.createAlert(e);
+                } catch (BusyForANewPartyException e) {
+                    text.setText("You've have already joined a party in this date yet!");
+                    dialogVbox.getChildren().add(text);
+                    dialogVbox.setStyle("-fx-background-color: #ff4040");
+                    Scene dialogScene = new Scene(dialogVbox, 600, 250);
+                    dialog.setScene(dialogScene);
+                    dialog.show();
+                } catch (PartyExpiredException e) {
+                    text.setText("You can't Join the party 'cause it is expired.");
+                    dialogVbox.getChildren().add(text);
+                    dialogVbox.setStyle("-fx-background-color: #ff4040");
+                    Scene dialogScene = new Scene(dialogVbox, 600, 250);
+                    dialog.setScene(dialogScene);
+                    dialog.show();
                 }
                 break;
             }
@@ -324,13 +325,13 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                         file=fileChooser.showOpenDialog(stage);
                         try {
 
-                            TargetGreenPass adapter = new AdapterGreenPass();
+                            AdapterGreenPass adapter = new AdapterGreenPass();
                             this.ret = adapter.getInfoGreenPass(file.getAbsolutePath());
 
                             hBox.getChildren().clear();
                             hBox.getChildren().add(btnSend);
-                        }catch (InavalidGreenPassException | GenericException e) {
-                            ErrorHandler.getInstance().reportFinalException(e);
+                        }catch (InavalidGreenPassException | SystemException e) {
+                            JFX2AlertCreator.createAlert(e);
                     }});
                     btnSend.setOnAction(ae -> {
                             JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(Integer.valueOf(ret[3]), ret[2]);
@@ -339,7 +340,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                             btnAction.setText(pending);
                             btnAction.setStyle(orange+radius);
                         } catch (ExpiredGreenPassException e) {
-                            ErrorHandler.getInstance().reportFinalException(e);
+                            JFX2AlertCreator.createAlert(e);
                         }
                         dialog.close();
                     });
@@ -351,7 +352,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                         btnAction.setText(pending);
                         btnAction.setStyle(orange+radius);
                     } catch (ExpiredGreenPassException e) {
-                        ErrorHandler.getInstance().reportFinalException(e);
+                        JFX2AlertCreator.createAlert(e);
                     }
                 }
                 break;
@@ -367,7 +368,7 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
     }
 
 
-    public void setAllParty(JFX2PartyBean jfx2PartyBean, int type, MangeParticipant man){
+    public void setAllParty(JFX2PartyBean jfx2PartyBean, int type){
 
         this.type = type;
         setInParty(true);
@@ -375,20 +376,25 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
         this.jfx2PartyBean=jfx2PartyBean;
 
 
-        setImgPic(jfx2PartyBean.getPartyImgOut2());
+        try {
+            setImgPic(jfx2PartyBean.getPartyImgOut2());
+        } catch (SystemException e) {
+            //
+        }
         setLabelDate(jfx2PartyBean.getPartyDateOut2());
         setLabelName(jfx2PartyBean.getPartyNameOut2());
 
         setBtnCreator("@" + jfx2PartyBean.getPartyCreatorOut2());
         btnAction.setText(joinStr);
 
-        //if(whoIamUser) ??
+
         if(jfx2PartyBean.getPartyCreatorOut2().equals(whoIamUser.getUsername())){
             setBtnCreator("You");
             btnAction.setText("Delete Party");
             btnAction.setStyle("-fx-background-color: red;"+radius);
         }
-        else if(MangeJoined.doIjoinedYet(this.jfx2PartyBean)){
+
+        else if(MangeJoined.doIjoinedYet(this.jfx2PartyBean ,ThreadLocalSession.getUserSession().get().getUserBean() )){
             btnAction.setText(leave);
             btnAction.setStyle("-fx-background-color: #ff9105; "+radius);
         }
@@ -399,17 +405,23 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
 
 
 
-    //eee non so se il creator potrebbe esssere anche utente a questo punto
+
 
     public void setAllEvent( JFX2EventBean eventBean , JFX2ClubBean creator, int type) {
+
             this.type=type;
             setInParty(false);
             setEventBean(eventBean);
             setWhoIam();
             setCreatorEvent(creator);
 
+
+        try {
             setImgPic(eventBean.getEventImgOut());
-            setLabelDate(eventBean.getEventDateOut());
+        } catch (SystemException e) {
+            //
+        }
+        setLabelDate(eventBean.getEventDateOut());
             setLabelName(eventBean.getEventNameOut());
             setLabelEventPriceDouble(eventBean.getEventPriceOut());
             setObbGreenPass(eventBean.isGreenPass());
@@ -425,46 +437,56 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
                         btnAction.setText("Delete Event");
                         btnAction.setStyle(red + radius);
                     }
-                    break;
-                }
+                }break;
                 case 0: {
-                    int i = getStatusRequest();
-                    switch (i) {
-                        case -1: {                               //Non esiste
-                            btnAction.setText("Join Event");
-                            setBtnCreator("@" + creatorClub.getUsername());
-                            break;
+                    int i = 0;
+                    try {
+                        i = getStatusRequest();
+
+                        switch (i) {
+                            case -1: {                               //Non esiste
+                                btnAction.setText("Join Event");
+                                setBtnCreator("@" + creatorClub.getUsername());
+                                break;
+                            }
+                            case 0: {                                //Pending
+                                btnAction.setText(pending);
+                                btnAction.setStyle(orange + radius);
+                                setBtnCreator("@" + creatorClub.getUsername());
+                                break;
+                            }
+                            case 1: {                                //Approvata
+                                btnAction.setText("Approved");
+                                btnAction.setStyle("-fx-background-color: green;" + radius);
+                                setBtnCreator("@" + creatorClub.getUsername());
+                                break;
+                            }
+                            case 2: {                                //Rejected
+                                btnAction.setText("Rejected");
+                                btnAction.setStyle(red + radius);
+                                setBtnCreator("@" + creatorClub.getUsername());
+                                break;
+                            }
+                            default:
+                                break;
                         }
-                        case 0: {                                //Pending
-                            btnAction.setText(pending);
-                            btnAction.setStyle(orange + radius);
-                            setBtnCreator("@" + creatorClub.getUsername());
-                            break;
-                        }
-                        case 1: {                                //Approvata
-                            btnAction.setText("Approved");
-                            btnAction.setStyle("-fx-background-color: green;" + radius);
-                            setBtnCreator("@" + creatorClub.getUsername());
-                            break;
-                        }
-                        case 2: {                                //Rejected
-                            btnAction.setText("Rejected");
-                            btnAction.setStyle(red + radius);
-                            setBtnCreator("@" + creatorClub.getUsername());
-                            break;
-                        }
-                        default:
-                            break;
+                        break;
+                    }catch (SystemException s ){
+                        JFX2AlertCreator.createAlert(s);
                     }
+                }break;
+                default:
                     break;
-                }
-                default: break;
             }
 
 
     }
     private void sendRequest(RequestBean requestBean) throws ExpiredGreenPassException {
-        JoinEventController.sendRequest(requestBean, eventBean);
+        try {
+            JoinEventController.sendRequest(requestBean, eventBean);
+        } catch (SystemException e) {
+            JFX2AlertCreator.createAlert(e);
+        }
 
     }
 
@@ -489,28 +511,35 @@ public class JFX2PartyEventPageGUIController implements Initializable,Observer {
 
 
     private  void goToDeleteEvent(ActionEvent ae, String fxml){
-        DeletePartyEventController.delete(eventBean);
-        ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
-        rsip.replaceSceneAndInitializePage(ae, fxml);
+        try {
+            DeletePartyEventController.delete(eventBean);
+            JFX2ReplaceSceneAndInitializePage rsip = new JFX2ReplaceSceneAndInitializePage();
+            rsip.replaceSceneAndInitializePage(ae, fxml);
+        } catch (SystemException e) {
+            JFX2AlertCreator.createAlert(e);
+        }
+
     }
 
-    private  int getStatusRequest() {
+    private  int getStatusRequest() throws SystemException {
 
         if (type==1) {
-            return JoinEventController.manageRequestInfo(this.eventBean, ThreadLocalSession.getUserSession().get().getUserBean(), creatorClub);
-        }
-        else {
-            return JoinEventController.manageRequestInfo(this.eventBean, ThreadLocalSession.getUserSession().get().getUserBean(), creatorUser);
+
+                return JoinEventController.manageRequestInfo(this.eventBean, ThreadLocalSession.getUserSession().get().getUserBean(), creatorClub);
 
         }
+        else {
+                return JoinEventController.manageRequestInfo(this.eventBean, ThreadLocalSession.getUserSession().get().getUserBean(), creatorUser);
+        }
     }
+
     private  void setWhoIam() {
-        int type= ThreadLocalSession.getUserSession().get().getType();
-        this.typeMe = type;
-        if(type==1){
+        int type2= ThreadLocalSession.getUserSession().get().getType();
+        this.typeMe = type2;
+        if(type2==1){
             this.whoIamClub= new JFX2ClubBean (ThreadLocalSession.getUserSession().get().getClubBean());
         }
-        else if(type==0){this.whoIamUser= new JFX2UserBean (ThreadLocalSession.getUserSession().get().getUserBean());}
+        else if(type2==0){this.whoIamUser= new JFX2UserBean (ThreadLocalSession.getUserSession().get().getUserBean());}
     }
 
 

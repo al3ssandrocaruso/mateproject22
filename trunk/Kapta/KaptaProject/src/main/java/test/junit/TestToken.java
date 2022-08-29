@@ -14,6 +14,7 @@ NOTA:
     -Per far partire il test disattivare l'opzione "Delegate IDE build/run actions to Maven
     che si trova nelle sezione impostazioni: Build, Excecution, Deployment -> Maven -> Runner
 */
+// Failed
 public class TestToken {
 
     /**

@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.utils.bean.jfx1.JFX1RequestBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 
@@ -38,14 +39,18 @@ public class JFX1AcceptedRequestItemGUIController {
 
     public void goToEventPage(ActionEvent actionEvent) {
         ReplaceSceneAndInitializePage rp = new ReplaceSceneAndInitializePage();
-        rp.replaceSceneAndInitializePage(actionEvent, "/JFX1/JFX1EventPage.fxml", getRequestBean());
+        rp.replaceSceneAndInitializePage(actionEvent, "/JFX1/JFX1EventPage.fxml", getRequestBean().getEventBean());
     }
 
     public void setAll(JFX1RequestBean jfx1RequestBean ){
         setRequestBean(jfx1RequestBean);
         setLabelEventName(jfx1RequestBean.getEventNameOut());
         setLabelEventDate(jfx1RequestBean.getEventDateOut());
-        setEventImageView(jfx1RequestBean.getEventImageOut());
+        try {
+            setEventImageView(jfx1RequestBean.getEventImageOut());
+        } catch (SystemException e) {
+            ///
+        }
     }
 
 }

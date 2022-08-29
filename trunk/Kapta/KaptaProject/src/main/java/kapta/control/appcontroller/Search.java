@@ -5,7 +5,7 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.dao.EventDao;
 import kapta.utils.dao.PartyDao;
 import kapta.utils.dao.UserDao;
-import java.sql.SQLException;
+import kapta.utils.exception.myexception.SystemException;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,20 +16,31 @@ public class Search {
     }
 
     public static List<UserModel> searchUserByUsername(String input) {
-        return UserDao.usersByUsername(input);
+        try {
+            return UserDao.usersByUsername(input);
+        } catch (SystemException e) {
+            e.printStackTrace();
+        }
+        return  Collections.emptyList();
     }
 
-    public static List<PartyModel> searchByPartyName(String input) {
+    public static List<PartyModel> searchByPartyName(String input)  {
+
         try {
             return PartyDao.getPartiesByPartyName(input);
-        } catch (SQLException e) {
+        } catch (SystemException e) {
             e.printStackTrace();
         }
         return  Collections.emptyList();
     }
 
     public static List<EventModel> searchByEventName(String input ) {
-        return  EventDao.getEventsbyEventName(input);
+        try {
+            return  EventDao.getEventsbyEventName(input);
+        } catch (SystemException e) {
+            e.printStackTrace();
+        }
+        return  Collections.emptyList();
     }
 
 

@@ -3,6 +3,8 @@ package kapta.utils.bean.jfx1;
 import javafx.scene.image.Image;
 import kapta.model.RequestModel;
 import kapta.utils.bean.RequestBean;
+
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.ImageConverter;
 
 public class JFX1RequestBean  extends RequestBean {
@@ -60,12 +62,12 @@ public class JFX1RequestBean  extends RequestBean {
         return clubReceiver;
     }
 
-    public Image getEventImageOut(){
-        return ImageConverter.convertFileToFxImage(eventBean.getEventImg());
+    public Image getEventImageOut() throws SystemException {
+            return ImageConverter.convertFileToFxImage(eventBean.getEventImg());
     }
 
-    public Image getSenderImageOut(){
-        return ImageConverter.convertFileToFxImage(senderImage);
+    public Image getSenderImageOut() throws SystemException {
+            return ImageConverter.convertFileToFxImage(senderImage);
     }
 
     public String getEventDateOut(){

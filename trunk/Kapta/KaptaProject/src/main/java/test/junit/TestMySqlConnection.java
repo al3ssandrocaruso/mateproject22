@@ -14,7 +14,7 @@ NOTA:
 public class TestMySqlConnection {
 
     /**
-     *Test banale ma che mi permette di testare l'efficacia della singleton sulla connessione al db
+     *Test  permette di testare l'efficacia della singleton sulla connessione al db
      */
     //SUCCESS
     @Test

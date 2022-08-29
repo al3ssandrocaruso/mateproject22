@@ -3,18 +3,24 @@ package kapta.utils.bean.jfx1;
 import javafx.scene.image.Image;
 import kapta.model.EventModel;
 import kapta.utils.bean.EventBean;
+import kapta.utils.exception.myexception.InputDateException2;
+import kapta.utils.exception.myexception.InputNullException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.ImageConverter;
 import java.io.File;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 public class JFX1EventBean extends EventBean {
 
     // this is used from the view
-    public JFX1EventBean(String eventName, String eventPrice, String eventAddress, String eventDuration, String eventTimeH, String eventTimeM, LocalDate eventDate){
+    public JFX1EventBean(String eventName, String eventPrice, String eventAddress, String eventDuration, String eventTimeH, String eventTimeM, LocalDate eventDate) throws InputNullException, InputDateException2 {
         super();
         setEventNameOut(eventName);
         setEventPriceOut(eventPrice);
@@ -38,36 +44,72 @@ public class JFX1EventBean extends EventBean {
     // this is from the in
 
 
-    public void setEventNameOut(String eventName) {
-        this.eventName = eventName;
+    public void setEventNameOut(String eventName) throws InputNullException {
+
+        if("".equals(eventName )){
+            throw new InputNullException("Event Name");
+        }
+        this.eventName=eventName;
     }
-    public void setEventPriceOut(String eventPrice) {
+    public void setEventPriceOut(String eventPrice) throws InputNullException, InputDateException2 {
+        if(Objects.equals(eventPrice, "") || eventPrice== null){
+            throw new InputNullException("Event Price");
+        }
+        try{
         Double price = Double.valueOf(eventPrice);
         this.eventPrice = price;
+        }catch (NumberFormatException p ){
+            throw  new InputDateException2(eventPrice, "Event Price", "$$.$$");
+        }
     }
-    public void setEventAddressOut(String eventAddress) {
-        this.eventAddress = eventAddress;
+    public void setEventAddressOut(String eventAddress) throws InputNullException {
+
+        if("".equals(eventAddress ) || eventAddress == null){
+            throw new InputNullException("Party Address");
+        }
+        this.eventAddress=eventAddress;
     }
-    public void setEventDurationOut(String eventDuration) {
-        //This is the duration of the pevent
+    public void setEventDurationOut(String eventDuration) throws InputNullException, InputDateException2 {
+
+            if ("".equals(eventDuration )|| eventDuration == null ) {
+                throw new InputNullException("Party Time ");
+            }
+        try{
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm"); //e.g 10:55 ==> 10 hours and 55 minutes
         long ms= 0;
-        try {
+
             ms = sdf.parse(eventDuration).getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
+            this.eventDuration = new Time(ms);
+        } catch (ParseException | DateTimeException e) {
+            throw new InputDateException2(eventDuration,"Event Duration", "hh:mm");
         }
-        this.eventDuration = new Time(ms);
+
     }
-    public void setEventTimeOut(String eventTimeH, String eventTimeM) {
-        //LocalTime format: hh:min
-        this.eventOrario = LocalTime.of(Integer.valueOf(eventTimeH),Integer.valueOf(eventTimeM));
-    }
-    public void setEventDateOut(LocalDate eventDate) {
-        this.eventDate = java.sql.Date.valueOf(eventDate);
+    public void setEventTimeOut(String eventTimeH, String eventTimeM) throws InputNullException, InputDateException2 {
+        if("".equals(eventTimeH ) ||"".equals(eventTimeM) ){
+            throw new InputNullException("Event  Time ");
+        }
+        try{
+            this.eventOrario = LocalTime.of(Integer.valueOf(eventTimeH),Integer.valueOf(eventTimeM));
+        } catch (NumberFormatException | DateTimeException d ){
+            throw new InputDateException2("", "Event Time","hh   mm");
+
+        }}
+    public void setEventDateOut(LocalDate eventDate) throws InputDateException2, InputNullException {
+        try {if(eventDate == null) {
+            throw new InputNullException("eventDate");
+        }
+            this.eventDate = java.sql.Date.valueOf(eventDate);
+        }catch (DateTimeParseException d){
+            throw new InputDateException2(  eventDate.toString(),"PartyDate"," DD/MM/YYYY ");
+
+        }
     }
     public void setGreenPassOut(boolean greenPass) {this.greenPass = greenPass;}
-    public void setEventImgOut(File eventImg) {
+    public void setEventImgOut(File eventImg) throws InputNullException {
+        if (eventImg == null) {
+            throw new InputNullException("Party Image");
+        }
         this.eventImg = eventImg;
     }
 
@@ -99,6 +141,9 @@ public class JFX1EventBean extends EventBean {
     }
     public boolean isGreenPassOut() {return greenPass;}
     public String getNumParticipantsOut(){return String.valueOf(numParticipants);}
-    public Image getEventImgOut() {return ImageConverter.convertFileToFxImage(eventImg);}
+    public Image getEventImgOut() throws SystemException {
 
+        return ImageConverter.convertFileToFxImage(eventImg);
+
+    }
 }

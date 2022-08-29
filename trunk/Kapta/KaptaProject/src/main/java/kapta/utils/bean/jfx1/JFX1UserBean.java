@@ -3,6 +3,7 @@ package kapta.utils.bean.jfx1;
 import javafx.scene.image.Image;
 import kapta.model.profiles.UserModel;
 import kapta.utils.bean.UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.ImageConverter;
 
 import java.io.File;
@@ -106,7 +107,7 @@ public class JFX1UserBean extends UserBean {
     public String getNameOut() {
         return name;
     }
-    public Image getProfileImgOut(){
+    public Image getProfileImgOut() throws SystemException {
         return ImageConverter.convertFileToFxImage(img);
     }
 }

@@ -9,7 +9,7 @@ import kapta.utils.dao.PartyDao;
 import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.JoinedListDAO;
 import kapta.utils.dao.listdao.ParticipantListDao;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.exception.myexception.SystemException;
 
 import java.util.List;
 
@@ -19,23 +19,31 @@ public class MangeJoined {
 
     }
 
-    public  static void adjJoinedList(UserBean us , Observer ob){
+    public  static void adjJoinedList(UserBean us , Observer ob) throws SystemException {
         UserModel um = UserDao.getUserById(us.getId());
         JoinedListDAO.getJoined(um, ob);
     }
 
-    public static boolean doIjoinedYet(JFX2PartyBean partyBean) { //fatta funzione in utils, sostituire con quella
+    public static boolean doIjoinedYet(JFX2PartyBean partyBean, UserBean userBean)  { //fatta funzione in utils, sostituire con quella
         boolean state = false;
 
-        PartyModel partyModel = PartyDao.getPartyById(partyBean.getId());
-        List<UserModel> list = ParticipantListDao.getParticipantList(partyModel, null).getParticipants();
-
-        for(UserModel um : list) {
-            if ( ThreadLocalSession.getUserSession().get().getUserBean().getId() == um.getId()) {
-                state = true;
+        try {
+            PartyModel partyModel = PartyDao.getPartyById(partyBean.getId());
+            List<UserModel> list = ParticipantListDao.getParticipantList(partyModel, null).getParticipants();
+            for(UserModel um : list) {
+                if ( userBean.getId() == um.getId()) {
+                    state = true;
+                }
             }
+
+        } catch (SystemException systemException) {
+            systemException.printStackTrace();
         }
+
+
         return state;
     }
+
+
 
 }

@@ -11,12 +11,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kapta.control.appcontroller.JoinPartyController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController;
 import kapta.utils.VisualComponent;
 import kapta.utils.bean.jfx1.JFX1PartyBean;
 import kapta.utils.bean.jfx1.JFX1UserBean;
+import kapta.utils.exception.myexception.BusyForANewPartyException;
+import kapta.utils.exception.myexception.PartyExpiredException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.ThreadLocalSession;
 
 public class JFX1DecorationPartyTwo extends Decorator {
 
@@ -43,23 +47,23 @@ public class JFX1DecorationPartyTwo extends Decorator {
         //In generale setto il tasto su Join ma se partecipo già all'evento allora mostro Leave
         this.setToWrite("Join");
         //aaa do I joined yet dovrebbe essere fatta in fase di inizializzazione, potrebbe anche avere a che fare con lo stratto soot .
-        if(!doIjoinedYet()){
-            button.setStyle("-fx-background-color: #0073c4;" + radius + white);
-            this.setToWrite("Join");
-        } else if(doIjoinedYet()) {
-            button.setStyle("-fx-background-color: #d00000;" + radius + white);
-            this.setToWrite("Leave");
+        try {
+            if (!doIjoinedYet()) {
+                button.setStyle("-fx-background-color: #0073c4;" + radius + white);
+                this.setToWrite("Join");
+            } else if (doIjoinedYet()) {
+                button.setStyle("-fx-background-color: #d00000;" + radius + white);
+                this.setToWrite("Leave");
+            }
+            this.addUserPanel();
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
         }
-        this.addUserPanel();
 
     }
 
 
-    ///aaa capire bene cosa fare con questa qui sotto , per ora è messa qui per elimianare lo strato application
-
-    private boolean doIjoinedYet() { //fatta funzione in utils, sostituire con quella
-
-        // eee solo per ora
+    private boolean doIjoinedYet() throws SystemException {
         JFX1UserBean userBean =  new JFX1UserBean (ThreadLocalSession.getUserSession().get().getUserBean()) ;
         return JoinPartyController.joinedYetInfo(partyBean, userBean);
     }
@@ -79,72 +83,87 @@ public class JFX1DecorationPartyTwo extends Decorator {
 
         new JFX1PartyPageGUIController();
         button.setOnAction((ActionEvent ae) -> { //button controller
-            if (!doIjoinedYet()) {
-                button.setStyle("-fx-background-color: #d00000;" + radius + white);
 
-                //Setto l'avviso
-                Stage dialog = new Stage();
-                dialog.initModality(Modality.APPLICATION_MODAL);
-                dialog.initOwner(button.getScene().getWindow());
-                VBox vBox = new VBox(20);
-                Text text = new Text();
-                text.setFont(font);
-                vBox.setAlignment(Pos.CENTER);
+            boolean bool=true;
+            try {
+                 bool = !doIjoinedYet();
+            } catch (SystemException systemException) {
+                JFX1AlertCreator.createAlert(systemException);
+            }
 
+            if (bool) {
+                joinPartyAction(font,userBean );
 
-                //ee
-
-
-                int ret = JoinPartyController.joinParty( userBean, partyBean);
-
-                switch (ret){
-                    case 0:{
-                        this.setToWrite("Leave");
-                        this.addUserPanel();
-                        break;
-                    }
-                    case -1:{
-                        text.setText("You've have already joined a party in this date yet!");
-                        vBox.getChildren().add(text);
-                        vBox.setStyle("-fx-background-color: #ff4040");
-                        Scene dialogScene = new Scene(vBox, 700, 250);
-                        dialog.setScene(dialogScene);
-                        dialog.show();
-                        break;
-                    }
-                    case -2:{
-                        text.setText("You can't Join the party 'cause it is expired.");
-                        vBox.getChildren().add(text);
-                        vBox.setStyle("-fx-background-color: #ff4040");
-                        Scene dialogScene = new Scene(vBox, 600, 250);
-                        dialog.setScene(dialogScene);
-                        dialog.show();
-                        break;
-                    }
-                    default: break;
-                }
-
-            } else {
+                } else {
                 button.setStyle("-fx-background-color: #0073c4;" + radius + white);
-                // eee solo per ora ...
-                JoinPartyController.leaveParty( userBean, partyBean);
-
-                this.setToWrite("Join");
-                this.addUserPanel();
+                try {
+                    JoinPartyController.leaveParty( userBean, partyBean);
+                    this.setToWrite("Join");
+                    this.addUserPanel();
+                } catch (SystemException e) {
+                    JFX1AlertCreator.createAlert(e);
+                }
             }
 
             ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();
-            replaceSceneAndInitializePage.replaceSceneAndInitializePage(ae, "/JFX1/JFX1PartyPage.fxml", partyBean);
+
+                replaceSceneAndInitializePage.replaceSceneAndInitializePage(ae, "/JFX1/JFX1PartyPage.fxml", partyBean);
+
 
         });
         output.getChildren().add(button);
         output.setStyle("-fx-background-color: #200f54");
         return output;
     }
+
+
+
+    private void joinPartyAction(Font font, JFX1UserBean userBean){
+        button.setStyle("-fx-background-color: #d00000;" + radius + white);
+
+        //Setto l'avviso
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(button.getScene().getWindow());
+        VBox vBox = new VBox(20);
+        Text text = new Text();
+        text.setFont(font);
+        vBox.setAlignment(Pos.CENTER);
+        try {
+            JoinPartyController.joinParty( userBean, partyBean);
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        } catch (BusyForANewPartyException e) {
+            //eee  I can do the same with the alert creator.
+            text.setText("You've have already joined a party in this date yet!");
+            vBox.getChildren().add(text);
+            vBox.setStyle("-fx-background-color: #ff4040");
+            Scene dialogScene = new Scene(vBox, 700, 250);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        } catch (PartyExpiredException e) {
+            text.setText("You can't Join the party 'cause it is expired.");
+            vBox.getChildren().add(text);
+            vBox.setStyle("-fx-background-color: #ff4040");
+            Scene dialogScene = new Scene(vBox, 600, 250);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        }
+
+        this.setToWrite("Leave");
+        this.addUserPanel();
+
+
+
+    }
+
+
     @Override
     public VBox addUserPanel() {
         VBox preliminaryResult=super.addUserPanel();
         preliminaryResult=this.applyDecorationPartyTwo(preliminaryResult);
         return preliminaryResult;
     }
+
+
 }

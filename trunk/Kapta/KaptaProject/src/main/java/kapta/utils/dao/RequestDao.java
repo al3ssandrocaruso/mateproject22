@@ -8,8 +8,7 @@ import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongCrudException;
-import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.MysqlConnection;
 
 import java.sql.ResultSet;
@@ -23,18 +22,18 @@ public class RequestDao {
     }
 
 
-    public static void rejectRequest(EventModel event, UserModel sender, ClubModel owner) {
+    public static void rejectRequest(EventModel event, UserModel sender, ClubModel owner) throws SystemException {
     int requestIdentifier=getRequestIdentifier(event, sender, owner);
     Statement stm = null;
     try {
         stm = MysqlConnection.mysqlConnection();
         CRUD.rejectRequest(stm,requestIdentifier);
-    } catch (MysqlConnectionFailed | WrongCrudException e) {
-        ErrorHandler.getInstance().reportFinalException(e);
+    } catch (MysqlConnectionFailed | SQLException e) {
+        ErrorHandler.getInstance().handleException(e);
     }
 
 }
-    public static void sendNewRequest( RequestModel requestModel) {
+    public static void sendNewRequest( RequestModel requestModel) throws SystemException {
 
         EventModel eventModel = requestModel.getEvent();
         UserModel sender= requestModel.getSender();
@@ -46,38 +45,36 @@ public class RequestDao {
             stm = MysqlConnection.mysqlConnection();
             CRUD.sendRequest(stm,eventModel.getEventCreator().getId(),sender.getId(),eventModel.getId(), eventModel.isGreenPass(), numDoses, vaccinationDate);
 
-        } catch (MysqlConnectionFailed | WrongCrudException e) {
-            if(e instanceof  MysqlConnectionFailed m){
-                ErrorHandler.getInstance().reportFinalException(m);
-            }
+    } catch (MysqlConnectionFailed | SQLException e) {
+                ErrorHandler.getInstance().handleException(e);
         }
 }
 
 
 
     // queste azioni non devono essere fatte nel caso d'uso
-    public static void acceptRequest(EventModel event, UserModel sender, ClubModel owner) {
+    public static void acceptRequest(EventModel event, UserModel sender, ClubModel owner) throws SystemException {
         int requestIdentifier=getRequestIdentifier(event, sender, owner);
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.acceptRequest(stm,requestIdentifier);
-        } catch (MysqlConnectionFailed | WrongCrudException e) {
-                ErrorHandler.getInstance().reportFinalException(e);
+        } catch (MysqlConnectionFailed | SQLException e) {
+                ErrorHandler.getInstance().handleException(e);
             }
     }
-    public static void userDeleteRequest(EventModel eventModel, UserModel userModel, ClubModel owner) {
+    public static void userDeleteRequest(EventModel eventModel, UserModel userModel, ClubModel owner)  throws SystemException{
         int requestIdentifier = getRequestIdentifier(eventModel, userModel, owner);
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.deleteRequest(stm, requestIdentifier);
-        } catch (MysqlConnectionFailed | WrongCrudException e){
-                ErrorHandler.getInstance().reportFinalException(e);
+        } catch (MysqlConnectionFailed | SQLException e){
+                ErrorHandler.getInstance().handleException(e);
             }
     }
 
-    public static int getRequestIdentifier(EventModel event, UserModel sender, ClubModel owner) {
+    public static int getRequestIdentifier(EventModel event, UserModel sender, ClubModel owner) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
@@ -89,15 +86,13 @@ public class RequestDao {
                 return resultSet.getInt(1);
             }
         }
-        catch ( MysqlConnectionFailed | WrongQueryException e) {
-                ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException throwables) {
-           // non gestita
+        catch ( MysqlConnectionFailed | SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
         return -1;
     }
 
-    public static int getRequestStatus(int requestId)  {
+    public static int getRequestStatus(int requestId) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
@@ -108,11 +103,9 @@ public class RequestDao {
             resultSet.first();
             return resultSet.getInt(1);
 
-        }catch (MysqlConnectionFailed| WrongQueryException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+        }catch (MysqlConnectionFailed| SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
 
-        }catch (SQLException throwables) {
-            // non gestita
         }
         return -1;
 

@@ -2,6 +2,8 @@ package kapta.utils.exception;
 
 import kapta.utils.exception.myexception.*;
 
+
+
 public class Trigger {
 
     private Trigger(){
@@ -27,18 +29,12 @@ public class Trigger {
     }
 
 
-    public static void wrongToken(String token) throws TokenException {
-        throw new TokenException(token);
-    }
+
 
     public static void connectionFailed() throws DBConnectionException {
         throw  new DBConnectionException();
     }
-    public static void triggerGenericException(Exception e) throws GenericException {
-        GenericException g = new GenericException();
-        g.initCause(e.getCause());
-        throw g;
-    }
+
     public  static void mySqlConnectionException(Exception e ) throws MysqlConnectionFailed {
         MysqlConnectionFailed m = new MysqlConnectionFailed();
         m.initCause(e);
@@ -58,4 +54,6 @@ public class Trigger {
         throw new ExpiredGreenPassException();
     }
 
+
 }
+

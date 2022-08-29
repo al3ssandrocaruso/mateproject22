@@ -9,7 +9,7 @@ import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.EventDao;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.MysqlConnection;
 import kapta.utils.dao.UserDao;
 
@@ -26,7 +26,7 @@ public class RequestListDao {
         //ignored
     }
 
-    public static List<RequestModel> getAllTypeRequests(UserModel userModel) {
+    public static List<RequestModel> getAllTypeRequests(UserModel userModel) throws SystemException {
         Statement stm = null;
         List<RequestModel> output=new ArrayList<>();
         try {
@@ -61,15 +61,13 @@ public class RequestListDao {
                     }
                 }while(rs.next());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (MysqlConnectionFailed | WrongQueryException f) {
-            ErrorHandler.getInstance().reportFinalException(f);
+        } catch (MysqlConnectionFailed | SQLException f) {
+            ErrorHandler.getInstance().handleException(f);
         }
         return  output;
 
     }
-    public static List<RequestModel> getPendingRequestsByClubId(int idOwner) {
+    public static List<RequestModel> getPendingRequestsByClubId(int idOwner) throws SystemException {
         Statement stm = null;
         List<RequestModel> output=new ArrayList<>();
         try {
@@ -99,10 +97,8 @@ public class RequestListDao {
 
             }while(rs.next());
             }
-        }catch (MysqlConnectionFailed | WrongQueryException e){
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException throwables) {
-            // non gestita
+        }catch (MysqlConnectionFailed | SQLException e){
+            ErrorHandler.getInstance().handleException(e);
         }
         return  output;
     }

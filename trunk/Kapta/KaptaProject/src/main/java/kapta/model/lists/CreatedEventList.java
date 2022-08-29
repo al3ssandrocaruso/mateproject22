@@ -34,6 +34,7 @@ public class CreatedEventList extends Subject {
             this.creatEvList.add(em);
             EventBean eventBean = new EventBean(em);
             GenericListInfoBean g = new GenericListInfoBean(creatEvList.size(), 2);
+
             this.notifyObservers(eventBean,g);
         }
 

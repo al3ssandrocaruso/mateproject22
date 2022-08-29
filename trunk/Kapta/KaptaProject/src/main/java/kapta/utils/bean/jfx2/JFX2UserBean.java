@@ -6,6 +6,7 @@ import kapta.utils.bean.UserBean;
 import kapta.utils.exception.Trigger;
 import kapta.utils.exception.myexception.EmailValidatorException;
 import kapta.utils.exception.myexception.InputNullException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.EmailValidator;
 import kapta.utils.utils.ImageConverter;
 
@@ -79,7 +80,7 @@ public class JFX2UserBean extends UserBean {
     public String getUsernameOut() {
         return username;
     }
-    public Image getImageOut() {
+    public Image getImageOut() throws SystemException {
         return ImageConverter.convertFileToFxImage(img);
     }
 

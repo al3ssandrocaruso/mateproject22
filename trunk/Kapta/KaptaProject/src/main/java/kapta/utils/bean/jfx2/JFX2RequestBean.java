@@ -3,6 +3,7 @@ package kapta.utils.bean.jfx2;
 import javafx.scene.image.Image;
 import kapta.model.RequestModel;
 import kapta.utils.bean.RequestBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.ImageConverter;
 
 public class JFX2RequestBean extends RequestBean {
@@ -41,7 +42,7 @@ public class JFX2RequestBean extends RequestBean {
     public String getSenderNameOut() {
         return sender;
     }
-    public Image getRelatedEventImgOut(){
+    public Image getRelatedEventImgOut() throws SystemException {
         return ImageConverter.convertFileToFxImage(eventBean.getEventImg());
     }
     public String getDateOut(){

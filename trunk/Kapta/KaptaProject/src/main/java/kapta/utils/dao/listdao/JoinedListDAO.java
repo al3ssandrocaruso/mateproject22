@@ -11,8 +11,7 @@ import kapta.utils.dao.EventDao;
 import kapta.utils.dao.PartyDao;
 import kapta.utils.exception.*;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongCrudException;
-import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.Observer;
 import kapta.utils.utils.MysqlConnection;
 
@@ -26,42 +25,42 @@ public class JoinedListDAO {
         //ignored
     }
 
-    public static void addJoinedParty(UserModel um, PartyModel pm)  {
+    public static void addJoinedParty(UserModel um, PartyModel pm) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.addNewPartyInJoinedLIst(um.getId(), pm.getId(), stm);
-        } catch (MysqlConnectionFailed  | WrongCrudException e) {
-                ErrorHandler.getInstance().reportFinalException(e);
+        } catch (MysqlConnectionFailed  | SQLException e) {
+                ErrorHandler.getInstance().handleException(e);
         }
     }
 
-    public static void addJoinedEvent(UserModel um, EventModel pm){
+    public static void addJoinedEvent(UserModel um, EventModel pm) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.addNewEventInJoinedLIst(um.getId(), pm.getId(), stm);
-        } catch (MysqlConnectionFailed | WrongCrudException e) {
+        } catch (MysqlConnectionFailed | SQLException e) {
             if(e instanceof  MysqlConnectionFailed m ){
-                ErrorHandler.getInstance().reportFinalException(m);
+                ErrorHandler.getInstance().handleException(m);
             }
         }
     }
 
-    public static void removeJoinedParty(UserModel um, PartyModel pm) {
+    public static void removeJoinedParty(UserModel um, PartyModel pm) throws SystemException {
         int partyId= pm.getId();
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.removePartyInJoinedLIst(um.getId(), partyId, stm);
-        } catch (MysqlConnectionFailed  | WrongCrudException e) {
+        } catch (MysqlConnectionFailed  | SQLException e) {
             if(e instanceof  MysqlConnectionFailed m ){
-                ErrorHandler.getInstance().reportFinalException(m);
+                ErrorHandler.getInstance().handleException(m);
             }
         }
     }
 
-    public static JoinedList getJoined(UserModel um, Observer obs) {
+    public static JoinedList getJoined(UserModel um, Observer obs) throws SystemException {
 //OK EXCEPTION, non è vero
         Statement stm = null;
         List<PartyEventModel> joined= new ArrayList<>();
@@ -90,10 +89,8 @@ public class JoinedListDAO {
                 }
 
             } while (rs.next());
-        } catch (SQLException |AssertionError e) {
-            // non gestite
-        } catch (MysqlConnectionFailed | WrongQueryException  e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+        } catch (MysqlConnectionFailed | SQLException  e) {
+            ErrorHandler.getInstance().handleException(e);
         }
         return joinedList ;
     }

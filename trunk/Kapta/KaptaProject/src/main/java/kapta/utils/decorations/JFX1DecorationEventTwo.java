@@ -15,19 +15,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kapta.control.appcontroller.JoinEventController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController;
 import kapta.utils.bean.RequestBean;
 import kapta.utils.bean.jfx1.JFX1ClubBean;
 import kapta.utils.bean.jfx1.JFX1EventBean;
 import kapta.utils.bean.jfx1.JFX1RequestBean;
-import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.ExpiredGreenPassException;
-import kapta.utils.exception.myexception.GenericException;
 import kapta.utils.exception.myexception.InavalidGreenPassException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.greenpass.AdapterGreenPass;
-import kapta.utils.greenpass.TargetGreenPass;
 import kapta.utils.VisualComponent;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.utils.GetDialogStage;
 
 import java.io.File;
@@ -71,30 +70,35 @@ public class JFX1DecorationEventTwo extends Decorator{
         setCreator(creator);
 
         int support = 0;
-        support = getStatusRequest();
-        // "dal punto di vista dell'utente"
-        switch(support){
-            case -1:{ //No Request yet
-                button.setFont(Font.font(arial, FontWeight.BOLD, 10));
-                fill("#e8e7fc","Request",black);
-                break;
+        try {
+            support = getStatusRequest();
+            switch(support){
+                case -1:{ //No Request yet
+                    button.setFont(Font.font(arial, FontWeight.BOLD, 10));
+                    fill("#e8e7fc","Request",black);
+                    break;
+                }
+                case 0:{ //Pending
+                    fill("#ff9105","Pending",white);
+                    break;
+                }
+                case 1: { //Accepted Request
+                    fill("#54e589","Accepted",white);
+                    break;
+                }
+                case 2: {
+                    fill("d00000","Rejected",white);
+                    break;
+                }
+                default:
+                    break;
             }
-            case 0:{ //Pending
-                fill("#ff9105","Pending",white);
-                break;
-            }
-            case 1: { //Accepted Request
-                fill("#54e589","Accepted",white);
-                break;
-            }
-            case 2: {
-                fill("d00000","Rejected",white);
-                break;
-            }
-            default:
-                break;
+            this.addUserPanel();
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
         }
-        this.addUserPanel();
+
+
     }
 
 
@@ -118,75 +122,90 @@ public class JFX1DecorationEventTwo extends Decorator{
         new JFX1PartyPageGUIController();
 
         button.setOnAction((ActionEvent ae) -> {
-            int support = 0;
-            support = getStatusRequest();
-            if(support == -1) {  //No Request yet
-                /*
-                Prima questa riga di codice qua sotto era dentro un else ma ora (per evitare code smells)
-                setto prima a null e poi in caso, se serve il greenPass, sviluppo tutto quanto
-                */
-                if (!getEventBean().isGreenPass()){ this.approvedSendingRequest(null, 0);}
-                else{
-                    final Stage dialog = new Stage();
-                    dialog.initModality(Modality.APPLICATION_MODAL);
-                    dialog.initOwner(((Node) ae.getSource()).getScene().getWindow());
+            try {
 
-                    Font font1 = Font.font(arial, FontWeight.BOLD, 20);
-                    Label label1 = new Label("Please, load and verify green pass");
-                    label1.setFont(font1);
+                int support = 0;
 
-                    labelName.setFont(font1);
-                    labelSurname.setFont(font1);
-                    labelDate.setFont(font1);
-                    labelNumVac.setFont(font1);
+                support = getStatusRequest();
 
-                    VBox dialogVbox = new VBox(20);
+                if (support == -1) {
+                    if (!getEventBean().isGreenPass()) {
+                        this.approvedSendingRequest(null, 0);
+                    } else {
+                        final Stage dialog = new Stage();
+                        dialog.initModality(Modality.APPLICATION_MODAL);
+                        dialog.initOwner(((Node) ae.getSource()).getScene().getWindow());
 
-                    dialogVbox.setPadding(new Insets(0, 50, 0, 50));
+                        Font font1 = Font.font(arial, FontWeight.BOLD, 20);
+                        Label label1 = new Label("Please, load and verify green pass");
+                        label1.setFont(font1);
 
-                    Button btnLoad = new Button("Load File");
-                    btnLoad.setFont(font1);
-                    btnLoad.setStyle("-fx-background-color: #200f54;" + radius + white);
+                        labelName.setFont(font1);
+                        labelSurname.setFont(font1);
+                        labelDate.setFont(font1);
+                        labelNumVac.setFont(font1);
 
-                    Button btnSend = new Button("Send");
-                    btnSend.setFont(font1);
-                    btnSend.setStyle("-fx-background-color: #54E589;" + radius + white);
-                    HBox hBox=GetDialogStage.fill(btnLoad,dialogVbox,dialog,label1);
+                        VBox dialogVbox = new VBox(20);
 
-                    btnLoad.setOnAction(actionEvent -> {
-                        try {File file;
-                            Stage stage = (Stage) dialog.getScene().getWindow();
-                            FileChooser fileChooser = new FileChooser();
-                            fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imagine Files","*.png","*.jpg"));
-                            file = fileChooser.showOpenDialog(stage);
+                        dialogVbox.setPadding(new Insets(0, 50, 0, 50));
 
-                            TargetGreenPass adapter = new AdapterGreenPass();
-                            this.ret = adapter.getInfoGreenPass(file.getAbsolutePath());
+                        Button btnLoad = new Button("Load File");
+                        btnLoad.setFont(font1);
+                        btnLoad.setStyle("-fx-background-color: #200f54;" + radius + white);
 
-                            labelName.setText(labelName.getText() + ret[0]);
-                            labelSurname.setText(labelSurname.getText() + ret[1]);
-                            labelDate.setText(labelDate.getText() + ret[2]);
-                            labelNumVac.setText(labelNumVac.getText() + ret[3]);
+                        Button btnSend = new Button("Send");
+                        btnSend.setFont(font1);
+                        btnSend.setStyle("-fx-background-color: #54E589;" + radius + white);
+                        HBox hBox = GetDialogStage.fill(btnLoad, dialogVbox, dialog, label1);
 
-                            hBox.getChildren().clear();
-                            hBox.getChildren().add(btnSend);
-                            VBox vboxInfo = new VBox();
-                            vboxInfo.setAlignment(Pos.CENTER);
-                            vboxInfo.getChildren().addAll(labelName, labelSurname, labelDate, labelNumVac);
-                            dialogVbox.getChildren().clear();
-                            dialogVbox.getChildren().addAll(vboxInfo, hBox);
-                        } catch (InavalidGreenPassException | GenericException e) {
-                            ErrorHandler.getInstance().reportFinalException(e);
-                        }
-                    });
-                    btnSend.setOnAction(actionEvent -> {
-                         this.approvedSendingRequest(ret[2], Integer.valueOf(ret[3]));
+                        btnLoad.setOnAction(actionEvent -> {
+                            try {
+                                File file;
+                                Stage stage = (Stage) dialog.getScene().getWindow();
+                                FileChooser fileChooser = new FileChooser();
+                                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imagine Files", "*.png", "*.jpg"));
+                                file = fileChooser.showOpenDialog(stage);
+
+                                AdapterGreenPass adapter = new AdapterGreenPass();
+                                this.ret = adapter.getInfoGreenPass(file.getAbsolutePath());
+
+                                labelName.setText(labelName.getText() + ret[0]);
+                                labelSurname.setText(labelSurname.getText() + ret[1]);
+                                labelDate.setText(labelDate.getText() + ret[2]);
+                                labelNumVac.setText(labelNumVac.getText() + ret[3]);
+
+                                hBox.getChildren().clear();
+                                hBox.getChildren().add(btnSend);
+                                VBox vboxInfo = new VBox();
+                                vboxInfo.setAlignment(Pos.CENTER);
+                                vboxInfo.getChildren().addAll(labelName, labelSurname, labelDate, labelNumVac);
+                                dialogVbox.getChildren().clear();
+                                dialogVbox.getChildren().addAll(vboxInfo, hBox);
+                            } catch (InavalidGreenPassException | SystemException e) {
+                               JFX1AlertCreator.createAlert(e);
+                            }
+                        });
+                        // to test
+                        btnSend.setOnAction(actionEvent -> {
+                            this.approvedSendingRequest(ret[2], Integer.valueOf(ret[3]));
                             dialog.close();
-                    });
+                        });
+
+                    }
+                }
+
+            } catch (SystemException  e){
+                JFX1AlertCreator.createAlert(e);
+            }
+
 
                 }
-            }
-        });
+
+
+
+
+
+        );
         output.getChildren().add(button);
         output.setStyle("-fx-background-color: #200f54");
         return output;
@@ -198,7 +217,7 @@ public class JFX1DecorationEventTwo extends Decorator{
             this.setToWrite("Pending");
             button.setStyle("-fx-background-color: #ff9105; "+ radius + white);
         } catch (ExpiredGreenPassException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+            JFX1AlertCreator.createAlert(e);
         }
         this.addUserPanel();
     }
@@ -215,12 +234,16 @@ public class JFX1DecorationEventTwo extends Decorator{
     }
 
     private void sendRequest(RequestBean requestBean) throws ExpiredGreenPassException {
-        JoinEventController.sendRequest(requestBean, getEventBean());
+        try {
+            JoinEventController.sendRequest(requestBean, getEventBean());
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
 
     }
 
-    //eeee to delete
-    private  int getStatusRequest() {
+
+    private  int getStatusRequest() throws SystemException {
         return JoinEventController.manageRequestInfo(this.eventBean,  ThreadLocalSession.getUserSession().get().getUserBean(), getCreator());
     }
 

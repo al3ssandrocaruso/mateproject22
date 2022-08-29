@@ -2,6 +2,7 @@ package kapta.control.appcontroller;
 
 import kapta.utils.bean.GenericUserBean;
 import kapta.utils.dao.SettingDao;
+import kapta.utils.exception.myexception.SystemException;
 
 public class SettingsPageController {
 
@@ -9,7 +10,7 @@ public class SettingsPageController {
         //ignored
     }
 
-    public static void saveSettings(GenericUserBean bean) {
+    public static void saveSettings(GenericUserBean bean) throws SystemException {
         if(bean.getType()   == 0 ){
             String username =  bean.getUsername();
             String name = bean.getName();

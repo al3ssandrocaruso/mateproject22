@@ -6,8 +6,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import kapta.control.appcontroller.DeletePartyEventController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.utils.VisualComponent;
 import kapta.utils.bean.jfx1.JFX1PartyBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 
@@ -34,6 +36,16 @@ public class JFX1DecorationPartyOne extends Decorator{
         setPartyBean(partyBean);
 
     }
+    private void goToDeleteParty(ActionEvent ae,String fxml){
+        try {
+            DeletePartyEventController.delete(getPartyBean());
+            ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
+            rsip.replaceSceneAndInitializePage(ae, fxml);
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
+
+    }
 
     protected VBox applyDecorationPartyOne(VBox input){
         VBox output = input;
@@ -50,11 +62,7 @@ public class JFX1DecorationPartyOne extends Decorator{
         output.getChildren().add(button);
         return output;
     }
-    private void goToDeleteParty(ActionEvent ae,String fxml){
-        DeletePartyEventController.delete(getPartyBean());
-        ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
-        rsip.replaceSceneAndInitializePage(ae, fxml);
-    }
+
 
     @Override
     public VBox addUserPanel() {

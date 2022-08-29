@@ -8,10 +8,11 @@ import kapta.utils.bean.LoginBean;
 import kapta.utils.bean.UserBean;
 import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.UserDao;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.exception.Trigger;
-import kapta.utils.session.Session;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.Session;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.utils.Authentication;
 
 public class LoginController {
@@ -20,7 +21,7 @@ public class LoginController {
         //ignored
     }
 
-    public static UserClubModel login(LoginBean loginBean) throws WrongPasswordException{
+    public static UserClubModel login(LoginBean loginBean) throws WrongPasswordException, SystemException {
         ClubModel clubModel = null;
         if (loginBean.getType() == 1) {
             // login MANAGER

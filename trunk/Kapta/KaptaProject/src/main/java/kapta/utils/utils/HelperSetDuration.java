@@ -1,5 +1,7 @@
 package kapta.utils.utils;
 
+import kapta.utils.exception.myexception.InputDateException2;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -7,7 +9,7 @@ public class HelperSetDuration {
     private HelperSetDuration(){
         //ignored
     }
-    public static long conv(Double partyDuration){
+    public static long conv(Double partyDuration) throws InputDateException2 {
         String durationStr="0"+partyDuration.toString().charAt(0)+":";
         String support=""+partyDuration.toString().charAt(2);
         if(support.equals("0")){durationStr=durationStr.concat("00");}
@@ -19,7 +21,7 @@ public class HelperSetDuration {
         try {
             ms = sdf.parse(durationStr).getTime();
         } catch (ParseException e) {
-            e.printStackTrace();
+           throw new InputDateException2(partyDuration.toString(), "Duration","hh:mm");
         }
         return ms;
 

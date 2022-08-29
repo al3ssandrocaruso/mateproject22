@@ -6,12 +6,10 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import kapta.control.appcontroller.RegisterController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.utils.bean.jfx1.JFX1ProfileBean;
 import kapta.utils.exception.*;
-import kapta.utils.exception.myexception.ConfirmPasswordException;
-import kapta.utils.exception.myexception.EmailValidatorException;
-import kapta.utils.exception.myexception.InputNullException;
-import kapta.utils.exception.myexception.UsernameConflictException;
+import kapta.utils.exception.myexception.*;
 import kapta.utils.init.ReplaceScene;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import java.io.File;
@@ -52,8 +50,8 @@ public class JFX1SuperRegisterGUIController {
                 replaceSceneAndInitializePage.replaceSceneAndInitializeRegister(ae, "/JFX1/JFX1RegisterClub.fxml", jfx1ProfileBean);
             }
         }
-        catch(EmailValidatorException | ConfirmPasswordException | UsernameConflictException| InputNullException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+        catch(EmailValidatorException | ConfirmPasswordException | UsernameConflictException | InputNullException | SystemException e) {
+            JFX1AlertCreator.createAlert(e);
         }
     }
 

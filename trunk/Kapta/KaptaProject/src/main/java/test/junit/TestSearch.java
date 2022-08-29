@@ -39,7 +39,7 @@ public class TestSearch {
     //SUCCESS
     @Test
     public void testSearchParty(){
-        List<PartyModel> list = Search.searchByPartyName("party22");
+        List<PartyModel> list = Search.searchByPartyName("party1");
 
         int ret = 0;
 

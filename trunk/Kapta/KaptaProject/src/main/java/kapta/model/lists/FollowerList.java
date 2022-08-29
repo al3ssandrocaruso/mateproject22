@@ -5,6 +5,8 @@ import kapta.utils.GenericObservableList;
 import kapta.utils.Observer;
 import kapta.utils.bean.GenericListInfoBean;
 import kapta.utils.bean.UserBean;
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +19,10 @@ public class FollowerList extends GenericObservableList {
     public FollowerList(UserClubModel owner, List<UserModel> list, Observer obs){
         super(obs);
         this.owner=owner;
+        if(list.isEmpty()){
+            GenericListInfoBean gl = new GenericListInfoBean(follList.size(),1);
+            this.notifyObservers(gl);
+        }
         for ( UserModel pm : list ){
             this.addUser(pm);
         }
@@ -32,16 +38,18 @@ public class FollowerList extends GenericObservableList {
         this.notifyObservers(ub,gl);
     }
     public void removeUser(UserModel pm) {
+
         Iterator<UserModel> it = this.follList.iterator();
         while(it.hasNext()){
             UserModel um = it.next();
-            if (um.getId()== pm.getId()){
+            if (um.getId()== pm.getId()) {
                 it.remove();
+                GenericListInfoBean gl = new GenericListInfoBean(follList.size(), 1);
+                UserBean ub = new UserBean(pm);
+                this.notifyObservers(ub, gl);
             }
         }
-        GenericListInfoBean gl = new GenericListInfoBean(follList.size(),1);
-        UserBean ub = new UserBean(pm);
-        this.notifyObservers(ub,gl);
+
 
     }
 

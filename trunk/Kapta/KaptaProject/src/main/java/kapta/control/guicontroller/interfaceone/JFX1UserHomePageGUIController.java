@@ -15,6 +15,7 @@ import kapta.utils.bean.UserBean;
 import kapta.utils.bean.jfx1.JFX1EventBean;
 import kapta.utils.bean.jfx1.JFX1PartyBean;
 import kapta.utils.bean.jfx1.JFX1UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import kapta.utils.Observer;
 import kapta.utils.utils.UpdateHandlerUno;
@@ -55,7 +56,7 @@ public class JFX1UserHomePageGUIController implements Observer {
             uigc.setAll(jfx1UserBean);
             this.listView.getItems().add(pane);
         }
-        // ee non errore ma da notare ...
+
         if(ob instanceof PartyBean partyBean){
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1PartyItem.fxml").openStream());
@@ -69,13 +70,14 @@ public class JFX1UserHomePageGUIController implements Observer {
         if(ob instanceof EventBean eventBean){
             try {
                 pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1EventItem.fxml").openStream());
-            } catch (IOException e) {
+
+                JFX1EventItemGUIController pigc = fxmlLoader.getController();
+                JFX1EventBean jfx1EventBean = new JFX1EventBean(eventBean);
+                pigc.setAll(jfx1EventBean);
+                this.listView.getItems().add(pane);
+            }catch (SystemException | IOException e ) {
                 e.printStackTrace();
             }
-            JFX1EventItemGUIController pigc = fxmlLoader.getController();
-            JFX1EventBean jfx1EventBean = new JFX1EventBean(eventBean);
-            pigc.setAll(jfx1EventBean);
-            this.listView.getItems().add(pane);
         }
     }
 

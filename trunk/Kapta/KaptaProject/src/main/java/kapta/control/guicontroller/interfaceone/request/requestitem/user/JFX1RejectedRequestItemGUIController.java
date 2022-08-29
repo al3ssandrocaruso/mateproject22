@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.utils.bean.jfx1.JFX1RequestBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1RejectedRequestItemGUIController {
@@ -49,6 +50,10 @@ public class JFX1RejectedRequestItemGUIController {
         setRequestBean(jfx1RequestBean);
         setLabelEventName(jfx1RequestBean.getEventNameOut());
         setEventDate(jfx1RequestBean.getEventDateOut());
-        setEventImageView(jfx1RequestBean.getEventImageOut());
+        try {
+            setEventImageView(jfx1RequestBean.getEventImageOut());
+        } catch (SystemException e) {
+            ///
+        }
     }
 }

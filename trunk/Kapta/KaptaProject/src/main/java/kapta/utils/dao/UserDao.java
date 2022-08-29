@@ -6,8 +6,7 @@ import kapta.utils.dao.listdao.FollowerListDao;
 import kapta.utils.dao.listdao.FollowingListDao;
 import kapta.utils.exception.*;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongCrudException;
-import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.ImageConverter;
 import kapta.utils.utils.MysqlConnection;
 
@@ -27,7 +26,7 @@ public  class UserDao {
         //ignored
     }
 
-    public static void saveUser(UserModel userModel) {
+    public static void saveUser(UserModel userModel) throws SystemException {
 
         int id = 0;
         Statement stm;
@@ -60,16 +59,15 @@ public  class UserDao {
             ps.executeUpdate();
 
 
-        } catch ( MysqlConnectionFailed | WrongCrudException |  WrongQueryException e ){
-                e.printStackTrace();
-                ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException | FileNotFoundException throwables) {
-            throwables.printStackTrace();
+        } catch (MysqlConnectionFailed | SQLException | FileNotFoundException e ){
+
+                ErrorHandler.getInstance().handleException(e);
+
         }
     }
 
 
-    public static UserModel getUserById(int index) {
+    public static UserModel getUserById(int index) throws SystemException {
         Statement stm = null;
         UserModel userModel = null;
         try {
@@ -92,17 +90,15 @@ public  class UserDao {
                 userModel.setProfileImg(file);
                 }
         }
-        catch (MysqlConnectionFailed | WrongQueryException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException | IOException throwables) {
-            // non gestita
+        catch (MysqlConnectionFailed | SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
 
         return userModel;
     }
 
 
-    public static UserModel getUserByUsername(String username)  {
+    public static UserModel getUserByUsername(String username) throws SystemException {
         Statement stm = null;
         UserModel um = null ;
         try {
@@ -127,15 +123,13 @@ public  class UserDao {
             ImageConverter.copyInputStreamToFile(in, file);
             um.setProfileImg(file);
             return um;
-        }catch (MysqlConnectionFailed | WrongQueryException e){
-                ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException | IOException throwables) {
-            // non gestita
+        }catch (MysqlConnectionFailed | SQLException e){
+                ErrorHandler.getInstance().handleException(e);
         }
             return um;
     }
 
-    public static List<UserModel> usersByUsername(String username) {
+    public static List<UserModel> usersByUsername(String username) throws SystemException {
         //OK FUNZIONA MA NON CATTURA TUTTE EXCEPTION
         List<UserModel> list = new ArrayList<>();
 
@@ -165,10 +159,8 @@ public  class UserDao {
             um.setProfileImg(file);
             list.add(um);
         }
-        catch (WrongQueryException|MysqlConnectionFailed e){
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException | IOException e) {
-            // non gestita
+        catch (SQLException|MysqlConnectionFailed e){
+            ErrorHandler.getInstance().handleException(e);
         }
         return list;
     }
@@ -176,14 +168,14 @@ public  class UserDao {
 
 
     //sono da elimianare
-    public static Integer getNumSeguiti(UserModel userModel) {
+    public static Integer getNumSeguiti(UserModel userModel) throws SystemException {
         int output=0;
             if (FollowingListDao.getFollowing(userModel) != null) {
                 output = Objects.requireNonNull(FollowingListDao.getFollowing(userModel)).size();
             }
         return output;
     }
-    public static Integer getNumFollower(UserModel userModel){
+    public static Integer getNumFollower(UserModel userModel) throws SystemException {
         int output=0;
             if (FollowerListDao.getFollower(userModel) != null) {
                 output = Objects.requireNonNull(FollowerListDao.getFollower(userModel)).size();

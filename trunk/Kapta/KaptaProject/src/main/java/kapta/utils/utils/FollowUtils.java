@@ -4,6 +4,8 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.bean.UserBean;
 import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.FollowingListDao;
+import kapta.utils.exception.myexception.SystemException;
+
 import java.util.List;
 
 public class FollowUtils {
@@ -14,10 +16,20 @@ public class FollowUtils {
 
     public static boolean doAFollowB(UserBean userBA, UserBean userBB)  {
 
-        UserModel userA = UserDao.getUserByUsername(userBA.getUsername());
-        UserModel userB= UserDao.getUserByUsername(userBB.getUsername());
+        UserModel userA = null;
+        UserModel userB = null;
+        List<UserModel> list = null;
+        try {
+            userA = UserDao.getUserByUsername(userBA.getUsername());
+             userB= UserDao.getUserByUsername(userBB.getUsername());
+             list= FollowingListDao.getFollowing(userA);
+        } catch (SystemException e) {
+            //non gestitat
+            e.printStackTrace();
+        }
+
             boolean followState=false;
-            List<UserModel> list= FollowingListDao.getFollowing(userA);
+
             //get di CHI SEGUO IO
             if(list == null){
                 return followState;

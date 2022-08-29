@@ -7,8 +7,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import kapta.control.appcontroller.DeletePartyEventController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.utils.VisualComponent;
 import kapta.utils.bean.jfx1.JFX1EventBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 
@@ -45,9 +47,14 @@ public class JFX1DecorationEventOne extends Decorator {
     }
 
     private void goToDeleteEvent(ActionEvent ae, String fxml){
-        DeletePartyEventController.delete(this.eventBean);
-        ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
-        rsip.replaceSceneAndInitializePage(ae, fxml);
+        try {
+            DeletePartyEventController.delete(this.eventBean);
+            ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
+            rsip.replaceSceneAndInitializePage(ae, fxml);
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
+
     }
 
 

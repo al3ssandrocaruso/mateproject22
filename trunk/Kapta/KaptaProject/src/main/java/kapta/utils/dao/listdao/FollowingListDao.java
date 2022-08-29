@@ -5,8 +5,7 @@ import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongCrudException;
-import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.MysqlConnection;
 import kapta.utils.dao.UserDao;
 
@@ -22,26 +21,26 @@ public class FollowingListDao {
         //ignored
     }
 
-    public static void addToFollowingList(UserModel listOwner, UserModel userToAdd)  {
+    public static void addToFollowingList(UserModel listOwner, UserModel userToAdd) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.addToListaFollowing(listOwner.getId(),userToAdd.getId(),stm);
-        } catch (MysqlConnectionFailed | WrongCrudException e) {
-                ErrorHandler.getInstance().reportFinalException(e);
+        } catch (MysqlConnectionFailed | SQLException e) {
+                ErrorHandler.getInstance().handleException(e);
             }
     }
-    public static void removeFromFollowingList(UserModel listOwner, UserModel userToRemove) {
+    public static void removeFromFollowingList(UserModel listOwner, UserModel userToRemove) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.removeFromListaFollowing(listOwner.getId(),userToRemove.getId(),stm);
-        }catch (MysqlConnectionFailed | WrongCrudException e) {
-                ErrorHandler.getInstance().reportFinalException(e);
+        }catch (MysqlConnectionFailed | SQLException e) {
+                ErrorHandler.getInstance().handleException(e);
             }
         }
 
-    public static List<UserModel> getFollowing(UserModel um) {
+    public static List<UserModel> getFollowing(UserModel um) throws SystemException {
         Statement stm = null;
         List<UserModel> seguiti= new ArrayList<>();
         try {
@@ -60,10 +59,8 @@ public class FollowingListDao {
                     seguiti.add(userModel);
                 }while (rs.next());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }catch ( MysqlConnectionFailed | WrongQueryException e){
-            ErrorHandler.getInstance().reportFinalException(e);
+        }catch ( MysqlConnectionFailed | SQLException e){
+            ErrorHandler.getInstance().handleException(e);
         }
         return seguiti ;
     }

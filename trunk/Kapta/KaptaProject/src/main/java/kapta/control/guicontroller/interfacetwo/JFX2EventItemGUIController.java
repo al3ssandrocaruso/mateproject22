@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.utils.bean.jfx2.JFX2EventBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 
 
@@ -45,7 +46,11 @@ public class JFX2EventItemGUIController {
     public void setAll(JFX2EventBean jfx2EventBean){
 
         setEventBean(jfx2EventBean);
-        setImageViewEventImage(jfx2EventBean.getEventImgOut());
+        try {
+            setImageViewEventImage(jfx2EventBean.getEventImgOut());
+        } catch (SystemException e) {
+            //
+        }
         setLabelEventData(jfx2EventBean.getEventDateOut());
         setLabelEventPrice(jfx2EventBean.getEventPriceOut());
         setLabelEventName(jfx2EventBean.getEventNameOut());

@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import kapta.utils.bean.jfx2.JFX2UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 
 
@@ -65,7 +66,11 @@ public class JFX2UserItemGUIController {
     }
     public void setAll(JFX2UserBean jfx2UserBean, AnchorPane ap, JFX2UserProfileGUIController upgc){
         setLabelUsername(jfx2UserBean.getUsernameOut());
-        setImageProfile(jfx2UserBean.getImageOut());
+        try {
+            setImageProfile(jfx2UserBean.getImageOut());
+        } catch (SystemException e) {
+            //
+        }
         setStageToGet(ap);
         this.jfx2UserBean = jfx2UserBean;
         setUpgc(upgc);

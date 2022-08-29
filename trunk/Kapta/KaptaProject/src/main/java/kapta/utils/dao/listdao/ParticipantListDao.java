@@ -7,7 +7,7 @@ import kapta.model.profiles.UserModel;
 import kapta.utils.db.Query;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.Observer;
 import kapta.utils.utils.MysqlConnection;
 import kapta.utils.dao.UserDao;
@@ -21,7 +21,7 @@ public class ParticipantListDao {
         //ignored
     }
 
-    public static ParticipantsList getParticipantList(PartyEventModel partyEventModel, Observer ob) {
+    public static ParticipantsList getParticipantList(PartyEventModel partyEventModel, Observer ob) throws SystemException {
 
         Statement stm = null;
         ParticipantsList participantsList = new ParticipantsList(partyEventModel, ob);
@@ -43,10 +43,10 @@ public class ParticipantListDao {
                     rst.next();
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (MysqlConnectionFailed |WrongQueryException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+        }
+
+       catch (MysqlConnectionFailed |SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
         return participantsList ;
     }

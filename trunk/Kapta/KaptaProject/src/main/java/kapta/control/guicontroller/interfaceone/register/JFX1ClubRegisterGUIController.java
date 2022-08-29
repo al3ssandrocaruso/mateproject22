@@ -4,12 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import kapta.control.appcontroller.RegisterController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.utils.bean.jfx1.JFX1ClubBean;
 import kapta.utils.bean.jfx1.JFX1ProfileBean;
+import kapta.utils.exception.myexception.SystemException;
+import kapta.utils.exception.myexception.WrongURLException;
 import kapta.utils.init.ReplaceScene;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 
 public class JFX1ClubRegisterGUIController {
 
@@ -30,7 +31,7 @@ public class JFX1ClubRegisterGUIController {
     }
 
     @FXML
-    void submitAction(ActionEvent event) throws MalformedURLException, URISyntaxException {
+    void submitAction(ActionEvent event)  {
 
         String username = profileBean.getUsername();
         String email = profileBean.getEmail();
@@ -41,10 +42,15 @@ public class JFX1ClubRegisterGUIController {
         String city = textFieldCity.getText();
         String website = textFieldWebsite.getText();
 
-        JFX1ClubBean jfx1ClubBean = new JFX1ClubBean(username, email, password, clubName, address, city, website);
-        jfx1ClubBean.setImageOut(img);
-        RegisterController.register(jfx1ClubBean);
-        ReplaceScene.replaceScene(event, "/JFX1/JFX1Login.fxml");
+        try {
+            JFX1ClubBean jfx1ClubBean = new JFX1ClubBean(username, email, password, clubName, address, city, website);
+            jfx1ClubBean.setImageOut(img);
+            RegisterController.register(jfx1ClubBean);
+            ReplaceScene.replaceScene(event, "/JFX1/JFX1Login.fxml");
+        }
+         catch (SystemException | WrongURLException e  ) {
+             JFX1AlertCreator.createAlert(e);
+        }
     }
 
 

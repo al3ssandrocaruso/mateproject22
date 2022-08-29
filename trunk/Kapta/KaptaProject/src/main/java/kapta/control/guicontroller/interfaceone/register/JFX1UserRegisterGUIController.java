@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import kapta.control.appcontroller.RegisterController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.utils.bean.jfx1.JFX1ProfileBean;
 import kapta.utils.bean.jfx1.JFX1UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceScene;
 
 import java.io.File;
@@ -45,8 +47,13 @@ public class JFX1UserRegisterGUIController {
         String secondName = textFieldSecondName.getText();
 
         JFX1UserBean jfx1UserBean = new JFX1UserBean(username, email, password, img, name, secondName, gen);
-        RegisterController.register(jfx1UserBean);
-        ReplaceScene.replaceScene(event, "/JFX1/JFX1Login.fxml");
+        try{
+            RegisterController.register(jfx1UserBean);
+            ReplaceScene.replaceScene(event, "/JFX1/JFX1Login.fxml");
+        }
+         catch (SystemException systemException) {
+             JFX1AlertCreator.createAlert(systemException);
+        }
     }
 
     public void setProfileBean(JFX1ProfileBean profileBean) {

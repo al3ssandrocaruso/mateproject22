@@ -7,13 +7,12 @@ import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongCrudException;
-import kapta.utils.exception.myexception.WrongQueryException;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.exception.myexception.SystemException;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.utils.ImageConverter;
 import kapta.utils.utils.MysqlConnection;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +28,7 @@ public class PartyDao {
         //ignored
     }
 
-    public static void saveNewParty(PartyModel party) {
+    public static void saveNewParty(PartyModel party) throws SystemException {
         String nameParty = party.getName();
         String address = party.getAddress();
 
@@ -40,12 +39,12 @@ public class PartyDao {
 
             CRUD.saveNewParty(stm, nameParty, party.getPartyEventSchedule(), address, creatorName, 0, party.getImg());
 
-        } catch (MysqlConnectionFailed | WrongCrudException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+        } catch (MysqlConnectionFailed | SQLException | FileNotFoundException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
 
     }
-    public static List<PartyModel> getPartiesByPartyName(String partyName) throws SQLException{
+    public static List<PartyModel> getPartiesByPartyName(String partyName) throws  SystemException {
         // in questa versone in realtà mi ritorna solo uno e soltanto un party id
         List<PartyModel> list = new ArrayList<>();
         Statement stm = null;
@@ -70,12 +69,10 @@ public class PartyDao {
             pm.setImg(file);
             list.add(pm);
             }
-        }catch (MysqlConnectionFailed | WrongQueryException e){
-            ErrorHandler.getInstance().reportFinalException(e);
+        }catch (MysqlConnectionFailed | SQLException e){
+            ErrorHandler.getInstance().handleException(e);
         }
-        catch (IOException e) {
-           // not  getstita
-        }catch (AssertionError assertionError){
+        catch (AssertionError assertionError){
             // empty list
             return list;
         }
@@ -83,7 +80,7 @@ public class PartyDao {
     }
 
 
-    public static PartyModel getPartyById(int partyId) {
+    public static PartyModel getPartyById(int partyId) throws SystemException {
         PartyModel partyModel=null;
         Statement stm = null;
         try {
@@ -105,40 +102,37 @@ public class PartyDao {
             return partyModel;
 
         }
-        catch ( IOException e) {
-            // non gestit
+
+        catch (MysqlConnectionFailed | SQLException  e) {
+            ErrorHandler.getInstance().handleException(e);
         }
-        catch (MysqlConnectionFailed | WrongQueryException  mysqlConnectionFailed) {
-            mysqlConnectionFailed.printStackTrace();
-        }
-        catch (SQLException throwables) {
-           return null;
-        }
+
         return partyModel;
     }
 
 
 
-    public static void removeParty(PartyModel partyModel)  {
+    public static void removeParty(PartyModel partyModel) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.deleteParty(stm, partyModel.getId());
-        } catch (MysqlConnectionFailed | WrongCrudException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+        } catch (MysqlConnectionFailed | SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
     }
-    public static int getIdByPartyName(String partyName)  {
+    public static int getIdByPartyName(String partyName) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             ResultSet rst = Query.askPartybyPartyName(stm, partyName);
-            rst.first();
+
+            if(!rst.first()){
+                return -1;
+            }
             return rst.getInt(1);
-        } catch ( MysqlConnectionFailed | WrongQueryException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException throwables) {
-           // ingnorata[ricerca effettuata impossibile da soddisfare ]
+        } catch ( MysqlConnectionFailed | SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
         return -1;
     }

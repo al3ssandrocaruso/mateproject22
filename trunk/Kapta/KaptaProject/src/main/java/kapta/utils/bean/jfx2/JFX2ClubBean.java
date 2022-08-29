@@ -6,6 +6,7 @@ import kapta.utils.bean.ClubBean;
 import kapta.utils.exception.Trigger;
 import kapta.utils.exception.myexception.EmailValidatorException;
 import kapta.utils.exception.myexception.InputNullException;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.EmailValidator;
 import kapta.utils.utils.ImageConverter;
 
@@ -63,7 +64,7 @@ public class JFX2ClubBean extends ClubBean {
     public void setTypeOut(){this.type=1;}
 
 
-    public Image getImgOut (){
+    public Image getImgOut () throws SystemException {
         return ImageConverter.convertFileToFxImage(this.img);
     }
 

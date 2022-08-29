@@ -7,6 +7,7 @@ import kapta.utils.bean.jfx1.JFX1LoginBean;
 import kapta.utils.bean.jfx2.JFX2LoginBean;
 import kapta.utils.bean.LoginBean;
 import kapta.utils.bean.UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.utils.FollowUtils;
 import org.junit.Test;
@@ -25,17 +26,17 @@ public class TestFollow {
     /**
      *Si vuole testare l'efficacia della funzione follow presente all'interno del nostro progetto
      */
-    //FAILED
+    //Pass
 
 
     @Test
-    public void testFollow() throws WrongPasswordException {
-        LoginBean loginBean1 = new JFX2LoginBean("a", "a", 0);
+    public void testFollow() throws WrongPasswordException, SystemException {
+        LoginBean loginBean1 = new JFX2LoginBean("ann", "ann", 0);
         UserClubModel a = LoginController.login(loginBean1);
         UserBean beanA = new UserBean((UserModel) a);
 
 
-        LoginBean loginBean2 = new JFX1LoginBean("c", "c", 0);
+        LoginBean loginBean2 = new JFX1LoginBean("nathan", "nat", 0);
         UserClubModel c = LoginController.login(loginBean2);
         UserBean beanC = new UserBean((UserModel) c);
 
@@ -44,14 +45,14 @@ public class TestFollow {
             ret = 1;
         }
 
-        assertEquals(1, ret, 0);    //SUCCESS (a meno che a non smetti di seguire a)
+        assertEquals(1, ret, 0);    //SUCCESS
 
         ret = 0;
         if(FollowUtils.doAFollowB(beanA, beanC)){
             ret = 1;
         }
 
-        assertEquals(1, ret, 0);    //FAILED (a meno che c non inizi a seguire a)
+        assertEquals(1, ret, 0);    //SUCCESS
     }
 
 

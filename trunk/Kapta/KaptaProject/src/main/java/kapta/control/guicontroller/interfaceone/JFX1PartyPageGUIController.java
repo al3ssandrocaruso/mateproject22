@@ -14,16 +14,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kapta.control.guicontroller.interfaceone.item.JFX1UserItemGUIController;
+
 import kapta.utils.bean.UserBean;
 import kapta.utils.bean.jfx1.JFX1ClubBean;
 import kapta.utils.bean.jfx1.JFX1PartyBean;
 import kapta.utils.bean.jfx1.JFX1UserBean;
+
 import kapta.utils.decorations.JFX1DecorationPartyOne;
 import kapta.utils.decorations.JFX1DecorationPartyTwo;
 import kapta.utils.Observer;
+import kapta.utils.exception.myexception.SystemException;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.pagesetter.setterjfx1.JFX1UserProfileSetter;
 import kapta.utils.VisualComponent;
-import kapta.utils.session.ThreadLocalSession;
 
 import java.io.IOException;
 
@@ -57,7 +60,7 @@ public class JFX1PartyPageGUIController implements Observer {
     private ListView<Pane> listView;
 
     private VBox addedVBox;
-    private JFX1UserPanel jfx1UserPanel;
+    private UserPanel userPanel;
     private VisualComponent contents;
 
 
@@ -113,13 +116,17 @@ public class JFX1PartyPageGUIController implements Observer {
         assert parentRoot != null;
         parentRoot.setVisible(true);
 
-        JFX1UserProfileGuiController ctrl=loader.getController();
 
-        JFX1UserProfileSetter.setter(getPartyCreator(), ctrl);
-        Stage stage = (Stage) ap.getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            JFX1UserProfileGuiController ctrl = loader.getController();
+            JFX1UserProfileSetter.setter(getPartyCreator(), ctrl);
+            Stage stage = (Stage) ap.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (SystemException systemException) {
+            JFX1AlertCreator.createAlert(systemException);
+        }
     }
 
     public void setAll(JFX1PartyBean jfx1PartyBean,JFX1UserBean creator ) {
@@ -129,7 +136,12 @@ public class JFX1PartyPageGUIController implements Observer {
         setLabelPartyName(jfx1PartyBean.getPartyNameOut());
         setLabelPartyDuration(jfx1PartyBean.getPartyDurationOut());
         setLabelPartyTime(jfx1PartyBean.getPartyTimeOut());
-        setImg((jfx1PartyBean.getPartyImgOut()));
+
+        try {
+            setImg((jfx1PartyBean.getPartyImgOut()));
+        } catch (SystemException e) {
+            //
+        }
         setBtnUsernameCreator(jfx1PartyBean.getPartyCreator());
         setWhoIam();
 
@@ -146,22 +158,22 @@ public class JFX1PartyPageGUIController implements Observer {
     public void setContents(VisualComponent contents){this.contents= contents;}
 
     public void actionDecoratePartyOne() {
-        JFX1DecorationPartyOne jfx1DecorationPartyOne =new JFX1DecorationPartyOne(this.jfx1UserPanel, getPartyBean());
+        JFX1DecorationPartyOne jfx1DecorationPartyOne =new JFX1DecorationPartyOne(this.userPanel, getPartyBean());
         this.setContents(jfx1DecorationPartyOne);
 
         this.display();
     }
 
     public void actionDecoratePartyTwo() {
-        JFX1DecorationPartyTwo jfx1DecorationPartyTwo = new JFX1DecorationPartyTwo(this.jfx1UserPanel, getPartyBean());
+        JFX1DecorationPartyTwo jfx1DecorationPartyTwo = new JFX1DecorationPartyTwo(this.userPanel, getPartyBean());
         this.setContents(jfx1DecorationPartyTwo);
         this.display();
     }
 
     public void myStart(){
         this.addedVBox = new VBox();
-        this.jfx1UserPanel =new JFX1UserPanel(addedVBox);
-        this.setContents(this.jfx1UserPanel);
+        this.userPanel =new UserPanel(addedVBox);
+        this.setContents(this.userPanel);
         setWhoIam();
         display();
         int decoration= chooseDecoration();

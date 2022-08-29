@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import kapta.model.lists.CreatedEventList;
 import kapta.model.profiles.ClubModel;
 import kapta.utils.bean.ClubBean;
+import kapta.utils.exception.myexception.SystemException;
+import kapta.utils.exception.myexception.WrongURLException;
 import kapta.utils.utils.ImageConverter;
 
 import java.io.File;
@@ -14,7 +16,7 @@ import java.net.URL;
 
 public class JFX1ClubBean extends ClubBean {
 
-    public JFX1ClubBean(String username, String email, String password, String clubName, String address, String city, String website) throws MalformedURLException, URISyntaxException {
+    public JFX1ClubBean(String username, String email, String password, String clubName, String address, String city, String website) throws WrongURLException {
         setBasic(username,email,city,address);
         setPasswordOut(password);
         setClubNameOut(clubName);
@@ -58,16 +60,20 @@ public class JFX1ClubBean extends ClubBean {
     public void setClubNameOut(String name) {this.name = name+"";}
     public void setAddressOut(String address){this.address = address+"";}
     public void setCityOut(String city){this.city=city+"";}
-    public void setWebsiteOut(String website) throws URISyntaxException, MalformedURLException {
+    public void setWebsiteOut(String website) throws WrongURLException {
+        try{
         URI support = new URI("https://"+website+"");
         URL url = support.toURL();
-        this.website= url;
+        this.website= url;}
+        catch (URISyntaxException |MalformedURLException e ){
+throw new WrongURLException("https://"+website+"");
+        }
     }
     public void setTypeOut(){this.type=1;}
 
 
-    public Image getImageOut() {
-        return ImageConverter.convertFileToFxImage(img);
+    public Image getImageOut() throws SystemException {
+            return ImageConverter.convertFileToFxImage(img);
     }
     public String getUsernameOut() {
         return username;

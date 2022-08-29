@@ -4,10 +4,13 @@ import kapta.model.EventModel;
 import kapta.model.RequestModel;
 import kapta.model.profiles.ClubModel;
 import kapta.model.profiles.UserModel;
+
 import kapta.utils.bean.EventBean;
+
 import kapta.utils.bean.GenericUserBean;
 import kapta.utils.bean.RequestBean;
 import kapta.utils.bean.UserBean;
+
 import kapta.utils.dao.ClubDao;
 import kapta.utils.dao.EventDao;
 import kapta.utils.dao.UserDao;
@@ -15,7 +18,8 @@ import kapta.utils.dao.listdao.JoinedListDAO;
 import kapta.utils.dao.RequestDao;
 import kapta.utils.exception.Trigger;
 import kapta.utils.exception.myexception.ExpiredGreenPassException;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.exception.myexception.SystemException;
+import kapta.utils.mysession.ThreadLocalSession;
 
 public class JoinEventController {
 
@@ -23,7 +27,7 @@ public class JoinEventController {
         //ignore
     }
 
-    public static void sendRequest(RequestBean requestBean, EventBean eventBean) throws ExpiredGreenPassException {
+    public static void sendRequest(RequestBean requestBean, EventBean eventBean) throws ExpiredGreenPassException, SystemException {
         //UserModel sender, EventModel event, int numDoses, String vaccinationDate
         if(requestBean.getDoses()>1 || !eventBean.isGreenPass()) {
             EventModel eventModel = EventDao.getEventbyEventId(eventBean.getEventId());
@@ -36,7 +40,7 @@ public class JoinEventController {
 
     }
 
-    public static void acceptRequest(RequestBean requestBean)  {
+    public static void acceptRequest(RequestBean requestBean) throws SystemException {
 
         UserModel userModel= UserDao.getUserByUsername(requestBean.getSender());
         ClubModel reciver = ClubDao.getClubByUserName(requestBean.getClubReceiver());
@@ -44,18 +48,18 @@ public class JoinEventController {
         RequestDao.acceptRequest(eventModel,userModel,reciver);
         JoinedListDAO.addJoinedEvent(userModel,eventModel);
     }
-    public static void rejectRequest(RequestBean requestBean)  {
+    public static void rejectRequest(RequestBean requestBean) throws SystemException {
         EventModel eventModel = EventDao.getEventbyEventId(requestBean.getEventId()) ;
         UserModel sender =UserDao.getUserByUsername(requestBean.getSender());
         ClubModel reciver = ClubDao.getClubByUserName(requestBean.getClubReceiver());
         RequestDao.rejectRequest(eventModel,sender,reciver);
     }
 
-    public static void userDeleteRequest(RequestModel requestModel) {
+    public static void userDeleteRequest(RequestModel requestModel) throws SystemException {
             RequestDao.userDeleteRequest(requestModel.getEvent(), requestModel.getSender(), requestModel.getReceiver());
 
     }
-    public static int manageRequestInfo(EventBean eventBean, UserBean userBean, GenericUserBean creator){
+    public static int manageRequestInfo(EventBean eventBean, UserBean userBean, GenericUserBean creator) throws SystemException {
         EventModel eventModel = EventDao.getEventbyEventId(eventBean.getEventId());
         ClubModel clubModel = ClubDao.getClubByUserName(creator.getUsername());
         UserModel um = UserDao.getUserById(userBean.getId());

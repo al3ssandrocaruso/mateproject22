@@ -13,7 +13,7 @@ import kapta.utils.bean.GenericUserBean;
 import kapta.utils.bean.UserBean;
 import kapta.utils.bean.jfx1.JFX1UserBean;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.ThreadLocalSession;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ public class JFX1FollowerFollowingListGuiController implements Observer {
     @FXML
     private AnchorPane apFollower;
 
-    // eee
+
     private GenericUserBean owner;
 
 

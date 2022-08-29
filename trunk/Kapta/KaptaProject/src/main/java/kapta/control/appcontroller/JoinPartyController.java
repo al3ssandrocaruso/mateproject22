@@ -5,6 +5,7 @@ import kapta.model.lists.ParticipantsList;
 import kapta.model.PartyEventModel;
 import kapta.model.PartyModel;
 import kapta.model.profiles.UserModel;
+
 import kapta.utils.bean.GenericUserBean;
 import kapta.utils.bean.PartyBean;
 import kapta.utils.bean.UserBean;
@@ -13,7 +14,10 @@ import kapta.utils.dao.UserDao;
 import kapta.utils.dao.listdao.JoinedListDAO;
 import kapta.utils.dao.listdao.ParticipantListDao;
 import kapta.utils.email.SendEmail;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.exception.myexception.BusyForANewPartyException;
+import kapta.utils.exception.myexception.PartyExpiredException;
+import kapta.utils.exception.myexception.SystemException;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.utils.FollowUtils;
 
 import java.time.LocalDate;
@@ -27,14 +31,12 @@ public class JoinPartyController {
         //ignored
     }
 
-    // eee
-    public static int joinParty(GenericUserBean participantToAddBean, PartyBean partyBean, ParticipantsList pl) {
-        pl.addParticipant(UserDao.getUserById(participantToAddBean.getId()));
-       return  joinParty(participantToAddBean, partyBean);
-    }
 
 
-    public static int joinParty(GenericUserBean participantToAddBean, PartyBean partyBean) {
+
+
+    public static void joinParty(GenericUserBean participantToAddBean, PartyBean partyBean) throws SystemException, BusyForANewPartyException, PartyExpiredException {
+
 
         PartyModel  partyModel = PartyDao.getPartyById(partyBean.getId());
         UserModel participantToAdd = UserDao.getUserById(participantToAddBean.getId()) ;
@@ -44,7 +46,7 @@ public class JoinPartyController {
         //User already busy
         for(PartyEventModel pm : joinedList.getPartyEventJoined()){
             if(pm.getDate().toString().equals(partyModel.getDate().toString())){
-                return -1;
+                throw new BusyForANewPartyException(partyModel.getDate().toString());
             }
         }
 
@@ -55,9 +57,11 @@ public class JoinPartyController {
             java.sql.Date tdy = java.sql.Date.valueOf(today);
 
             if (dt.compareTo(tdy) < 0) {
-                return -2;
+                throw new PartyExpiredException();
             }
         }
+
+
 
         String toWrite="The user you follow '"+ ThreadLocalSession.getUserSession().get().getUserBean().getUsername()+"' has joined party: "+partyModel.getName()+ " too!";
         ParticipantsList participantList=ParticipantListDao.getParticipantList(partyModel,null);
@@ -73,16 +77,16 @@ public class JoinPartyController {
 
         JoinedListDAO.addJoinedParty(participantToAdd, partyModel);
 
-        return 0;
+
     }
 
-    public static void leaveParty(GenericUserBean userBean, PartyBean partyBean){
+    public static void leaveParty(GenericUserBean userBean, PartyBean partyBean) throws SystemException {
         PartyModel partyModel = PartyDao.getPartyById(partyBean.getId());
         UserModel participantToRemove = UserDao.getUserById(userBean.getId());
         JoinedListDAO.removeJoinedParty(participantToRemove, partyModel);
     }
 
-    public static boolean joinedYetInfo(PartyBean partyBean, GenericUserBean userBean){
+    public static boolean joinedYetInfo(PartyBean partyBean, GenericUserBean userBean) throws SystemException {
 
         boolean state = false;
         PartyModel partyModel = PartyDao.getPartyById(partyBean.getId());

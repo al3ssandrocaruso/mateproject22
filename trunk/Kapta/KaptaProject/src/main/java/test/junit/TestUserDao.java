@@ -2,6 +2,7 @@ package test.junit;
 
 import kapta.model.profiles.UserModel;
 import kapta.utils.dao.UserDao;
+import kapta.utils.exception.myexception.SystemException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,12 +22,12 @@ public class TestUserDao {
      */
     //SUCCESS
     @Test
-    public void testUserById() {
-        int id = 88;
-        String username = "a";
-        String name = "a";
-        String secondName = "a";
-        String email = "a@a.com";
+    public void testUserById() throws SystemException {
+        int id = 5;
+        String username = "nathan";
+        String name = "nathan";
+        String secondName = "Brown";
+        String email = "nathan@gmail.com";
 
         UserModel userModel = UserDao.getUserById(id);
 
@@ -38,14 +39,14 @@ public class TestUserDao {
 
     //SUCCESS
     @Test
-    public void testUserByUsername() {
-        int id = 88;
-        String name = "a";
-        String secondName = "a";
-        String email = "a@a.com";
+    public void testUserByUsername() throws SystemException {
+        int id = 5;
+        String name = "nathan";
+        String secondName = "Brown";
+        String email = "nathan@gmail.com";
 
         UserModel userModel = null;
-        userModel = UserDao.getUserByUsername("a");
+        userModel = UserDao.getUserByUsername("nathan");
 
         assertEquals(id, userModel.getId(), 0);
         assertEquals(0, name.compareTo(userModel.getName()), 0);

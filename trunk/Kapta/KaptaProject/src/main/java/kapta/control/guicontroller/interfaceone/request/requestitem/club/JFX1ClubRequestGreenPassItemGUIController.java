@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import kapta.control.appcontroller.JoinEventController;
+import kapta.control.guicontroller.interfaceone.JFX1AlertCreator;
 import kapta.utils.bean.jfx1.JFX1RequestBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 public class JFX1ClubRequestGreenPassItemGUIController {
@@ -68,14 +70,24 @@ public class JFX1ClubRequestGreenPassItemGUIController {
 
 
     public void rejectRequest(ActionEvent actionEvent) {
-        JoinEventController.rejectRequest(getRequestBean());
-        goToRequestPage(actionEvent);
+        try {
+            JoinEventController.rejectRequest(getRequestBean());
+            goToRequestPage(actionEvent);
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
+
 
     }
 
     public void acceptRequest(ActionEvent actionEvent) {
-        JoinEventController.acceptRequest(getRequestBean());
-        goToRequestPage(actionEvent);
+        try {
+            JoinEventController.acceptRequest(getRequestBean());
+            goToRequestPage(actionEvent);
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
+
 
     }
     public void setAll(JFX1RequestBean jfx1RequestBean){
@@ -85,7 +97,11 @@ public class JFX1ClubRequestGreenPassItemGUIController {
         setLabelUsername(jfx1RequestBean.getSenderOut());
         setLabelDate(jfx1RequestBean.getVaccinationDateOut());
         setLabelDoses(jfx1RequestBean.getDosesOut());
-        setImageViewProfilePic(jfx1RequestBean.getSenderImageOut());
+        try {
+            setImageViewProfilePic(jfx1RequestBean.getSenderImageOut());
+        } catch (SystemException e) {
+            //
+        }
     }
     public void goToRequestPage(ActionEvent actionEvent){
         ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new ReplaceSceneAndInitializePage();

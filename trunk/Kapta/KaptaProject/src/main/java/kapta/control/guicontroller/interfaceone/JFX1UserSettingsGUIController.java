@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import kapta.control.appcontroller.SettingsPageController;
 import kapta.utils.bean.jfx1.JFX1UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.EndSettingsChanges;
 
 public class JFX1UserSettingsGUIController {
@@ -46,7 +47,11 @@ public class JFX1UserSettingsGUIController {
         setTextFieldName(jfx1UserBean.getNameOut());
         setTextFieldSecondName(jfx1UserBean.getSecondNameOut());
         setTextFieldEmail(jfx1UserBean.getEmailOut());
-        this.img.setImage(jfx1UserBean.getProfileImgOut());
+        try {
+            this.img.setImage(jfx1UserBean.getProfileImgOut());
+        } catch (SystemException e) {
+            //
+        }
     }
 
     public void saveAction(ActionEvent ae) {
@@ -56,8 +61,13 @@ public class JFX1UserSettingsGUIController {
         String secondName = textFieldSecondName.getText();
 
         JFX1UserBean bean = new JFX1UserBean(username, email, name, secondName, this.userBean.getId());
-        SettingsPageController.saveSettings(bean);
-        EndSettingsChanges.endChanges1(ae);
+        try {
+            SettingsPageController.saveSettings(bean);
+            EndSettingsChanges.endChanges1(ae);
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
+
 
     }
 }

@@ -7,11 +7,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import kapta.control.appcontroller.LoginController;
 import kapta.utils.bean.jfx2.JFX2LoginBean;
-import kapta.utils.exception.ErrorHandler;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.exception.myexception.WrongPasswordException;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 import kapta.utils.init.ReplaceScene;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.ThreadLocalSession;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,8 +45,8 @@ public class JFX2LoginGUIController implements Initializable {
                 rsip.replaceSceneAndInitializePage(ae, "/JFX2/JFX2UserProfile.fxml");
             }
         }
-        catch (WrongPasswordException e){
-            ErrorHandler.getInstance().reportFinalException(e);
+        catch (WrongPasswordException | SystemException e){
+            JFX2AlertCreator.createAlert(e);
         }
     }
 

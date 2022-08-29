@@ -9,12 +9,10 @@ import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongCrudException;
-import kapta.utils.exception.myexception.WrongQueryException;
 import kapta.utils.Observer;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.ImageConverter;
 import kapta.utils.utils.MysqlConnection;
-
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +27,7 @@ public class ClubDao {
         //ignored
     }
 
-    public static void saveClub(  ClubModel clubModel) {
+    public static void saveClub(  ClubModel clubModel) throws SystemException {
 
         try {
             Statement stm= MysqlConnection.mysqlConnection();
@@ -53,17 +51,15 @@ public class ClubDao {
 
             ps.executeUpdate();
 
-        } catch (MysqlConnectionFailed | WrongCrudException | WrongQueryException m) {
-               ErrorHandler.getInstance().reportFinalException(m);
-        } catch (SQLException | FileNotFoundException throwables) {
-                // non gestita
+        } catch (MysqlConnectionFailed | SQLException | FileNotFoundException m) {
+               ErrorHandler.getInstance().handleException(m);
         }
     }
 
 
 
     // sintomo di una cattiva proggettazione==> da spostare nel event dao e getsire nel caso d'uso (Controller Applicativo l'allaccio)
-    public static CreatedEventList getCreatedEventsList(ClubModel clubModel, Observer obs) throws SQLException {
+    public static CreatedEventList getCreatedEventsList(ClubModel clubModel, Observer obs) throws  SystemException {
         List<EventModel> list=new ArrayList<>();
         CreatedEventList createdEventList = new CreatedEventList(clubModel, list , obs);
         Statement stm = null;
@@ -92,15 +88,13 @@ public class ClubDao {
                 eventModel.setPartyEventSchedule(partyEventSchedule);
                 createdEventList.addEvent(eventModel);
             } while (rs.next());
-        }catch (MysqlConnectionFailed | WrongQueryException e){
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (IOException e) {
-           // non gestita
+        }catch (MysqlConnectionFailed | SQLException e){
+            ErrorHandler.getInstance().handleException(e);
         }
         return createdEventList;
     }
 
-    public  static  int clubIdbyClub(ClubModel cl )  {
+    public  static  int clubIdbyClub(ClubModel cl ) throws SystemException {
         int id =-1;
         Statement stm = null;
         try {
@@ -109,15 +103,14 @@ public class ClubDao {
             rs = Query.askIdbyClubName(stm, cl.getUsername());
             rs.first();
             id=  rs.getInt(1);
-        } catch (SQLException | MysqlConnectionFailed | WrongQueryException e) {
-            if(e instanceof MysqlConnectionFailed m) {
-                ErrorHandler.getInstance().reportFinalException(m);
-            }
+        } catch (SQLException | MysqlConnectionFailed  e) {
+
+            ErrorHandler.getInstance().handleException(e);
         }
         return id;
     }
 
-    public static ClubModel clubModelByID(int id) {
+    public static ClubModel clubModelByID(int id) throws SystemException {
         Statement stm = null;
         ClubModel clubModel = null;
         try {
@@ -137,15 +130,14 @@ public class ClubDao {
             File file = new File(filePath);
             clubModel.setProfileImg(file);
             ImageConverter.copyInputStreamToFile(in, file);
-        } catch (MysqlConnectionFailed | WrongQueryException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException | IOException throwables) {
-            // ignored
+
+        } catch (MysqlConnectionFailed | SQLException e ) {
+            ErrorHandler.getInstance().handleException(e);
         }
         return clubModel;
     }
 
-    public static ClubModel getClubByUserName(String username){
+    public static ClubModel getClubByUserName(String username) throws SystemException {
         Statement stm = null;
         ClubModel clubModel = null;
         try {
@@ -163,15 +155,9 @@ public class ClubDao {
         File file = new File(filePath);
         ImageConverter.copyInputStreamToFile(in, file);
         clubModel.setProfileImg(file);
-        } catch (MysqlConnectionFailed | WrongQueryException e) {
-            if(e instanceof MysqlConnectionFailed m) {
-                ErrorHandler.getInstance().reportFinalException(m);
+        } catch (MysqlConnectionFailed | SQLException e) {
+                ErrorHandler.getInstance().handleException(e);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         return clubModel;
     }

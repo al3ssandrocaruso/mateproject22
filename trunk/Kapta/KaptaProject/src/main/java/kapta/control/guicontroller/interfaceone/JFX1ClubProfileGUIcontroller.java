@@ -15,12 +15,14 @@ import kapta.utils.bean.EventBean;
 import kapta.utils.bean.GenericListInfoBean;
 import kapta.utils.bean.jfx1.JFX1ClubBean;
 import kapta.utils.bean.jfx1.JFX1EventBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.ThreadLocalSession;
 
 import java.io.IOException;
 
 public class JFX1ClubProfileGUIcontroller implements Observer {
+
 
     private JFX1ClubBean clubBean;
 
@@ -28,11 +30,12 @@ public class JFX1ClubProfileGUIcontroller implements Observer {
     @FXML
     private ImageView imageViewImgProfile;
     @FXML
+    private Label labelCreatedEventsNum;
+    @FXML
     private ListView<Pane> listViewCreatedEvents;
     @FXML
     private Label labelUsername;
-    @FXML
-    private Label labelCreatedEvents;
+
     @FXML
     private Label labelAddress;
     @FXML
@@ -54,7 +57,7 @@ public class JFX1ClubProfileGUIcontroller implements Observer {
         this.labelAddress.setText("Address: "+address);
     }
     public void setLabelCreatedEvents(String numCreatedEvents) {
-        this.labelCreatedEvents.setText(numCreatedEvents);
+        this.labelCreatedEventsNum.setText(numCreatedEvents);
     }
     public void setImageViewImgProfile(Image imageViewImgProfile) {this.imageViewImgProfile.setImage(imageViewImgProfile);}
 
@@ -71,9 +74,11 @@ public class JFX1ClubProfileGUIcontroller implements Observer {
         setLabelUserName(jfx1ClubBean.getUsernameOut());
         setLabelAddress(jfx1ClubBean.getClubAddressOut());
 
-        // !!!
-        setLabelCreatedEvents(jfx1ClubBean.getNumCreatedEventsOut());
-        setImageViewImgProfile(jfx1ClubBean.getImageOut());
+        try {
+            setImageViewImgProfile(jfx1ClubBean.getImageOut());
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
         setClubBean(jfx1ClubBean);
 
         if(hideBtnCreateEvent()){
@@ -89,24 +94,29 @@ public class JFX1ClubProfileGUIcontroller implements Observer {
 
     @Override
     public void update(Object ob) {
-        JFX1EventBean jfx1EventBean = new JFX1EventBean((EventBean) ob);
+        try {
+            JFX1EventBean jfx1EventBean = new JFX1EventBean((EventBean) ob);
 
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        Pane pane = null;
-        try{
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane pane = null;
+
             pane = fxmlLoader.load(getClass().getResource("/JFX1/JFX1EventItem.fxml").openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JFX1EventItemGUIController eigc = fxmlLoader.getController();
-        eigc.setAll(jfx1EventBean );
 
-        this.listViewCreatedEvents.getItems().add(pane);
+            JFX1EventItemGUIController eigc = fxmlLoader.getController();
+            eigc.setAll(jfx1EventBean);
+
+            this.listViewCreatedEvents.getItems().add(pane);
+
+        } catch (SystemException | IOException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
 
     }
 
     @Override
     public void updateFrom(Object ob, Object objectFrom) {
-        setLabelCreatedEvents( String.valueOf (((GenericListInfoBean) objectFrom).getSize()));
+        int num =( (GenericListInfoBean) objectFrom).getSize();
+        String str = String.valueOf(num);
+        this.labelCreatedEventsNum.setText(str);
     }
 }

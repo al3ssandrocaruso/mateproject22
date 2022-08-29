@@ -1,56 +1,33 @@
 package kapta.engineering;
-
 import kapta.model.lists.FollowerList;
 import kapta.model.lists.FollowingList;
 import kapta.model.profiles.UserModel;
+import kapta.utils.Observer;
+import kapta.utils.bean.GenericUserBean;
 import kapta.utils.bean.UserBean;
 import kapta.utils.dao.UserDao;
+import kapta.utils.dao.listdao.FollowerListDao;
+import kapta.utils.dao.listdao.FollowingListDao;
+import kapta.utils.exception.myexception.SystemException;
 
 public class ManageFollowerFollowingList {
+    private  ManageFollowerFollowingList(){
 
-    private FollowerList followerList;
-    private FollowingList followingList;
-
-    public ManageFollowerFollowingList(FollowingList followingList, FollowerList followerList){
-        setFollowerList(followerList);
-        setFollowingList(followingList);
     }
 
+    public static void  refreshList(UserBean userBean, Observer obs) throws SystemException {
+        UserModel userModel = UserDao.getUserByUsername(userBean.getUsername());
+        new FollowerList(userModel, FollowerListDao.getFollower(userModel),obs);
 
-    public void setFollowerList(FollowerList followerList) {
-        this.followerList = followerList;
     }
-
-    public void setFollowingList(FollowingList followingList) {
-        this.followingList = followingList;
-    }
-
-    public FollowerList getFollowerList() {
-        return followerList;
-    }
-
-    public FollowingList getFollowingList() {
-        return followingList;
-    }
-
-    public void removeUserFollowerList(UserBean userBean) {
+    public static void setFollowerListP(GenericUserBean userBean, Observer obs) throws SystemException {
         UserModel userModel = UserDao.getUserById(userBean.getId());
-        followerList.removeUser(userModel);
+        new FollowerList(userModel, FollowerListDao.getFollower(userModel),obs);
     }
 
-    public void removeUserFollowingList(UserBean userBean) {
+    public static void setFollowingListP(GenericUserBean userBean, Observer obs) throws SystemException {
         UserModel userModel = UserDao.getUserById(userBean.getId());
-        followingList.removeParticipant(userModel);
-    }
-
-    public void addUserFollowerList(UserBean userBean){
-        UserModel userModel = UserDao.getUserById(userBean.getId());
-        followerList.addUser(userModel);
-    }
-
-    public void addUserFollowingList(UserBean userBean){
-        UserModel userModel= UserDao.getUserById(userBean.getId());
-        followingList.addParticipant(userModel);
+        new FollowingList(userModel, FollowingListDao.getFollowing(userModel),obs);
     }
 
 }

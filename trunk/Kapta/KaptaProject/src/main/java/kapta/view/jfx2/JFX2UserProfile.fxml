@@ -292,7 +292,7 @@
                      <font>
                         <Font size="20.0" />
                      </font></TextField>
-                  <TextField fx:id="textFieldPartyDate" prefHeight="50.0" prefWidth="360.0" promptText="insert date" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;">
+                  <TextField fx:id="textFieldPartyDate" prefHeight="50.0" prefWidth="360.0" promptText="insert date : dd/mm/aaaa" style="-fx-background-radius: 28; -fx-background-color: #e8e7fc;">
                      <font>
                         <Font size="20.0" />
                      </font></TextField>

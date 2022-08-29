@@ -4,12 +4,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import kapta.utils.exception.ErrorHandler;
+import kapta.utils.exception.myexception.SystemException;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class ImageConverter {
 
@@ -34,26 +34,31 @@ public class ImageConverter {
     return new ImageView(wr).getImage();
 }
 
-    public  static void copyInputStreamToFile(InputStream inputStream, File file)
-            throws IOException {
-        try (FileOutputStream outputStream = new FileOutputStream(file, false)) {
-            int read;
-            byte[] bytes = new byte[DEFAULT_BUFFER_SIZE];
-            while ((read = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, read);
-            }
+    public  static void copyInputStreamToFile(InputStream inputStream, File file) throws SystemException {
+        FileOutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(file, false);
+        int read;
+          byte[] bytes = new byte[DEFAULT_BUFFER_SIZE];
+          while ((read = inputStream.read(bytes)) != -1) {
+              outputStream.write(bytes, 0, read);
+          }
+        } catch (IOException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
-
     }
 
 
-    public static Image convertFileToFxImage(File im) {
-            try {
-                BufferedImage bf = ImageIO.read(im);
-                return convertToFxImage(bf);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+    public static Image convertFileToFxImage(File im) throws SystemException {
+        BufferedImage bf = null;
+        try {
+            bf = ImageIO.read(im);
+            return convertToFxImage(bf);
+        } catch (IOException e) {
+            ErrorHandler.getInstance().handleException(e);
+        }
+        return null;
+
+
     }
 }

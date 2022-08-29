@@ -28,12 +28,15 @@ import kapta.utils.bean.jfx2.JFX2ClubBean;
 import kapta.utils.bean.jfx2.JFX2EventBean;
 import kapta.utils.bean.jfx2.JFX2RequestBean;
 import kapta.utils.bean.jfx2.JFX2TokenBean;
-import kapta.utils.exception.ErrorHandler;
-import kapta.utils.exception.myexception.TokenException;
+import kapta.utils.exception.myexception.*;
 import kapta.utils.Observer;
-import kapta.utils.session.ThreadLocalSession;
+
+import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.utils.GetDialogStage;
 import kapta.utils.utils.GetFontedLabel;
+
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -104,15 +107,22 @@ public class JFX2ClubProfileGUIController implements Observer {
         this.clubImg.setImage(clubImg);
     }
 
-    public void noClubInProfileOn(){
+    private void noClubInProfileOn(){
         vBoxCreatedEvents.toFront();
         noClubInProfile.toFront();
         btnCreatedEvents.setVisible(false);
     }
     
     public void confirmCreateEvent(ActionEvent ae) {
+        try {
+            new JFX2EventBean(textFieldEventName.getText(), textFieldAddress.getText(), textFieldBeginTime.getText(), textFieldDate.getText(), sliderDuration.getValue(), spinnerPrice.getValue(), radioButtonGreenPass.isSelected());
+        }
+         catch (InputDateException2 | InputNullException e) {
+                JFX2AlertCreator.createAlert(e);
 
-        goToGenerateToken();
+            return;
+        }
+        generateToken();
 
         Stage dialog=GetDialogStage.startDialog(ae);
 
@@ -146,11 +156,12 @@ public class JFX2ClubProfileGUIController implements Observer {
         dialog.setScene(dialogScene);
         dialog.show();
 
+
         button.setOnAction(e-> {
             String insertedToken = textField.getText();
             JFX2TokenBean jfx2TokenBeanIn = new JFX2TokenBean(insertedToken);
             try {
-                goToCompareToken(jfx2TokenBeanIn);
+                compareToken(jfx2TokenBeanIn);
                 //evento creato con successo
                 JFX2EventBean eventBean = new JFX2EventBean(textFieldEventName.getText(), textFieldAddress.getText(), textFieldBeginTime.getText(), textFieldDate.getText(), sliderDuration.getValue(), spinnerPrice.getValue(), radioButtonGreenPass.isSelected());
                 goToCreateEvent(eventBean);
@@ -163,17 +174,27 @@ public class JFX2ClubProfileGUIController implements Observer {
                 labelDuration.setText("0");
                 dialog.close();
                 successEventVBox.toFront();
-            } catch (TokenException ex) {
-                ErrorHandler.getInstance().reportFinalException(ex);
+                Thread.sleep(100);
+                JFX2ReplaceSceneAndInitializePage replaceSceneAndInitializePage = new JFX2ReplaceSceneAndInitializePage();
+                replaceSceneAndInitializePage.replaceSceneAndInitializePage(e, "/JFX2/JFX2ClubProfile.fxml");
+            } catch (TokenIncorrectException | TokenTimeException | InputDateException2 | InputNullException | InterruptedException ex) {
+                JFX2AlertCreator.createAlert(ex);
                 numSbagliate = FillDialogBox.fill(label1, button, label2, numSbagliate);
             }
         });
     }
 
     public void setAll(JFX2ClubBean clubBean){
+
         SpinnerValueFactory<Double> gradesValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0,500,0, 0.5);
         this.spinnerPrice.setValueFactory(gradesValueFactory);
-        if(clubBean.getImg()!=null){setClubImg(clubBean.getImgOut()); }//usa e aggiorna i bean
+        if(clubBean.getImg()!=null){
+            try {
+                setClubImg(clubBean.getImgOut());
+            } catch (SystemException e) {
+                //
+            }
+        }//usa e aggiorna i bean
         setLabelUsername("@"+clubBean.getUsernameOut());
         if( ThreadLocalSession.getUserSession().get().getUserBean()!=null) {
             noClubInProfileOn();
@@ -201,10 +222,15 @@ public class JFX2ClubProfileGUIController implements Observer {
         Pane selected = pendingList.getSelectionModel().getSelectedItem();
         JFX2RequestBean selectedRequest=map.get(selected);
         pendingList.getItems().removeAll(selected);
-        JoinEventController.acceptRequest(selectedRequest);
-        JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(selectedRequest);
-        textFieldRequest.setText(supportRequestFrom + jfx2RequestBean.getSenderNameOut()+ supportFor +jfx2RequestBean.getRelatedEventOut()+ " ACCEPTED");
-        textFieldRequest.setStyle("-fx-background-color:  #54e589;" + radius + white);
+        try {
+            JoinEventController.acceptRequest(selectedRequest);
+            JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(selectedRequest);
+            textFieldRequest.setText(supportRequestFrom + jfx2RequestBean.getSenderNameOut()+ supportFor +jfx2RequestBean.getRelatedEventOut()+ " ACCEPTED");
+            textFieldRequest.setStyle("-fx-background-color:  #54e589;" + radius + white);
+        } catch (SystemException e) {
+            JFX2AlertCreator.createAlert(e);
+        }
+
     }
 
     public void rejectRequest() {
@@ -233,7 +259,11 @@ public class JFX2ClubProfileGUIController implements Observer {
             JFX2RequestBean jfx2RequestBean = new JFX2RequestBean(request);
             crigc.setLabelUsername(jfx2RequestBean.getSenderNameOut());
             crigc.setLabelEventName(jfx2RequestBean.getRelatedEventOut());
-            crigc.setImageProfile(jfx2RequestBean.getRelatedEventImgOut());
+            try {
+                crigc.setImageProfile(jfx2RequestBean.getRelatedEventImgOut());
+            } catch (SystemException e) {
+                //
+            }
             if (jfx2RequestBean.isGreenPassOut()) {
                 crigc.greenPassOn(jfx2RequestBean.getNumDosesOut(),  request.getVaccinationDate());
             }
@@ -282,14 +312,20 @@ public class JFX2ClubProfileGUIController implements Observer {
         }
     }
 
-    private void goToGenerateToken() {
+    private void generateToken() {
         setToken1(CreateEventController.generateToken());
     }
-    private void goToCompareToken(TokenBean tokenBeanIn) throws TokenException {
+    private void compareToken(TokenBean tokenBeanIn) throws TokenIncorrectException, TokenTimeException {
         CreateEventController.checkToken(this.getToken1(),tokenBeanIn);
     }
+
     private void goToCreateEvent(JFX2EventBean eventBean){
-        eventBean.setEventImgOut(imgEvent);
+        try {
+            eventBean.setEventImgOut(imgEvent);
+            CreateEventController.createEvent(eventBean);
+        } catch (SystemException |InputNullException e) {
+            JFX2AlertCreator.createAlert(e);
+        }
     }
 
     private TokenBean getToken1() {return token1;}

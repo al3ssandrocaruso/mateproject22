@@ -4,7 +4,7 @@ import kapta.utils.bean.jfx1.JFX1ProfileBean;
 import kapta.utils.db.Query;
 import kapta.utils.exception.ErrorHandler;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongQueryException;
+import kapta.utils.exception.myexception.SystemException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ public class Authentication {
         //ignore
     }
 
-    public static int checkIsRegistered(int tipo, String password, String username) {
+    public static int checkIsRegistered(int tipo, String password, String username) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
@@ -24,15 +24,15 @@ public class Authentication {
             if (rs.next()) {
                 return 1;
             }
-        } catch (MysqlConnectionFailed | WrongQueryException m) {
-            ErrorHandler.getInstance().reportFinalException(m);
+        } catch (MysqlConnectionFailed  m) {
+            ErrorHandler.getInstance().handleException(m);
         } catch (SQLException e) {
             // non gestita.
         }
         return 0;
     }
 
-    public static boolean checkRegistered(JFX1ProfileBean profileBean)  {
+    public static boolean checkRegistered(JFX1ProfileBean profileBean) throws SystemException {
         Statement stm = null;
         ResultSet rs = null;
         try {
@@ -40,8 +40,8 @@ public class Authentication {
             String username = profileBean.getUsername();
             rs = Query.searchUsernameInLogged(username, stm);
             return !rs.first();
-        } catch (MysqlConnectionFailed | WrongQueryException m) {
-            ErrorHandler.getInstance().reportFinalException(m);
+        } catch (MysqlConnectionFailed  m) {
+            ErrorHandler.getInstance().handleException(m);
         } catch (SQLException throwables) {
             // non gestito
         }

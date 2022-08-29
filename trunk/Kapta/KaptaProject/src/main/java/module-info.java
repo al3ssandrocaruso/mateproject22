@@ -61,8 +61,6 @@ module kapta.classes {
     exports kapta.control.guicontroller.interfaceone.request.requestitem.club;
     opens kapta.control.guicontroller.interfaceone.request.requestitem.club to javafx.fxml;
 
-    exports kapta.utils.session;
-    opens kapta.utils.session to javafx.fxml;
 
     exports kapta.control.guicontroller.interfaceone.register;
     opens kapta.control.guicontroller.interfaceone.register to javafx.fxml;
@@ -76,4 +74,5 @@ module kapta.classes {
     opens kapta.utils.bean.jfx1 to javafx.fxml;
     exports kapta.utils.bean.jfx2;
     opens kapta.utils.bean.jfx2 to javafx.fxml;
+
 }

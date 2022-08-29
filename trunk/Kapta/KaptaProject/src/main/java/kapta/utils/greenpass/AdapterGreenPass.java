@@ -6,8 +6,8 @@ import com.google.iot.cbor.CborMap;
 import com.google.iot.cbor.CborParseException;
 import com.google.zxing.*;
 import kapta.utils.exception.ErrorHandler;
-import kapta.utils.exception.myexception.GenericException;
 import kapta.utils.exception.myexception.InavalidGreenPassException;
+import kapta.utils.exception.myexception.SystemException;
 import nl.minvws.encoding.Base45;
 
 import java.io.ByteArrayOutputStream;
@@ -18,7 +18,7 @@ import java.util.zip.Inflater;
 import static COSE.Message.DecodeFromBytes;
 
 //Adapter
-public class AdapterGreenPass implements TargetGreenPass {
+public class AdapterGreenPass {
 
     // riferimento all'istanza di Adaptee
     private QRGreenPass greenPass;
@@ -28,12 +28,12 @@ public class AdapterGreenPass implements TargetGreenPass {
         this.greenPass = new QRGreenPass();
     }
 
-    @Override
-    public String [] getInfoGreenPass(String pathname) throws InavalidGreenPassException, GenericException {
+
+    public String [] getInfoGreenPass(String pathname) throws InavalidGreenPassException, SystemException {
         return decode(pathname);
     }
 
-    private String[] decode(String pathname) throws InavalidGreenPassException, GenericException {
+    private String[] decode(String pathname) throws InavalidGreenPassException, SystemException {
 
         String strName;
         String strSurname;
@@ -82,9 +82,9 @@ public class AdapterGreenPass implements TargetGreenPass {
             ret[3] = strNumDosi;
 
         } catch (CoseException | CborParseException |DataFormatException| IOException e) {
-            ErrorHandler.getInstance().reportGeneric(e);
+            ErrorHandler.getInstance().handleException(e);
         } catch (NotFoundException e) {
-            ErrorHandler.getInstance().reportInvelidGreenPass(e);
+            throw new InavalidGreenPassException();
         }
 
         return ret;

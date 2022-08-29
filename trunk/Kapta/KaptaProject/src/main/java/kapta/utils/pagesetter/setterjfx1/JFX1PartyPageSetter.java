@@ -2,12 +2,10 @@ package kapta.utils.pagesetter.setterjfx1;
 
 
 import kapta.control.guicontroller.interfaceone.JFX1PartyPageGUIController;
-import kapta.model.PartyModel;
-import kapta.model.profiles.UserModel;
+import kapta.engineering.MangeParticipant;
 import kapta.utils.bean.jfx1.JFX1PartyBean;
 import kapta.utils.bean.jfx1.JFX1UserBean;
-import kapta.utils.dao.PartyDao;
-import kapta.utils.dao.listdao.ParticipantListDao;
+import kapta.utils.exception.myexception.SystemException;
 
 
 public class JFX1PartyPageSetter {
@@ -16,13 +14,9 @@ public class JFX1PartyPageSetter {
         //ignore
     }
 
-    public static void setter(JFX1PartyBean partyBean, JFX1PartyPageGUIController ppgc) {
+    public static void setter(JFX1PartyBean partyBean, JFX1PartyPageGUIController ppgc) throws SystemException {
 
-        // ee
-        PartyModel partyModel = PartyDao.getPartyById(partyBean.getId());
-        ParticipantListDao.getParticipantList(partyModel, ppgc);
-        UserModel um = partyModel.getPartyCreator();
-        JFX1UserBean creator = new JFX1UserBean(um);
+        JFX1UserBean creator = new JFX1UserBean( MangeParticipant.setParticipantListParty(partyBean,ppgc));
         ppgc.setAll(partyBean,creator);
         ppgc.myStart();
 

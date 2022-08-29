@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import kapta.control.appcontroller.SettingsPageController;
 import kapta.utils.bean.jfx1.JFX1ClubBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.utils.EndSettingsChanges;
 
 public class JFX1ClubSettingGUIController {
@@ -21,8 +22,8 @@ public class JFX1ClubSettingGUIController {
     @FXML
     private ImageView img;
 
-
     private JFX1ClubBean clubBean;
+
 
     public int getClubId(){
         return clubBean.getId();
@@ -52,7 +53,11 @@ public class JFX1ClubSettingGUIController {
         setTextFieldCity(clubBean.getCityOut());
         setTextFieldAddress(clubBean.getClubAddressOut());
         setTextFieldEmail(clubBean.getEmailOut());
-        this.img.setImage(clubBean.getImageOut());
+        try {
+            this.img.setImage(clubBean.getImageOut());
+        } catch (SystemException e) {
+            JFX1AlertCreator.createAlert(e);
+        }
     }
 
     public void saveAction(ActionEvent ae) {
@@ -64,9 +69,14 @@ public class JFX1ClubSettingGUIController {
         int id = getClubId();
 
         JFX1ClubBean bean = new JFX1ClubBean(username, email, city, address, id);
-        SettingsPageController.saveSettings(bean);
+        try {
+            SettingsPageController.saveSettings(bean);
 
-        EndSettingsChanges.endChanges1(ae);
+            EndSettingsChanges.endChanges1(ae);
+
+        } catch (SystemException systemException) {
+            systemException.printStackTrace();
+        }
 
     }
 

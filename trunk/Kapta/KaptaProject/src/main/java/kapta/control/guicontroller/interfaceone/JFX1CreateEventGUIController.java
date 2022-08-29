@@ -11,13 +11,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import kapta.control.appcontroller.CreateEventController;
 import kapta.control.guicontroller.interfacetwo.FillDialogBox;
 import kapta.utils.bean.TokenBean;
 import kapta.utils.bean.jfx1.JFX1EventBean;
 import kapta.utils.bean.jfx1.JFX1TokenBean;
-import kapta.utils.exception.ErrorHandler;
-import kapta.utils.exception.myexception.TokenException;
+import kapta.utils.exception.myexception.*;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 import kapta.utils.utils.GetDialogStage;
 import kapta.utils.utils.GetFontedLabel;
@@ -57,14 +57,12 @@ public class JFX1CreateEventGUIController implements Initializable {
 
     @FXML
     private Button btnSubmitRequest;
-    private TokenBean token1; //the right token
+    private TokenBean token1;
     private File imgEvent;
 
 
     private int numSbagliate=1;
     private String arial="Arial";
-
-
 
 
     @FXML
@@ -73,15 +71,25 @@ public class JFX1CreateEventGUIController implements Initializable {
         rsip.replaceSceneAndInitializePage(ae, "/JFX1/JFX1ClubProfile.fxml");
     }
 
-    public void confirmCreateEventAction(ActionEvent actionEvent){
+    public void confirmCreateEventAction(ActionEvent actionEvent)  {
+       try{
         JFX1EventBean eventBean =new JFX1EventBean(textFieldEventName.getText(),textFieldEventPrice.getText(),textFieldEventAddress.getText(),textFieldEventDuration.getText(), textFieldEventTimeH.getText(),textFieldEventTimeM.getText(),  datePickerEventDate.getValue());
         eventBean.setEventImgOut(getImgEvent());
         eventBean.setGreenPassOut(checkBoxGreenPass.isSelected());
         CreateEventController.createEvent(eventBean);
         ReplaceSceneAndInitializePage rsip = new ReplaceSceneAndInitializePage();
         rsip.replaceSceneAndInitializePage(actionEvent, "/JFX1/JFX1ClubProfile.fxml");
+        } catch (SystemException | InputNullException | InputDateException2 e) {
+            JFX1AlertCreator.createAlert(e);
+        }
     }
+
+
     public void submitRequest(ActionEvent ae) {
+        try{
+        JFX1EventBean eventBean =new JFX1EventBean(textFieldEventName.getText(),textFieldEventPrice.getText(),textFieldEventAddress.getText(),textFieldEventDuration.getText(), textFieldEventTimeH.getText(),textFieldEventTimeM.getText(),  datePickerEventDate.getValue());
+        eventBean.setEventImgOut(getImgEvent());
+        eventBean.setGreenPassOut(checkBoxGreenPass.isSelected());
         goToGenerateToken();
         final Stage dialog = GetDialogStage.startDialog(ae);
         Label label1= GetFontedLabel.getFonted("An email has been sent to you",arial);
@@ -110,19 +118,23 @@ public class JFX1CreateEventGUIController implements Initializable {
         dialog.setResizable(false);
         dialog.setScene(dialogScene);
         dialog.show();
+            button.setOnAction(e->{
+                try{
+                    JFX1TokenBean jfx1TokenBeanIn=new JFX1TokenBean(textField.getText());
+                    goToCompareToken(jfx1TokenBeanIn);
+                    this.getBtnConfirmCreateEvent().setVisible(true);
+                    this.getBtnSubmitRequest().setVisible(false);
+                    dialog.close();
+                }catch (TokenIncorrectException | TokenTimeException  t){
+                    numSbagliate = FillDialogBox.fill(label1, button, label2, numSbagliate);
+                    JFX1AlertCreator.createAlert(t);
+                }
+            });
+        }catch (InputDateException2 | InputNullException e){
+            JFX1AlertCreator.createAlert(e);
+        }
 
-        button.setOnAction(e->{
-            JFX1TokenBean jfx1TokenBeanIn=new JFX1TokenBean(textField.getText());
-            try{
-                goToCompareToken(jfx1TokenBeanIn);
-                this.getBtnConfirmCreateEvent().setVisible(true);
-                this.getBtnSubmitRequest().setVisible(false);
-                dialog.close();
-            }catch (TokenException t){
-                numSbagliate = FillDialogBox.fill(label1, button, label2, numSbagliate);
-                ErrorHandler.getInstance().reportFinalException(t);
-            }
-        });
+
     }
 
     public void loadEventImage() {
@@ -132,7 +144,7 @@ public class JFX1CreateEventGUIController implements Initializable {
         setImgEvent(fileChooser.showOpenDialog(stage).getAbsoluteFile());
     }
 
-    private  void goToCompareToken(TokenBean tokenBeanIn) throws TokenException {
+    private  void goToCompareToken(TokenBean tokenBeanIn) throws  TokenIncorrectException, TokenTimeException {
         CreateEventController.checkToken(this.getToken1(),tokenBeanIn);
     }
 

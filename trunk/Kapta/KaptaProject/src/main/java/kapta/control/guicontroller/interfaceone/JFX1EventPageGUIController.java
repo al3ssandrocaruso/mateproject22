@@ -12,15 +12,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import kapta.control.guicontroller.interfaceone.item.JFX1UserItemGUIController;
 import kapta.utils.bean.UserBean;
+
 import kapta.utils.bean.jfx1.JFX1ClubBean;
 import kapta.utils.bean.jfx1.JFX1EventBean;
 import kapta.utils.bean.jfx1.JFX1UserBean;
+
 import kapta.utils.decorations.JFX1DecorationEventOne;
 import kapta.utils.decorations.JFX1DecorationEventTwo;
 import kapta.utils.Observer;
 import kapta.utils.VisualComponent;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.ThreadLocalSession;
 
 import java.io.IOException;
 
@@ -49,7 +52,7 @@ public class JFX1EventPageGUIController implements Observer {
 
     private VisualComponent contents;
     private VBox addedVBox;
-    private JFX1UserPanel jfx1UserPanel;
+    private UserPanel userPanel;
 
 
     private JFX1EventBean eventBean;
@@ -117,7 +120,11 @@ public class JFX1EventPageGUIController implements Observer {
         setLabelEventPrice(jfx1EventBean.getEventPriceOut());
         setLabelEventTime(jfx1EventBean.getEventTimeOut());
         setBtnUsername(jfx1EventBean.getEventCreatorOut());
-        setImg(jfx1EventBean.getEventImgOut());
+        try {
+            setImg(jfx1EventBean.getEventImgOut());
+        } catch (SystemException e) {
+            ///
+        }
         myStart();
 
     }
@@ -131,8 +138,8 @@ public class JFX1EventPageGUIController implements Observer {
 
      private void myStart() {
         this.addedVBox = new VBox();
-        this.jfx1UserPanel =new JFX1UserPanel(addedVBox);
-        this.setContents(this.jfx1UserPanel);
+        this.userPanel =new UserPanel(addedVBox);
+        this.setContents(this.userPanel);
         this.setWhoIam();
 
         display();
@@ -167,13 +174,13 @@ public class JFX1EventPageGUIController implements Observer {
     }
 
     private void actionDecorateEventTwo(){
-        JFX1DecorationEventTwo jfx1DecorationEventTwo = new JFX1DecorationEventTwo(this.jfx1UserPanel, this.eventBean, this.creator);
+        JFX1DecorationEventTwo jfx1DecorationEventTwo = new JFX1DecorationEventTwo(this.userPanel, this.eventBean, this.creator);
         this.setContents(jfx1DecorationEventTwo);
         this.display();
     }
 
     private void actionDecorateEventOne() {
-        JFX1DecorationEventOne jfx1DecorationEventOne = new JFX1DecorationEventOne(this.jfx1UserPanel, this.eventBean);
+        JFX1DecorationEventOne jfx1DecorationEventOne = new JFX1DecorationEventOne(this.userPanel, this.eventBean);
         this.setContents(jfx1DecorationEventOne);
         this.display();
     }
@@ -213,6 +220,6 @@ public class JFX1EventPageGUIController implements Observer {
 
     @Override
     public void updateFrom(Object ob, Object from) {
-        //devo implementarlo ma non mi serve, quindi lo lascio vuoto
+        //
     }
 }

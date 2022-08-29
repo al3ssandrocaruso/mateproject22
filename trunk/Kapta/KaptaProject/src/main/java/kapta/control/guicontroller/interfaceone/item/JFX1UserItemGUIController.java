@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import kapta.utils.bean.jfx1.JFX1UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.ReplaceSceneAndInitializePage;
 
 
@@ -36,7 +37,11 @@ public class JFX1UserItemGUIController {
     public void setAll(JFX1UserBean jfx1UserBean){
         this.userBean = jfx1UserBean;
         this.setLabelUsername(jfx1UserBean.getUsernameOut());
-        this.setImageViewProfilePic(jfx1UserBean.getProfileImgOut());
+        try {
+            this.setImageViewProfilePic(jfx1UserBean.getProfileImgOut());
+        } catch (SystemException e) {
+          //
+        }
     }
 
     public void goToProfile(ActionEvent ae) {

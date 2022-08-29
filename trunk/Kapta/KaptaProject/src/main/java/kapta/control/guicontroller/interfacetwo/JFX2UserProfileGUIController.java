@@ -36,9 +36,8 @@ import kapta.utils.bean.jfx2.JFX2PartyBean;
 import kapta.utils.bean.jfx2.JFX2UserBean;
 import kapta.utils.Observer;
 
-import kapta.utils.exception.myexception.EmailValidatorException;
-import kapta.utils.exception.myexception.InputNullException;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.exception.myexception.*;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.utils.EndSettingsChanges;
 import kapta.utils.utils.FollowUtils;
 
@@ -113,7 +112,7 @@ public class JFX2UserProfileGUIController implements Observer {
     private int typeMe;
 
     private JFX2UserBean userBean;
-    ManageFollowerFollowingList m;
+
 
 
     public JFX2UserBean getUserBean() {
@@ -179,9 +178,14 @@ public class JFX2UserProfileGUIController implements Observer {
         String secondName = textFieldSettingSecondName.getText();
 
         JFX2UserBean bean = new JFX2UserBean(username, email, name, secondName, userBean.getId());
-        SettingsPageController.saveSettings(bean);
+        try {
+            SettingsPageController.saveSettings(bean);
+            EndSettingsChanges.endChanges2(ae);
+        } catch (SystemException e) {
+            JFX2AlertCreator.createAlert(e);
+        }
 
-        EndSettingsChanges.endChanges2(ae);
+
 
     }
 
@@ -196,7 +200,6 @@ public class JFX2UserProfileGUIController implements Observer {
                     vboxForm.toBack();
                     vboxJoinedList.toFront();
                     hboxSettings.toBack();
-                    // eee solo per ora
                     JFX2UserBean userBeanMe = whoIamUser;
                     if (FollowUtils.doAFollowB(userBeanMe, getUserBean())) {
                         btnJoinedOrFollow.setText("Unfollow");
@@ -225,39 +228,80 @@ public class JFX2UserProfileGUIController implements Observer {
 
     }
 
-    public void performAction(){
-        if (itsMyPageOrNot) { //change pane
-            if (state) { //sto in mio profilo
+    private int retCase() {
+        int k = -1;
+        if (itsMyPageOrNot && state) {
+            k = 0;
+        }
 
-                state = false;
-                vboxForm.toBack();
-                btnJoinedOrFollow.setMinSize(163, 42);
-                btnJoinedOrFollow.setFont(Font.font(arial, FontWeight.BOLD, 20));
-                btnJoinedOrFollow.setText("Create Party");
-                listViewJoined.getItems().clear();
+        if (itsMyPageOrNot && !state) {
+            k = 1;
+        }
+        if (!itsMyPageOrNot) {
+            k = 2;
+        }
+        return k;
 
-                MangeJoined.adjJoinedList(getUserBean(),this);
+    }
 
-            } else {
+    public void performAction() {
+        int k = retCase();
+
+        switch (k){
+            case 0:
+                try {
+
+                    state = false;
+                    vboxForm.toBack();
+                    btnJoinedOrFollow.setMinSize(163, 42);
+                    btnJoinedOrFollow.setFont(Font.font(arial, FontWeight.BOLD, 20));
+                    btnJoinedOrFollow.setText("Create Party");
+                    listViewJoined.getItems().clear();
+
+                    MangeJoined.adjJoinedList(getUserBean(), this);
+                }catch (SystemException e ){
+                    JFX2AlertCreator.createAlert(e);
+                }
+                finally {
+                    break;
+                }
+
+
+            case 1 :
                 state = true;
                 vboxForm.toFront();
                 btnJoinedOrFollow.setText("Joined List");
-            }
-        } else {
-            // eee solo per ora
-            JFX2UserBean userBean2 = whoIamUser;
-            if(btnJoinedOrFollow.getText().equals(STR_FOLLOW)){
-                btnJoinedOrFollow.setText("Unfollow");
-                FollowUserController.follow(getUserBean(), userBean2);
-                m.addUserFollowerList(this.userBean);
-            }else{
-                btnJoinedOrFollow.setText(STR_FOLLOW);
-                FollowUserController.unfollow(getUserBean(), userBean2);
-                m.removeUserFollowerList(this.userBean);
-            }
+                break;
+
+            case 2 :
+                JFX2UserBean userBean2 = whoIamUser;
+                if(btnJoinedOrFollow.getText().equals(STR_FOLLOW)){
+                    try {
+                        FollowUserController.follow(getUserBean(), userBean2);
+                        btnJoinedOrFollow.setText("Unfollow");
+                        ManageFollowerFollowingList.refreshList(whoIamUser,this);
+                    } catch (SystemException e) {
+                        JFX2AlertCreator.createAlert(e);
+                    }
+                }else{
+
+                    try {
+                        FollowUserController.unfollow(getUserBean(), userBean2);
+                        btnJoinedOrFollow.setText(STR_FOLLOW);
+                        ManageFollowerFollowingList.refreshList(whoIamUser,this);
+                    } catch (SystemException e) {
+                        JFX2AlertCreator.createAlert(e);
+                    }
+
+                }
+                break;
+            default: break;
+
+
+
+
         }
     }
-
     public void showFollowing() {
         if (!popupFollowingOn && !popupFollowerOn) {
             popupFollowingOn = true;
@@ -330,6 +374,9 @@ public class JFX2UserProfileGUIController implements Observer {
             eigc.setAll(jfx2EventBean);
             this.listViewJoined.getItems().add(pane);
         }
+        else if (ob instanceof GenericListInfoBean gen){
+            setNumberFollower(String.valueOf(gen.getSize()));
+        }
     }
 
     @Override
@@ -366,38 +413,46 @@ public class JFX2UserProfileGUIController implements Observer {
     }
 
     public void createParty(ActionEvent ae) {
-        CreatePartyController createPartyController = new CreatePartyController();
-        JFX2PartyBean partyBean = new JFX2PartyBean(textFieldPartyName.getText(),this.duration,textFieldPartyAddress.getText(),textFieldBeginTime.getText() ,textFieldPartyDate.getText(),this.createdPartyImg);
-        createPartyController.createAndJoinParty(partyBean);
+        try {
 
-        final Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(((Node)ae.getSource()).getScene().getWindow());
-        VBox dialogVbox = new VBox(20);
-        dialogVbox.setAlignment(Pos.CENTER);
-        Label text=new Label("Successful Party Creation!");
-        text.setStyle("-fx-font-weight: bold;"+"-fx-font-family: Arial; -fx-font-size: 20;"+"-fx-text-fill: #200f54");
-        dialogVbox.getChildren().add(text);
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
-        dialog.setScene(dialogScene);
-        dialog.show();
+            JFX2PartyBean partyBean = new JFX2PartyBean(textFieldPartyName.getText(),this.duration,textFieldPartyAddress.getText(),textFieldBeginTime.getText() ,textFieldPartyDate.getText(),this.createdPartyImg);
+            CreatePartyController.createAndJoinParty(partyBean);
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(((Node)ae.getSource()).getScene().getWindow());
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.setAlignment(Pos.CENTER);
+            Label text=new Label("Successful Party Creation!");
+            text.setStyle("-fx-font-weight: bold;"+"-fx-font-family: Arial; -fx-font-size: 20;"+"-fx-text-fill: #200f54");
+            dialogVbox.getChildren().add(text);
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+            textFieldPartyName.setText("");
+            textFieldPartyAddress.setText("");
+            textFieldBeginTime.setText("");
+            textFieldPartyDate.setText("");
+            labelDuration.setText("0");
+            sliderDuration.setValue(0);
+            this.duration= Double.valueOf(0);
+        } catch (SystemException | PartyExpiredException | BusyForANewPartyException | InputDateException2 | InputNullException e) {
 
-        textFieldPartyName.setText("");
-        textFieldPartyAddress.setText("");
-        textFieldBeginTime.setText("");
-        textFieldPartyDate.setText("");
-        labelDuration.setText("0");
-        sliderDuration.setValue(0);
-        this.duration= Double.valueOf(0);
+
+           JFX2AlertCreator.createAlert(e);
+        }
+
     }
 
-    public void setAll(JFX2UserBean jfx2UserBean, ManageFollowerFollowingList m){
+    public void setAll(JFX2UserBean jfx2UserBean){
         setWhoIam();
 
-        this.m=m;
         this.userBean = jfx2UserBean;
         setLabelUsername(jfx2UserBean.getUsernameOut());
-        setProfileImg(jfx2UserBean.getImageOut());
+        try {
+            setProfileImg(jfx2UserBean.getImageOut());
+        } catch (SystemException e) {
+            //
+        }
 
         if(itsMyPageOrNot){
             setTextFieldSettingEmail(jfx2UserBean.getEmailOut());

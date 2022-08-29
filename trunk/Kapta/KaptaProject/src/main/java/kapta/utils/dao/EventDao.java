@@ -7,14 +7,13 @@ import kapta.utils.db.CRUD;
 import kapta.utils.db.Query;
 import kapta.utils.exception.*;
 import kapta.utils.exception.myexception.MysqlConnectionFailed;
-import kapta.utils.exception.myexception.WrongCrudException;
-import kapta.utils.exception.myexception.WrongQueryException;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.exception.myexception.SystemException;
+import kapta.utils.mysession.ThreadLocalSession;
 import kapta.utils.utils.ImageConverter;
 import kapta.utils.utils.MysqlConnection;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +33,7 @@ public class EventDao {
         //ignored
     }
 
-    public static void saveNewEvent(EventModel eventModel) {
+    public static void saveNewEvent(EventModel eventModel) throws SystemException {
         String eventName = eventModel.getName();
         String eventAddress = eventModel.getAddress();
 
@@ -54,14 +53,17 @@ public class EventDao {
             Double price = eventModel.getEventPrice();
             new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
             InfoEvent infoEvent = new InfoEvent(eventAddress, price, obbG);
+            // check pre esisstent e???
             CRUD.saveNewEvent(stm, eventModel.getPartyEventSchedule(), eventName, infoEvent, creatorId, eventModel.getImg());
-        } catch (MysqlConnectionFailed | WrongCrudException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+
+
+        } catch (MysqlConnectionFailed | SQLException | FileNotFoundException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
     }
 
 
-    public static List<EventModel> getEventsbyEventName(String input) {
+    public static List<EventModel> getEventsbyEventName(String input) throws SystemException {
         Statement stm = null;
         List<EventModel> list = new ArrayList<>();
         try {
@@ -90,16 +92,14 @@ public class EventDao {
             ImageConverter.copyInputStreamToFile(in, file);
             eM.setImg(file);
             list.add(eM);
-        } catch (MysqlConnectionFailed | WrongQueryException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException | IOException t) {
-            // non gestite
+    } catch (MysqlConnectionFailed |SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
         return list;
     }
 
 
-    public static EventModel getEventbyEventId(int id) {
+    public static EventModel getEventbyEventId(int id) throws SystemException {
         EventModel eM = null;
         try {
             Statement stm = MysqlConnection.mysqlConnection();
@@ -129,15 +129,13 @@ public class EventDao {
                 eM.setImg(file);
 
             }
-        } catch (MysqlConnectionFailed | WrongQueryException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException | IOException throwables) {
-            // non getsita
+        } catch (MysqlConnectionFailed | SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
         return eM;
     }
 
-    public static int getIdByEventName(String eventName) {
+    public static int getIdByEventName(String eventName) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
@@ -149,21 +147,19 @@ public class EventDao {
             }
             rst.first();
             return rst.getInt(1);
-        } catch (MysqlConnectionFailed | WrongQueryException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
-        } catch (SQLException throwables) {
-            //ignored
+        } catch (MysqlConnectionFailed |SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
         return -1;
     }
 
-    public static void deleteEvent(EventModel eventModel) {
+    public static void deleteEvent(EventModel eventModel) throws SystemException {
         Statement stm = null;
         try {
             stm = MysqlConnection.mysqlConnection();
             CRUD.deleteEvent(stm, eventModel.getId());
-        } catch (MysqlConnectionFailed | WrongCrudException e) {
-            ErrorHandler.getInstance().reportFinalException(e);
+        } catch (MysqlConnectionFailed | SQLException e) {
+            ErrorHandler.getInstance().handleException(e);
         }
     }
 }

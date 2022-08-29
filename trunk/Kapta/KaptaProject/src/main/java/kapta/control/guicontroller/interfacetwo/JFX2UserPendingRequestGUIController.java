@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import kapta.model.EventModel;
 import kapta.utils.bean.jfx2.JFX2RequestBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.init.JFX2ReplaceSceneAndInitializePage;
 
 public class JFX2UserPendingRequestGUIController {
@@ -36,7 +37,11 @@ public class JFX2UserPendingRequestGUIController {
     }
     public void setAll(JFX2RequestBean jfx2RequestBean){
         this.jfx2RequestBean=jfx2RequestBean;
-        eventPic.setImage(jfx2RequestBean.getRelatedEventImgOut());
+        try {
+            eventPic.setImage(jfx2RequestBean.getRelatedEventImgOut());
+        } catch (SystemException e) {
+            //
+        }
         this.labelEventName.setText( jfx2RequestBean.getRelatedEventOut());
         this.labelEventDate.setText(jfx2RequestBean.getDateOut());
     }

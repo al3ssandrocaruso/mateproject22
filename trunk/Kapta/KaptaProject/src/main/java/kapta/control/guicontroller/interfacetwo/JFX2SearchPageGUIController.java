@@ -18,6 +18,7 @@ import kapta.utils.bean.UserBean;
 import kapta.utils.bean.jfx2.JFX2EventBean;
 import kapta.utils.bean.jfx2.JFX2PartyBean;
 import kapta.utils.bean.jfx2.JFX2UserBean;
+import kapta.utils.exception.myexception.SystemException;
 import kapta.utils.pagesetter.setterjfx2.JFX2PartyEventPageSetter;
 import kapta.utils.pagesetter.setterjfx2.JFX2UserProfileSetter;
 
@@ -53,11 +54,15 @@ public class JFX2SearchPageGUIController{
             // ee
             JFX2UserBean userBean1 = new JFX2UserBean(userBean);
 
-            JFX2UserProfileSetter.setter(userBean1, loader.getController());
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root1);
-            stage.setScene(scene);
-            stage.show();
+            try {
+                JFX2UserProfileSetter.setter(userBean1, loader.getController());
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root1);
+                stage.setScene(scene);
+                stage.show();
+            } catch (SystemException e) {
+              JFX2AlertCreator.createAlert(e);
+            }
             return;
         }
         support1= ManageSearch.searchEvent(input);
@@ -74,11 +79,16 @@ public class JFX2SearchPageGUIController{
                 e.printStackTrace();
             }
             //parentRoot.setVisible(true);    //linea di codice che serve per evitare code smells
-            JFX2PartyEventPageSetter.setter(ob, loader.getController());
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(parentRoot);
-            stage.setScene(scene);
-            stage.show();
+            try {
+                JFX2PartyEventPageSetter.setter(ob, loader.getController());
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(parentRoot);
+                stage.setScene(scene);
+                stage.show();
+            } catch (SystemException e) {
+                JFX2AlertCreator.createAlert(e);
+            }
+
             return;
         }
         searchBar.setText("");

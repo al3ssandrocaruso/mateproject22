@@ -2,7 +2,7 @@ package kapta;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import kapta.utils.session.ThreadLocalSession;
+import kapta.utils.mysession.ThreadLocalSession;
 
 public class MainApp extends Application {
 

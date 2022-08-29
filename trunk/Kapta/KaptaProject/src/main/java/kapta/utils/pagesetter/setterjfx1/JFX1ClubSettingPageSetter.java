@@ -1,7 +1,6 @@
 package kapta.utils.pagesetter.setterjfx1;
 
 import kapta.control.guicontroller.interfaceone.JFX1ClubSettingGUIController;
-import kapta.model.profiles.ClubModel;
 import kapta.utils.bean.jfx1.JFX1ClubBean;
 
 public class JFX1ClubSettingPageSetter {
@@ -10,8 +9,7 @@ public class JFX1ClubSettingPageSetter {
         //ignored
     }
 
-    public static  void setter(ClubModel cm, JFX1ClubSettingGUIController csgc){
-        JFX1ClubBean jfx1ClubBean = new JFX1ClubBean(cm);
+    public static  void setter(JFX1ClubBean jfx1ClubBean, JFX1ClubSettingGUIController csgc){
         csgc.setAll(jfx1ClubBean);
     }
 }

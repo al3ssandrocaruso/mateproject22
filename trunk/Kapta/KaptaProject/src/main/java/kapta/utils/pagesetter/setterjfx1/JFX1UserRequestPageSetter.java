@@ -1,9 +1,9 @@
 package kapta.utils.pagesetter.setterjfx1;
 
 import kapta.control.guicontroller.interfaceone.request.JFX1UserRequestPageGUIController;
-import kapta.model.lists.RequestList;
-import kapta.model.profiles.UserModel;
-import kapta.utils.dao.listdao.RequestListDao;
+import kapta.engineering.ManageRequest;
+import kapta.utils.bean.jfx1.JFX1UserBean;
+import kapta.utils.exception.myexception.SystemException;
 
 public class JFX1UserRequestPageSetter {
 
@@ -11,9 +11,8 @@ public class JFX1UserRequestPageSetter {
         //ignore
     }
 
-    public static void setter(JFX1UserRequestPageGUIController jfx1UserRequestPageGUIController, UserModel pageOwner) {
+    public static void setter(JFX1UserRequestPageGUIController jfx1UserRequestPageGUIController, JFX1UserBean pageOwner) throws SystemException {
 
-        new RequestList(pageOwner, RequestListDao.getAllTypeRequests(pageOwner) , jfx1UserRequestPageGUIController);
-
+        ManageRequest.setRequestListUser(pageOwner, jfx1UserRequestPageGUIController);
     }
 }
